@@ -19,6 +19,11 @@ This language borrows the concept of the *frame* from [The Newton Script Program
 </pre>
 
 
+# Transpile 
+
+The ArisiaScript code will be translated into the JavaScript code.
+
+
 # Grammar
 
 <pre>
