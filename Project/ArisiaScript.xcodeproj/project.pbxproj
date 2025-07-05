@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		058859272E0A4F8E00DF6555 /* ArisiaScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058859252E0A4F8E00DF6555 /* ArisiaScript.swift */; };
+		05596BFA2E196BB90001384E /* MultiDataKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05596BF92E196BB90001384E /* MultiDataKit.xcframework */; };
+		05596BFD2E196BCF0001384E /* MultiDataKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05596BF92E196BB90001384E /* MultiDataKit.xcframework */; };
+		05596C012E196C020001384E /* ALFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05596C002E196C020001384E /* ALFrame.swift */; };
+		05596C022E196C030001384E /* ALFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05596C002E196C020001384E /* ALFrame.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,8 +32,9 @@
 
 /* Begin PBXFileReference section */
 		051A82B92E196A54004A9C4B /* ArisiaScript.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ArisiaScript.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		05596BF92E196BB90001384E /* MultiDataKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MultiDataKit.xcframework; path = ../../../Library/Frameworks/MultiDataKit.xcframework; sourceTree = "<group>"; };
+		05596C002E196C020001384E /* ALFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ALFrame.swift; sourceTree = "<group>"; };
 		056B2FB72E0A4F52004E0EFC /* ArisiaScript.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ArisiaScript.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		058859252E0A4F8E00DF6555 /* ArisiaScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArisiaScript.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -39,9 +43,9 @@
 			path = ArisiaScript_iOS;
 			sourceTree = "<group>";
 		};
-		056B2FB92E0A4F52004E0EFC /* ArisiaScript */ = {
+		056B2FB92E0A4F52004E0EFC /* ArisiaScript_macOS */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = ArisiaScript;
+			path = ArisiaScript_macOS;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -51,6 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05596BFD2E196BCF0001384E /* MultiDataKit.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05596BFA2E196BB90001384E /* MultiDataKit.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -67,16 +73,26 @@
 		051A82B32E19698A004A9C4B /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				05596C002E196C020001384E /* ALFrame.swift */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		05596BF82E196BB90001384E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				05596BF92E196BB90001384E /* MultiDataKit.xcframework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		056B2FAD2E0A4F52004E0EFC = {
 			isa = PBXGroup;
 			children = (
-				056B2FB92E0A4F52004E0EFC /* ArisiaScript */,
-				058859282E0A4FA700DF6555 /* Source */,
 				051A82BA2E196A54004A9C4B /* ArisiaScript_iOS */,
+				056B2FB92E0A4F52004E0EFC /* ArisiaScript_macOS */,
+				058859282E0A4FA700DF6555 /* Source */,
+				05596BF82E196BB90001384E /* Frameworks */,
 				056B2FB82E0A4F52004E0EFC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -94,7 +110,6 @@
 			isa = PBXGroup;
 			children = (
 				051A82B32E19698A004A9C4B /* Data */,
-				058859252E0A4F8E00DF6555 /* ArisiaScript.swift */,
 			);
 			name = Source;
 			path = ../Source;
@@ -178,7 +193,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				056B2FB92E0A4F52004E0EFC /* ArisiaScript */,
+				056B2FB92E0A4F52004E0EFC /* ArisiaScript_macOS */,
 			);
 			name = ArisiaScript_macOS;
 			packageProductDependencies = (
@@ -251,6 +266,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05596C022E196C030001384E /* ALFrame.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,7 +274,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				058859272E0A4F8E00DF6555 /* ArisiaScript.swift in Sources */,
+				05596C012E196C020001384E /* ALFrame.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
