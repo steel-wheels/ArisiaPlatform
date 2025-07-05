@@ -2,3 +2,25 @@
 
 The ArisiaScript code will be translated into the JavaScript code.
 
+For example, following ArisiaScript will be transpiled into the JavaScript.
+<pre>
+{
+        ok_button: {
+                class:          "Button"
+                title:          "OK"
+                clicked: event %{
+                        console.log("button pressed) ;
+                %}
+        }
+}
+</pre>
+
+Generated JavaScript is:
+<pre>
+let ok_button = allocateFrame("Button") ;
+ok_button.setValue("title", "OK") ;
+ok_button.setEvent("clicked", function(){
+	console.log("button pressed) ;
+}) ;
+</pre>
+

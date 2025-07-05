@@ -1,5 +1,10 @@
 # Grammar
 
+## Reserved words
+<code>event</code>
+
+## Syntax
+
 <pre>
 frame
     :  '{' frame_slot_list_opt '}'
@@ -24,6 +29,28 @@ object
     | path_expression
     | frame
     | array
+    | dictionary
+    | event_function
+    ;
+
+object_list_opt
+    : /* empty */
+    | object_list
+    ;
+
+object_lust:
+    : object
+    | object_list ',' object
+    ;
+
+key_object_list_opt
+    : /* empty */
+    | key_object_list
+    ;
+
+key_object_list
+    : STRING ':' object
+    | key_object_list STRING ':' object
     ;
 
 simple_literal
@@ -43,6 +70,14 @@ path_expression
 
 array
     : '[' object_list_opt ']'
+    ;
+
+dictionary
+    : '[' key_object_lust_opt ']'
+    ;
+
+event_function
+    : _EVENT_ '%{' TEXT '}%'
     ;
 
 </pre>

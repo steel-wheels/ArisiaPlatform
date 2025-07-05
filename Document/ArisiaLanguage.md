@@ -9,9 +9,9 @@ This language borrows the concept of the *frame* from [The Newton Script Program
 <pre>
 {
         ok_button: {
-                class:          Button
+                class:          "Button"
                 title:          "OK"
-                clicked: event() %{
+                clicked: event %{
                         console.log("button pressed) ;
                 %}
         }
@@ -23,8 +23,35 @@ This language borrows the concept of the *frame* from [The Newton Script Program
 
 The ArisiaScript code will be translated into the JavaScript code.
 
+For example, following ArisiaScript will be transpiled into the JavaScript.
+<pre>
+{
+        ok_button: {
+                class:          "Button"
+                title:          "OK"
+                clicked: event %{
+                        console.log("button pressed) ;
+                %}
+        }
+}
+</pre>
+
+Generated JavaScript is:
+<pre>
+let ok_button = allocateFrame("Button") ;
+ok_button.setValue("title", "OK") ;
+ok_button.setEvent("clicked", function(){
+	console.log("button pressed) ;
+}) ;
+</pre>
+
 
 # Grammar
+
+## Reserved words
+<code>event</code>
+
+## Syntax
 
 <pre>
 frame
@@ -50,6 +77,28 @@ object
     | path_expression
     | frame
     | array
+    | dictionary
+    | event_function
+    ;
+
+object_list_opt
+    : /* empty */
+    | object_list
+    ;
+
+object_lust:
+    : object
+    | object_list ',' object
+    ;
+
+key_object_list_opt
+    : /* empty */
+    | key_object_list
+    ;
+
+key_object_list
+    : STRING ':' object
+    | key_object_list STRING ':' object
     ;
 
 simple_literal
@@ -69,6 +118,14 @@ path_expression
 
 array
     : '[' object_list_opt ']'
+    ;
+
+dictionary
+    : '[' key_object_lust_opt ']'
+    ;
+
+event_function
+    : _EVENT_ '%{' TEXT '}%'
     ;
 
 </pre>

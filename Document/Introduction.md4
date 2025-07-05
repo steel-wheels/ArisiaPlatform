@@ -9,9 +9,9 @@ This language borrows the concept of the *frame* from [The Newton Script Program
 <pre>
 {
         ok_button: {
-                class:          Button
+                class:          "Button"
                 title:          "OK"
-                clicked: event() %{
+                clicked: event %{
                         console.log("button pressed) ;
                 %}
         }

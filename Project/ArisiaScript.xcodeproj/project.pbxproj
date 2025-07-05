@@ -10,12 +10,35 @@
 		058859272E0A4F8E00DF6555 /* ArisiaScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058859252E0A4F8E00DF6555 /* ArisiaScript.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		05596BF42E196B140001384E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 056B2FAE2E0A4F52004E0EFC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 051A82B82E196A54004A9C4B;
+			remoteInfo = ArisiaScript_iOS;
+		};
+		05596BF62E196B140001384E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 056B2FAE2E0A4F52004E0EFC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 056B2FB62E0A4F52004E0EFC;
+			remoteInfo = ArisiaScript_macOS;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		051A82B92E196A54004A9C4B /* ArisiaScript.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ArisiaScript.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		056B2FB72E0A4F52004E0EFC /* ArisiaScript.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ArisiaScript.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		058859252E0A4F8E00DF6555 /* ArisiaScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArisiaScript.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		051A82BA2E196A54004A9C4B /* ArisiaScript_iOS */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ArisiaScript_iOS;
+			sourceTree = "<group>";
+		};
 		056B2FB92E0A4F52004E0EFC /* ArisiaScript */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = ArisiaScript;
@@ -24,6 +47,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		051A82B62E196A54004A9C4B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		056B2FB42E0A4F52004E0EFC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -34,11 +64,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		051A82B32E19698A004A9C4B /* Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		056B2FAD2E0A4F52004E0EFC = {
 			isa = PBXGroup;
 			children = (
 				056B2FB92E0A4F52004E0EFC /* ArisiaScript */,
 				058859282E0A4FA700DF6555 /* Source */,
+				051A82BA2E196A54004A9C4B /* ArisiaScript_iOS */,
 				056B2FB82E0A4F52004E0EFC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -47,6 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				056B2FB72E0A4F52004E0EFC /* ArisiaScript.framework */,
+				051A82B92E196A54004A9C4B /* ArisiaScript.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -54,6 +93,7 @@
 		058859282E0A4FA700DF6555 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				051A82B32E19698A004A9C4B /* Data */,
 				058859252E0A4F8E00DF6555 /* ArisiaScript.swift */,
 			);
 			name = Source;
@@ -63,6 +103,13 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		051A82B42E196A54004A9C4B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		056B2FB22E0A4F52004E0EFC /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -72,10 +119,54 @@
 		};
 /* End PBXHeadersBuildPhase section */
 
+/* Begin PBXLegacyTarget section */
+		05596BF02E196B090001384E /* Install */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "-f ../Script/install.mk";
+			buildConfigurationList = 05596BF32E196B090001384E /* Build configuration list for PBXLegacyTarget "Install" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = "";
+			dependencies = (
+				05596BF52E196B140001384E /* PBXTargetDependency */,
+				05596BF72E196B140001384E /* PBXTargetDependency */,
+			);
+			name = Install;
+			packageProductDependencies = (
+			);
+			passBuildSettingsInEnvironment = 1;
+			productName = Install;
+		};
+/* End PBXLegacyTarget section */
+
 /* Begin PBXNativeTarget section */
-		056B2FB62E0A4F52004E0EFC /* ArisiaScript */ = {
+		051A82B82E196A54004A9C4B /* ArisiaScript_iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 056B2FC02E0A4F52004E0EFC /* Build configuration list for PBXNativeTarget "ArisiaScript" */;
+			buildConfigurationList = 051A82BF2E196A54004A9C4B /* Build configuration list for PBXNativeTarget "ArisiaScript_iOS" */;
+			buildPhases = (
+				051A82B42E196A54004A9C4B /* Headers */,
+				051A82B52E196A54004A9C4B /* Sources */,
+				051A82B62E196A54004A9C4B /* Frameworks */,
+				051A82B72E196A54004A9C4B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				051A82BA2E196A54004A9C4B /* ArisiaScript_iOS */,
+			);
+			name = ArisiaScript_iOS;
+			packageProductDependencies = (
+			);
+			productName = ArisiaScript_iOS;
+			productReference = 051A82B92E196A54004A9C4B /* ArisiaScript.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		056B2FB62E0A4F52004E0EFC /* ArisiaScript_macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 056B2FC02E0A4F52004E0EFC /* Build configuration list for PBXNativeTarget "ArisiaScript_macOS" */;
 			buildPhases = (
 				056B2FB22E0A4F52004E0EFC /* Headers */,
 				056B2FB32E0A4F52004E0EFC /* Sources */,
@@ -89,7 +180,7 @@
 			fileSystemSynchronizedGroups = (
 				056B2FB92E0A4F52004E0EFC /* ArisiaScript */,
 			);
-			name = ArisiaScript;
+			name = ArisiaScript_macOS;
 			packageProductDependencies = (
 			);
 			productName = ArisiaScript;
@@ -106,6 +197,12 @@
 				LastSwiftUpdateCheck = 1640;
 				LastUpgradeCheck = 1640;
 				TargetAttributes = {
+					051A82B82E196A54004A9C4B = {
+						CreatedOnToolsVersion = 16.4;
+					};
+					05596BF02E196B090001384E = {
+						CreatedOnToolsVersion = 16.4;
+					};
 					056B2FB62E0A4F52004E0EFC = {
 						CreatedOnToolsVersion = 16.4;
 					};
@@ -125,12 +222,21 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				056B2FB62E0A4F52004E0EFC /* ArisiaScript */,
+				056B2FB62E0A4F52004E0EFC /* ArisiaScript_macOS */,
+				051A82B82E196A54004A9C4B /* ArisiaScript_iOS */,
+				05596BF02E196B090001384E /* Install */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		051A82B72E196A54004A9C4B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		056B2FB52E0A4F52004E0EFC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -141,6 +247,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		051A82B52E196A54004A9C4B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		056B2FB32E0A4F52004E0EFC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -151,7 +264,118 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		05596BF52E196B140001384E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 051A82B82E196A54004A9C4B /* ArisiaScript_iOS */;
+			targetProxy = 05596BF42E196B140001384E /* PBXContainerItemProxy */;
+		};
+		05596BF72E196B140001384E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 056B2FB62E0A4F52004E0EFC /* ArisiaScript_macOS */;
+			targetProxy = 05596BF62E196B140001384E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		051A82C02E196A54004A9C4B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = TR2DNF3P93;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(HOME)/Library/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.github.steel-wheels.ArisiaScript.iOS.ArisiaScript-iOS";
+				PRODUCT_NAME = ArisiaScript;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_MODULE = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		051A82C12E196A54004A9C4B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = TR2DNF3P93;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(HOME)/Library/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.github.steel-wheels.ArisiaScript.iOS.ArisiaScript-iOS";
+				PRODUCT_NAME = ArisiaScript;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_MODULE = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		05596BF12E196B090001384E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEBUGGING_SYMBOLS = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = TR2DNF3P93;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		05596BF22E196B090001384E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = TR2DNF3P93;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		056B2FBE2E0A4F52004E0EFC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -292,7 +516,7 @@
 				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				INSTALL_PATH = "$(HOME)/Libraries/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -301,8 +525,8 @@
 				MARKETING_VERSION = 1.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.github.steel-wheels.ArisiaScript.ArisiaScript";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.github.steel-wheels.ArisiaScript.macOS";
+				PRODUCT_NAME = ArisiaScript;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INSTALL_MODULE = YES;
@@ -325,7 +549,7 @@
 				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				INSTALL_PATH = "$(HOME)/Libraries/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -334,8 +558,8 @@
 				MARKETING_VERSION = 1.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.github.steel-wheels.ArisiaScript.ArisiaScript";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.github.steel-wheels.ArisiaScript.macOS";
+				PRODUCT_NAME = ArisiaScript;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INSTALL_MODULE = YES;
@@ -347,6 +571,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		051A82BF2E196A54004A9C4B /* Build configuration list for PBXNativeTarget "ArisiaScript_iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				051A82C02E196A54004A9C4B /* Debug */,
+				051A82C12E196A54004A9C4B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		05596BF32E196B090001384E /* Build configuration list for PBXLegacyTarget "Install" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				05596BF12E196B090001384E /* Debug */,
+				05596BF22E196B090001384E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		056B2FB12E0A4F52004E0EFC /* Build configuration list for PBXProject "ArisiaScript" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -356,7 +598,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		056B2FC02E0A4F52004E0EFC /* Build configuration list for PBXNativeTarget "ArisiaScript" */ = {
+		056B2FC02E0A4F52004E0EFC /* Build configuration list for PBXNativeTarget "ArisiaScript_macOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				056B2FC12E0A4F52004E0EFC /* Debug */,
