@@ -13,6 +13,7 @@ public enum ALFrameValue
         case value(MIValue)
         case text(String)
         case frame(ALFrame)
+        case path(Array<String>)
 }
 
 public class ALFrame

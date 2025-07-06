@@ -11,6 +11,8 @@
 		05596BFD2E196BCF0001384E /* MultiDataKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05596BF92E196BB90001384E /* MultiDataKit.xcframework */; };
 		05596C012E196C020001384E /* ALFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05596C002E196C020001384E /* ALFrame.swift */; };
 		05596C022E196C030001384E /* ALFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05596C002E196C020001384E /* ALFrame.swift */; };
+		05596C172E1971440001384E /* ALParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05596C162E1971440001384E /* ALParser.swift */; };
+		05596C182E1971440001384E /* ALParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05596C162E1971440001384E /* ALParser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +36,7 @@
 		051A82B92E196A54004A9C4B /* ArisiaScript.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ArisiaScript.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		05596BF92E196BB90001384E /* MultiDataKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MultiDataKit.xcframework; path = ../../../Library/Frameworks/MultiDataKit.xcframework; sourceTree = "<group>"; };
 		05596C002E196C020001384E /* ALFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ALFrame.swift; sourceTree = "<group>"; };
+		05596C162E1971440001384E /* ALParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ALParser.swift; sourceTree = "<group>"; };
 		056B2FB72E0A4F52004E0EFC /* ArisiaScript.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ArisiaScript.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -86,6 +89,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		05596C152E19712F0001384E /* Parser */ = {
+			isa = PBXGroup;
+			children = (
+				05596C162E1971440001384E /* ALParser.swift */,
+			);
+			path = Parser;
+			sourceTree = "<group>";
+		};
 		056B2FAD2E0A4F52004E0EFC = {
 			isa = PBXGroup;
 			children = (
@@ -110,6 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				051A82B32E19698A004A9C4B /* Data */,
+				05596C152E19712F0001384E /* Parser */,
 			);
 			name = Source;
 			path = ../Source;
@@ -266,6 +278,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05596C172E1971440001384E /* ALParser.swift in Sources */,
 				05596C022E196C030001384E /* ALFrame.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -274,6 +287,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05596C182E1971440001384E /* ALParser.swift in Sources */,
 				05596C012E196C020001384E /* ALFrame.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
