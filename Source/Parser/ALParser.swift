@@ -145,14 +145,13 @@ public class ALParser
                                         switch tokens[index+1].value {
                                         case .identifier(let ident):
                                                 result.append(ident)
-                                                docont = false
+                                                index += 1
                                         default:
                                                 let err = MIError.parseError(
                                                         message: "identifier is required after .",
                                                         line: MIToken.lastLine(tokens: tokens))
                                                 return .failure(err)
                                         }
-                                        index += 1
                                 } else {
                                         docont = false
                                 }

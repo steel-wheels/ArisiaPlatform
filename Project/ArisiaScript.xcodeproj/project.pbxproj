@@ -30,7 +30,26 @@
 			remoteGlobalIDString = 056B2FB62E0A4F52004E0EFC;
 			remoteInfo = ArisiaScript_macOS;
 		};
+		05A6F26D2E1AB2FB005A41E5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 056B2FAE2E0A4F52004E0EFC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 05596BF02E196B090001384E;
+			remoteInfo = Install;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		05A6F2642E1AB2EA005A41E5 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		051A82B92E196A54004A9C4B /* ArisiaScript.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ArisiaScript.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -38,6 +57,8 @@
 		05596C002E196C020001384E /* ALFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ALFrame.swift; sourceTree = "<group>"; };
 		05596C162E1971440001384E /* ALParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ALParser.swift; sourceTree = "<group>"; };
 		056B2FB72E0A4F52004E0EFC /* ArisiaScript.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ArisiaScript.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		05A6F2662E1AB2EA005A41E5 /* UnitTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UnitTest; sourceTree = BUILT_PRODUCTS_DIR; };
+		05A6F2722E1AB329005A41E5 /* ArisiaScript.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ArisiaScript.xcframework; path = ../../../Library/Frameworks/ArisiaScript.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -49,6 +70,11 @@
 		056B2FB92E0A4F52004E0EFC /* ArisiaScript_macOS */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = ArisiaScript_macOS;
+			sourceTree = "<group>";
+		};
+		05A6F2672E1AB2EA005A41E5 /* UnitTest */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = UnitTest;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -70,6 +96,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		05A6F2632E1AB2EA005A41E5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -84,6 +117,7 @@
 		05596BF82E196BB90001384E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				05A6F2722E1AB329005A41E5 /* ArisiaScript.xcframework */,
 				05596BF92E196BB90001384E /* MultiDataKit.xcframework */,
 			);
 			name = Frameworks;
@@ -103,6 +137,7 @@
 				051A82BA2E196A54004A9C4B /* ArisiaScript_iOS */,
 				056B2FB92E0A4F52004E0EFC /* ArisiaScript_macOS */,
 				058859282E0A4FA700DF6555 /* Source */,
+				05A6F2612E1AB28E005A41E5 /* Test */,
 				05596BF82E196BB90001384E /* Frameworks */,
 				056B2FB82E0A4F52004E0EFC /* Products */,
 			);
@@ -113,6 +148,7 @@
 			children = (
 				056B2FB72E0A4F52004E0EFC /* ArisiaScript.framework */,
 				051A82B92E196A54004A9C4B /* ArisiaScript.framework */,
+				05A6F2662E1AB2EA005A41E5 /* UnitTest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -125,6 +161,15 @@
 			);
 			name = Source;
 			path = ../Source;
+			sourceTree = "<group>";
+		};
+		05A6F2612E1AB28E005A41E5 /* Test */ = {
+			isa = PBXGroup;
+			children = (
+				05A6F2672E1AB2EA005A41E5 /* UnitTest */,
+			);
+			name = Test;
+			path = ../Test;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -214,6 +259,29 @@
 			productReference = 056B2FB72E0A4F52004E0EFC /* ArisiaScript.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		05A6F2652E1AB2EA005A41E5 /* UnitTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 05A6F26A2E1AB2EA005A41E5 /* Build configuration list for PBXNativeTarget "UnitTest" */;
+			buildPhases = (
+				05A6F2622E1AB2EA005A41E5 /* Sources */,
+				05A6F2632E1AB2EA005A41E5 /* Frameworks */,
+				05A6F2642E1AB2EA005A41E5 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				05A6F26E2E1AB2FB005A41E5 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				05A6F2672E1AB2EA005A41E5 /* UnitTest */,
+			);
+			name = UnitTest;
+			packageProductDependencies = (
+			);
+			productName = UnitTest;
+			productReference = 05A6F2662E1AB2EA005A41E5 /* UnitTest */;
+			productType = "com.apple.product-type.tool";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -231,6 +299,9 @@
 						CreatedOnToolsVersion = 16.4;
 					};
 					056B2FB62E0A4F52004E0EFC = {
+						CreatedOnToolsVersion = 16.4;
+					};
+					05A6F2652E1AB2EA005A41E5 = {
 						CreatedOnToolsVersion = 16.4;
 					};
 				};
@@ -252,6 +323,7 @@
 				056B2FB62E0A4F52004E0EFC /* ArisiaScript_macOS */,
 				051A82B82E196A54004A9C4B /* ArisiaScript_iOS */,
 				05596BF02E196B090001384E /* Install */,
+				05A6F2652E1AB2EA005A41E5 /* UnitTest */,
 			);
 		};
 /* End PBXProject section */
@@ -292,6 +364,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		05A6F2622E1AB2EA005A41E5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -304,6 +383,11 @@
 			isa = PBXTargetDependency;
 			target = 056B2FB62E0A4F52004E0EFC /* ArisiaScript_macOS */;
 			targetProxy = 05596BF62E196B140001384E /* PBXContainerItemProxy */;
+		};
+		05A6F26E2E1AB2FB005A41E5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 05596BF02E196B090001384E /* Install */;
+			targetProxy = 05A6F26D2E1AB2FB005A41E5 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -598,6 +682,28 @@
 			};
 			name = Release;
 		};
+		05A6F26B2E1AB2EA005A41E5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = TR2DNF3P93;
+				ENABLE_HARDENED_RUNTIME = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		05A6F26C2E1AB2EA005A41E5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = TR2DNF3P93;
+				ENABLE_HARDENED_RUNTIME = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -633,6 +739,15 @@
 			buildConfigurations = (
 				056B2FC12E0A4F52004E0EFC /* Debug */,
 				056B2FC22E0A4F52004E0EFC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		05A6F26A2E1AB2EA005A41E5 /* Build configuration list for PBXNativeTarget "UnitTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				05A6F26B2E1AB2EA005A41E5 /* Debug */,
+				05A6F26C2E1AB2EA005A41E5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
