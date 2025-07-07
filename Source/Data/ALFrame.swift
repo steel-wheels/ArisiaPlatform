@@ -24,6 +24,8 @@ public class ALFrame
                 mSlots = [:]
         }
 
+        public var slots: Dictionary<String, ALFrameValue> { get { return mSlots }}
+
         public func set(slotName name: String, value val: ALFrameValue) {
                 mSlots[name] = val
         }

@@ -1,6 +1,6 @@
 /*
- * @file ALParser.swift
- * @description Define ALParser class
+ * @file ALFrameParser.swift
+ * @description Define ALFrameParser class
  * @par Copyright
  *   Copyright (C) 2025 Steel Wheels Project
  */
@@ -8,7 +8,7 @@
 import MultiDataKit
 import Foundation
 
-public class ALParser
+public class ALFrameParser
 {
         public func parse(string str: String) -> Result<ALFrame, NSError>
         {
