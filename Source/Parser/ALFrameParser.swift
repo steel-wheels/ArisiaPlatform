@@ -10,6 +10,10 @@ import Foundation
 
 public class ALFrameParser
 {
+        public init() {
+                
+        }
+
         public func parse(string str: String) -> Result<ALFrame, NSError>
         {
                 let stream = MIStringStream(string: str)
