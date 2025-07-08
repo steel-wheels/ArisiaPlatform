@@ -13,31 +13,32 @@ public extension ALFrame
         func dump(_ indent: Int = 0) {
                 printIndent(indent) ; dump(string: "{\n")
 
-                for (name, value) in self.slots {
-                        printIndent(indent + 1)
-                        dump(string: name + ": ")
+                for name in self.slots.keys.sorted() {
+                        if let value = self.value(slotName: name) {
+                                printIndent(indent + 1)
+                                dump(string: name + ": ")
 
-                        switch value {
-                        case .value(let val):
-                                dump(string: val.toString())
-                        case .frame(let child):
-                                child.dump(indent + 1)
-                        case .path(let paths):
-                                var is1stpath = true
-                                for path in paths {
-                                        if is1stpath {
+                                switch value {
+                                case .value(let val):
+                                        dump(string: val.toString())
+                                case .frame(let child):
+                                        child.dump(indent + 1)
+                                case .path(let paths):
+                                        var is1stpath = true
+                                        for path in paths {
+                                                if is1stpath {
+                                                        is1stpath = false
+                                                } else {
+                                                        dump(string: ".")
+                                                }
+                                                dump(string: path)
                                                 is1stpath = false
-                                        } else {
-                                                dump(string: ".")
                                         }
-                                        dump(string: path)
-                                        is1stpath = false
+                                case .text(let str):
+                                        dump(string: "%{" + str + "}%")
                                 }
-                        case .text(let str):
-                                dump(string: "%{" + str + "}%")
+                                dump(string: "\n")
                         }
-
-                        dump(string: "\n")
                 }
 
                 printIndent(indent) ; dump(string: "}\n")

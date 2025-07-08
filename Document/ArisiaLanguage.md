@@ -102,8 +102,7 @@ key_object_list
     ;
 
 simple_literal
-    : CHARACTER
-    | STRING
+    : STRING
     | INTEGER
     | REAL
     | TRUE

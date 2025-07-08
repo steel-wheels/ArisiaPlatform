@@ -12,7 +12,24 @@ import Foundation
 public func parserTest() -> Bool
 {
         var result = true
-        result = testParser(script: "{}") && result
+
+        let script0 = "{}"
+        let script1 =     "{\n"
+                        + " a : 10\n"
+                        + " b : -10\n"
+                        + " c : -12.3\n"
+                        + " d : \"string\"\n"
+                        + " e : true\n"
+                        + " f : false\n"
+                        + " g : nil\n"
+                        + "}\n"
+        let script2 =    "{\n"
+                        + " a: p0\n"
+                        + " b: p0.p1\n"
+                        + "}"
+        result = testParser(script: script0) && result
+        result = testParser(script: script1) && result
+        result = testParser(script: script2) && result
         return result
 }
 

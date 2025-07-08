@@ -8,10 +8,12 @@
 import MultiDataKit
 import Foundation
 
+let DO_DEBUG: Bool = false
+
 public class ALFrameParser
 {
         public init() {
-                
+
         }
 
         public func parse(string str: String) -> Result<ALFrame, NSError>
@@ -27,12 +29,22 @@ public class ALFrameParser
 
         private func parse(tokens: Array<MIToken>) -> Result<ALFrame, NSError>
         {
+                #if DO_DEBUG
+                print("Token {")
+                for token in tokens {
+                        print(token.toString())
+                }
+                print("}")
+                #endif
                 var index: Int = 0
                 return parseFrame(index: &index, tokens: tokens)
         }
 
         private func parseFrame(index: inout Int, tokens: Array<MIToken>) -> Result<ALFrame, NSError>
         {
+                #if DO_DEBUG
+                print("(\(#function))")
+                #endif
                 if let err = requireSymbol(index: &index, symbol: "{", tokens: tokens) {
                         return .failure(err)
                 }
@@ -40,10 +52,11 @@ public class ALFrameParser
                 let newframe = ALFrame()
                 while(index < tokens.count) {
                         if tokens[index].isSymbol(c: "}") {
+                                index += 1 // for last "}"
                                 break
                         } else {
                                 switch parseSlot(index: &index, tokens: tokens) {
-                                case .success((let  name, let val)):
+                                case .success((let name, let val)):
                                         newframe.set(slotName: name, value: val)
                                 case .failure(let err):
                                         return .failure(err)
@@ -51,12 +64,15 @@ public class ALFrameParser
                         }
                 }
 
-                index += 1 // for last "}"
                 return .success(newframe)
         }
 
         private func parseSlot(index: inout Int, tokens: Array<MIToken>) -> Result<(String, ALFrameValue), NSError>
         {
+                #if DO_DEBUG
+                print("(\(#function))")
+                #endif
+
                 // get identifier
                 let ident: String
                 switch requireIdentifier(index: &index, tokens: tokens) {
@@ -85,6 +101,10 @@ public class ALFrameParser
 
         private func parseValue(index: inout Int, tokens: Array<MIToken>) -> Result<ALFrameValue, NSError>
         {
+                #if DO_DEBUG
+                print("(\(#function))")
+                #endif
+
                 if let err = checkIndex(index: index, tokens: tokens) {
                         return .failure(err)
                 }
@@ -92,15 +112,21 @@ public class ALFrameParser
                 switch tokens[index].value {
                 case .bool(let val):
                         value = .value(MIValue(booleanValue: val))
+                        index += 1
                 case .string(let val):
                         value = .value(MIValue(stringValue: val))
+                        index += 1
                 case .uint(let val):
                         value = .value(MIValue(unsignedIntValue: val))
+                        index += 1
                 case .int(let val):
                         value = .value(MIValue(signedIntValue: val))
+                        index += 1
                 case .float(let val):
                         value = .value(MIValue(floatValue: val))
+                        index += 1
                 case .identifier(let ident):
+                        index += 1
                         switch ident {
                         case "nil":
                                 value = .value(MIValue())
@@ -113,6 +139,7 @@ public class ALFrameParser
                                 }
                         }
                 case .comment(_):
+                        index += 1
                         value = .value(MIValue())
                 case .symbol(let c):
                         let err = MIError.parseError(message: "Unexpected character: \(c)",
@@ -139,14 +166,14 @@ public class ALFrameParser
                         if let err = checkIndex(index: index, tokens: tokens) {
                                 return .failure(err)
                         }
-                        switch tokens[index+1].value {
+                        switch tokens[index].value {
                         case .symbol(let c):
                                 if(c == "."){
                                         index += 1
                                         if let err = checkIndex(index: index, tokens: tokens) {
                                                 return .failure(err)
                                         }
-                                        switch tokens[index+1].value {
+                                        switch tokens[index].value {
                                         case .identifier(let ident):
                                                 result.append(ident)
                                                 index += 1
