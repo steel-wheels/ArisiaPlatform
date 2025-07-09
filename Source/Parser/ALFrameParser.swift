@@ -8,8 +8,6 @@
 import MultiDataKit
 import Foundation
 
-let DO_DEBUG: Bool = false
-
 public class ALFrameParser
 {
         public init() {
@@ -29,7 +27,7 @@ public class ALFrameParser
 
         private func parse(tokens: Array<MIToken>) -> Result<ALFrame, NSError>
         {
-                #if DO_DEBUG
+                #if false
                 print("Token {")
                 for token in tokens {
                         print(token.toString())
@@ -42,7 +40,7 @@ public class ALFrameParser
 
         private func parseFrame(index: inout Int, tokens: Array<MIToken>) -> Result<ALFrame, NSError>
         {
-                #if DO_DEBUG
+                #if false
                 print("(\(#function))")
                 #endif
                 if let err = requireSymbol(index: &index, symbol: "{", tokens: tokens) {
@@ -69,7 +67,7 @@ public class ALFrameParser
 
         private func parseSlot(index: inout Int, tokens: Array<MIToken>) -> Result<(String, ALFrameValue), NSError>
         {
-                #if DO_DEBUG
+                #if false
                 print("(\(#function))")
                 #endif
 
@@ -101,7 +99,7 @@ public class ALFrameParser
 
         private func parseValue(index: inout Int, tokens: Array<MIToken>) -> Result<ALFrameValue, NSError>
         {
-                #if DO_DEBUG
+                #if false
                 print("(\(#function))")
                 #endif
 
@@ -170,6 +168,10 @@ public class ALFrameParser
 
         private func parsePath(index: inout Int, paths path: Array<String>, tokens: Array<MIToken>) -> Result<Array<String>, NSError>
         {
+                #if false
+                print("(\(#function))")
+                #endif
+
                 var result: Array<String> = path
 
                 var docont = true
@@ -207,7 +209,16 @@ public class ALFrameParser
         private func parseArrayValue(index: inout Int, tokens: Array<MIToken>) -> Result<Array<ALFrameValue>, NSError>
         {
                 var result: Array<ALFrameValue> = []
-                while requireSymbol(index: &index, symbol: "]", tokens: tokens) == nil {
+                var is1st = true
+                while requireSymbol(index: &index, symbol: "]", tokens: tokens) != nil {
+                        if is1st {
+                                is1st = false
+                        } else {
+                                if let err = requireSymbol(index: &index, symbol: ",", tokens: tokens) {
+                                        return .failure(err)
+                                }
+                        }
+
                         switch parseValue(index: &index, tokens: tokens){
                         case .success(let val):
                                 result.append(val)

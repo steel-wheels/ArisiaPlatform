@@ -77,7 +77,6 @@ object
     | path_expression
     | frame
     | array
-    | dictionary
     | event_function
     ;
 
@@ -89,16 +88,6 @@ object_list_opt
 object_list:
     : object
     | object_list ',' object
-    ;
-
-key_object_list_opt
-    : /* empty */
-    | key_object_list
-    ;
-
-key_object_list
-    : STRING ':' object
-    | key_object_list STRING ':' object
     ;
 
 simple_literal
@@ -117,10 +106,6 @@ path_expression
 
 array
     : '[' object_list_opt ']'
-    ;
-
-dictionary
-    : '[' key_object_list_opt ']'
     ;
 
 event_function

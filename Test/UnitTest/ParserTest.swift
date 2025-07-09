@@ -26,6 +26,7 @@ public func parserTest() -> Bool
         let script2 =    "{\n"
                         + " a: p0\n"
                         + " b: p0.p1\n"
+                        + " c: [1, 2]\n"
                         + "}"
         result = testParser(script: script0) && result
         result = testParser(script: script1) && result
