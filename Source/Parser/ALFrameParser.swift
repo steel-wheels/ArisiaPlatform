@@ -142,9 +142,20 @@ public class ALFrameParser
                         index += 1
                         value = .value(MIValue())
                 case .symbol(let c):
-                        let err = MIError.parseError(message: "Unexpected character: \(c)",
-                                                     line: MIToken.lastLine(tokens: tokens))
-                        return .failure(err)
+                        switch c {
+                        case "[":
+                                index += 1
+                                switch parseArrayValue(index: &index, tokens: tokens){
+                                case .success(let vals):
+                                        value = .array(vals)
+                                case .failure(let err):
+                                        return .failure(err)
+                                }
+                        default:
+                                let err = MIError.parseError(message: "Unexpected symbol: \(c)",
+                                                             line: MIToken.lastLine(tokens: tokens))
+                                return .failure(err)
+                        }
                 case .text(let text):
                         let err = MIError.parseError(message: "Unexpected text \"\(text)\"",
                                                      line: MIToken.lastLine(tokens: tokens))
@@ -188,6 +199,20 @@ public class ALFrameParser
                                 }
                         default:
                                 docont = false
+                        }
+                }
+                return .success(result)
+        }
+
+        private func parseArrayValue(index: inout Int, tokens: Array<MIToken>) -> Result<Array<ALFrameValue>, NSError>
+        {
+                var result: Array<ALFrameValue> = []
+                while requireSymbol(index: &index, symbol: "]", tokens: tokens) == nil {
+                        switch parseValue(index: &index, tokens: tokens){
+                        case .success(let val):
+                                result.append(val)
+                        case .failure(let err):
+                                return .failure(err)
                         }
                 }
                 return .success(result)

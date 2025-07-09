@@ -10,10 +10,11 @@ import Foundation
 
 public enum ALFrameValue
 {
-        case value(MIValue)
+        case value(MIValue)                     // scalar value only
         case text(String)
         case frame(ALFrame)
         case path(Array<String>)
+        case array(Array<ALFrameValue>)
 }
 
 public class ALFrame

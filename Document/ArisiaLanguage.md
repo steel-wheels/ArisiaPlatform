@@ -86,7 +86,7 @@ object_list_opt
     | object_list
     ;
 
-object_lust:
+object_list:
     : object
     | object_list ',' object
     ;
@@ -120,7 +120,7 @@ array
     ;
 
 dictionary
-    : '[' key_object_lust_opt ']'
+    : '[' key_object_list_opt ']'
     ;
 
 event_function
