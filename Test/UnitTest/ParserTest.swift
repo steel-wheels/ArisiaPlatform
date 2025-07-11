@@ -43,7 +43,7 @@ private func testParser(script scr: String) -> Bool
         switch parser.parse(string: scr) {
         case .success(let frame):
                 print("[Parse result]")
-                frame.dump()
+                print(frame.encode())
                 result = true
         case .failure(let err):
                 print("[Error] " + MIError.errorToString(error: err))

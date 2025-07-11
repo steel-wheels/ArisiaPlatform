@@ -13,8 +13,8 @@
 		05596C022E196C030001384E /* ALFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05596C002E196C020001384E /* ALFrame.swift */; };
 		05596C172E1971440001384E /* ALFrameParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05596C162E1971440001384E /* ALFrameParser.swift */; };
 		05596C182E1971440001384E /* ALFrameParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05596C162E1971440001384E /* ALFrameParser.swift */; };
-		05A6F2762E1AB6A5005A41E5 /* ALFrameDumper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A6F2752E1AB6A5005A41E5 /* ALFrameDumper.swift */; };
-		05A6F2772E1AB6A5005A41E5 /* ALFrameDumper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A6F2752E1AB6A5005A41E5 /* ALFrameDumper.swift */; };
+		05A6F2762E1AB6A5005A41E5 /* ALFrameEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A6F2752E1AB6A5005A41E5 /* ALFrameEncoder.swift */; };
+		05A6F2772E1AB6A5005A41E5 /* ALFrameEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A6F2752E1AB6A5005A41E5 /* ALFrameEncoder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,7 +61,7 @@
 		056B2FB72E0A4F52004E0EFC /* ArisiaScript.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ArisiaScript.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		05A6F2662E1AB2EA005A41E5 /* UnitTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UnitTest; sourceTree = BUILT_PRODUCTS_DIR; };
 		05A6F2722E1AB329005A41E5 /* ArisiaScript.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ArisiaScript.xcframework; path = ../../../Library/Frameworks/ArisiaScript.xcframework; sourceTree = "<group>"; };
-		05A6F2752E1AB6A5005A41E5 /* ALFrameDumper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ALFrameDumper.swift; sourceTree = "<group>"; };
+		05A6F2752E1AB6A5005A41E5 /* ALFrameEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ALFrameEncoder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -130,7 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				05596C162E1971440001384E /* ALFrameParser.swift */,
-				05A6F2752E1AB6A5005A41E5 /* ALFrameDumper.swift */,
+				05A6F2752E1AB6A5005A41E5 /* ALFrameEncoder.swift */,
 			);
 			path = Parser;
 			sourceTree = "<group>";
@@ -356,7 +356,7 @@
 			files = (
 				05596C172E1971440001384E /* ALFrameParser.swift in Sources */,
 				05596C022E196C030001384E /* ALFrame.swift in Sources */,
-				05A6F2772E1AB6A5005A41E5 /* ALFrameDumper.swift in Sources */,
+				05A6F2772E1AB6A5005A41E5 /* ALFrameEncoder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,7 +366,7 @@
 			files = (
 				05596C182E1971440001384E /* ALFrameParser.swift in Sources */,
 				05596C012E196C020001384E /* ALFrame.swift in Sources */,
-				05A6F2762E1AB6A5005A41E5 /* ALFrameDumper.swift in Sources */,
+				05A6F2762E1AB6A5005A41E5 /* ALFrameEncoder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
