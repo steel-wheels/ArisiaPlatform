@@ -116,8 +116,11 @@ event_function
 
 
 # References
-
 * The NewtonScript Programming Language: https://www.newted.org/download/manuals/NewtonScriptProgramLanguage.pdf
+
+# Related links
+* [ArisiaCard](https://github.com/steel-wheels/ArisiaCard): The application which supports ArisiaStack.
+* [Steel Wheels Project](https://github.com/steel-wheels/Project): The developper's web site
 
 
 
