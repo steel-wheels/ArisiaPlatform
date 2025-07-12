@@ -10,15 +10,16 @@ import Foundation
 
 public class ALStack
 {
-        public struct FrameItem {
-                var file:       URL
-                var frame:      ALFrame
-        }
+        private var mFrameURLs:     Array<URL>
 
-        private var mFrams:     Array<FrameItem>
+        public var frameURLs: Array<URL> { get{ return mFrameURLs }}
 
         public init() {
-                mFrams = []
+                mFrameURLs = []
+        }
+
+        public func set(frameURLs urls: Array<URL>){
+                mFrameURLs = urls
         }
 }
 

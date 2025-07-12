@@ -1,6 +1,6 @@
 /*
- * @file ParserTest.swift
- * @description Define ParserTest function
+ * @file FrameParserTest.swift
+ * @description Define FrameParserTest function
  * @par Copyright
  *   Copyright (C) 2025 Steel Wheels Project
  */
@@ -9,7 +9,7 @@ import ArisiaScript
 import MultiDataKit
 import Foundation
 
-public func parserTest() -> Bool
+public func frameParserTest() -> Bool
 {
         var result = true
 
