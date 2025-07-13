@@ -11,19 +11,19 @@ import Foundation
 
 public func stackParserTest() -> Bool
 {
-        let script0 = "{\n"
-                    + "  scripts: [\"a\"]\n"
-                    + "}\n"
-        let result0 = testParser(script: script0)
+        guard let resdir = FileManager.default.resourceDirectory(forClass: ALStack.self) else {
+                print("[Error] No resource directory")
+                return false
+        }
+        let pkgdir = resdir.appending(path: "Tests/Hello.astack")
+        let result0 = testParser(packageDirectory: pkgdir)
         return result0
 }
 
-private func testParser(script scr: String) -> Bool
+private func testParser(packageDirectory pkdir: URL) -> Bool
 {
-        print("[script] \(scr)")
-
         let result: Bool
-        switch ALStackLoader.load(script: scr) {
+        switch ALStackLoader.load(packageDirectory: pkdir) {
         case .success(let stack):
                 print("[Parse result]")
                 print(stack.encode())

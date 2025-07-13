@@ -19,7 +19,7 @@ public extension ALStack
 
                 result += indentString(indent: indent+1) + "acripts: [\n"
 
-                let paths = self.frameURLs.map { $0.path }
+                let paths = self.frameScriptURLs.map { $0.path }
                 let path  = paths.joined(separator: ", ")
                 result += indentString(indent: indent+2) +  path + "\n"
 

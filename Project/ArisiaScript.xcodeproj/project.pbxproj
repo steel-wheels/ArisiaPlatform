@@ -13,6 +13,8 @@
 		0505BFDC2E226ADD0023EE05 /* ALStackLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0505BFDA2E226ADD0023EE05 /* ALStackLoader.swift */; };
 		0505BFE22E22A0F90023EE05 /* ALStackEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0505BFE12E22A0F90023EE05 /* ALStackEncoder.swift */; };
 		0505BFE32E22A0F90023EE05 /* ALStackEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0505BFE12E22A0F90023EE05 /* ALStackEncoder.swift */; };
+		055037262E232C8A00670753 /* Hello.astack in CopyFiles */ = {isa = PBXBuildFile; fileRef = 055037252E232C6200670753 /* Hello.astack */; };
+		055037282E232EED00670753 /* Hello.astack in CopyFiles */ = {isa = PBXBuildFile; fileRef = 055037252E232C6200670753 /* Hello.astack */; };
 		05596BFA2E196BB90001384E /* MultiDataKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05596BF92E196BB90001384E /* MultiDataKit.xcframework */; };
 		05596BFD2E196BCF0001384E /* MultiDataKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05596BF92E196BB90001384E /* MultiDataKit.xcframework */; };
 		05596C012E196C020001384E /* ALFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05596C002E196C020001384E /* ALFrame.swift */; };
@@ -48,6 +50,26 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		055037202E232B5700670753 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Tests;
+			dstSubfolderSpec = 7;
+			files = (
+				055037262E232C8A00670753 /* Hello.astack in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		055037272E232EE300670753 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Tests;
+			dstSubfolderSpec = 7;
+			files = (
+				055037282E232EED00670753 /* Hello.astack in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		05A6F2642E1AB2EA005A41E5 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -64,6 +86,7 @@
 		0505BFDA2E226ADD0023EE05 /* ALStackLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ALStackLoader.swift; sourceTree = "<group>"; };
 		0505BFE12E22A0F90023EE05 /* ALStackEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ALStackEncoder.swift; sourceTree = "<group>"; };
 		051A82B92E196A54004A9C4B /* ArisiaScript.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ArisiaScript.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		055037252E232C6200670753 /* Hello.astack */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Hello.astack; sourceTree = "<group>"; };
 		05596BF92E196BB90001384E /* MultiDataKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MultiDataKit.xcframework; path = ../../../Library/Frameworks/MultiDataKit.xcframework; sourceTree = "<group>"; };
 		05596C002E196C020001384E /* ALFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ALFrame.swift; sourceTree = "<group>"; };
 		05596C162E1971440001384E /* ALFrameParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ALFrameParser.swift; sourceTree = "<group>"; };
@@ -128,6 +151,23 @@
 			path = Frame;
 			sourceTree = "<group>";
 		};
+		055037232E232BAE00670753 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				055037242E232C0E00670753 /* Test */,
+			);
+			name = Resource;
+			path = ../Resource;
+			sourceTree = "<group>";
+		};
+		055037242E232C0E00670753 /* Test */ = {
+			isa = PBXGroup;
+			children = (
+				055037252E232C6200670753 /* Hello.astack */,
+			);
+			path = Test;
+			sourceTree = "<group>";
+		};
 		05596BF82E196BB90001384E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -153,6 +193,7 @@
 				051A82BA2E196A54004A9C4B /* ArisiaScript_iOS */,
 				056B2FB92E0A4F52004E0EFC /* ArisiaScript_macOS */,
 				058859282E0A4FA700DF6555 /* Source */,
+				055037232E232BAE00670753 /* Resource */,
 				05A6F2612E1AB28E005A41E5 /* Test */,
 				05596BF82E196BB90001384E /* Frameworks */,
 				056B2FB82E0A4F52004E0EFC /* Products */,
@@ -237,6 +278,7 @@
 				051A82B52E196A54004A9C4B /* Sources */,
 				051A82B62E196A54004A9C4B /* Frameworks */,
 				051A82B72E196A54004A9C4B /* Resources */,
+				055037272E232EE300670753 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -260,6 +302,7 @@
 				056B2FB32E0A4F52004E0EFC /* Sources */,
 				056B2FB42E0A4F52004E0EFC /* Frameworks */,
 				056B2FB52E0A4F52004E0EFC /* Resources */,
+				055037202E232B5700670753 /* CopyFiles */,
 			);
 			buildRules = (
 			);

@@ -10,16 +10,19 @@ import Foundation
 
 public class ALStack
 {
-        private var mFrameURLs:     Array<URL>
+        private var mPackageDirectory:          URL
+        private var mFrameScriptURLs:           Array<URL>
 
-        public var frameURLs: Array<URL> { get{ return mFrameURLs }}
+        public var frameScriptURLs: Array<URL> { get{ return mFrameScriptURLs }}
 
-        public init() {
-                mFrameURLs = []
+        public init(packageDirectory pkgdir: URL) {
+                mPackageDirectory       = pkgdir
+                mFrameScriptURLs        = []
         }
 
-        public func set(frameURLs urls: Array<URL>){
-                mFrameURLs = urls
+        public func add(frameScriptPath path: String) {
+                let path = mPackageDirectory.appending(path: path)
+                mFrameScriptURLs.append(path)
         }
 }
 
