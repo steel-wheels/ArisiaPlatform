@@ -38,15 +38,23 @@ public class ALStack
                         return .success(frame)
                 }
                 /* allocate frame */
-                let text: String
+                let script: String
                 do {
-                        text = try String(contentsOf: url, encoding: .utf8)
+                        script = try String(contentsOf: url, encoding: .utf8)
                 } catch {
                         let err = MIError.error(errorCode: .fileError, message: "Failed to load script from \(url.path)")
                         return .failure(err)
                 }
-                NSLog("(\(#function): loaded text: \(text)")
-                return .success(ALFrame())
+                //NSLog("(\(#function): loaded text: \(text)")
+                let parser = ALFrameParser()
+                switch parser.parse(string: script) {
+                case .success(let frame):
+                        // save the loaded frame
+                        mFrameTable[url.path] = frame
+                        return .success(frame)
+                case .failure(let err):
+                        return .failure(err)
+                }
         }
 }
 
