@@ -1,6 +1,6 @@
 # Introduction
 
-This document describes about the ArisiaScript language.
+This document describes about the ArisiaScript programming language.
 The ArisiaScript is frame oriented language to declare hierarchical GUI components.
 
 This language borrows the concept of the *frame* from [The Newton Script Programming Language](https://www.newted.org/download/manuals/NewtonScriptProgramLanguage.pdf). The Newton Script supports Pascal like syntax, but the ArisiaScript supports TypeScript syntax.

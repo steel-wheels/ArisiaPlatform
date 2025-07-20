@@ -5,13 +5,13 @@
  *   Copyright (C) 2025 Steel Wheels Project
  */
 
-import ArisiaScript
+import ArisiaPlatform
 import MultiDataKit
 import Foundation
 
 public func stackParserTest() -> Bool
 {
-        guard let resdir = FileManager.default.resourceDirectory(forClass: ALStack.self) else {
+        guard let resdir = FileManager.default.resourceDirectory(forClass: ASStack.self) else {
                 print("[Error] No resource directory")
                 return false
         }
@@ -23,7 +23,7 @@ public func stackParserTest() -> Bool
 private func testParser(packageDirectory pkdir: URL) -> Bool
 {
         let result: Bool
-        switch ALStackLoader.load(packageDirectory: pkdir) {
+        switch ASStackLoader.load(packageDirectory: pkdir) {
         case .success(let stack):
                 print("[Parse result]")
                 print(stack.encode())

@@ -1,6 +1,6 @@
 /*
- * @file ALFrameDumper.swift
- * @description Define ALFrameEncoder class
+ * @file ASFrameDumper.swift
+ * @description Define ASFrameEncoder class
  * @par Copyright
  *   Copyright (C) 2025 Steel Wheels Project
  */
@@ -8,7 +8,7 @@
 import MultiDataKit
 import Foundation
 
-public extension ALFrame
+public extension ASFrame
 {
         func encode() -> String {
                 return encode(indent: 0)
@@ -28,7 +28,7 @@ public extension ALFrame
                 return result
         }
 
-        private func encode(value: ALFrameValue,  indent: Int) -> String {
+        private func encode(value: ASFrameValue,  indent: Int) -> String {
                 let result: String
                 switch value {
                 case .value(let val):

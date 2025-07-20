@@ -1,6 +1,6 @@
 /*
- * @file ALStack.swift
- * @description Define ALStack class
+ * @file ASStack.swift
+ * @description Define ASStack class
  * @par Copyright
  *   Copyright (C) 2025 Steel Wheels Project
  */
@@ -8,11 +8,11 @@
 import MultiDataKit
 import Foundation
 
-public class ALStack
+public class ASStack
 {
         private var mPackageDirectory:          URL
         private var mFrameScriptURLs:           Array<URL>
-        private var mFrameTable:                Dictionary<String, ALFrame>
+        private var mFrameTable:                Dictionary<String, ASFrame>
 
         public var frameScriptURLs: Array<URL> { get{ return mFrameScriptURLs }}
 
@@ -27,7 +27,7 @@ public class ALStack
                 mFrameScriptURLs.append(path)
         }
 
-        public func loadFrame(at index: Int) -> Result<ALFrame, NSError> {
+        public func loadFrame(at index: Int) -> Result<ASFrame, NSError> {
                 guard index < mFrameScriptURLs.count else {
                         let err = MIError.error(errorCode: .fileError, message: "No frame at \(index)")
                         return .failure(err)
@@ -46,7 +46,7 @@ public class ALStack
                         return .failure(err)
                 }
                 //NSLog("(\(#function): loaded text: \(text)")
-                let parser = ALFrameParser()
+                let parser = ASFrameParser()
                 switch parser.parse(string: script) {
                 case .success(let frame):
                         // save the loaded frame

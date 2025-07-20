@@ -1,6 +1,6 @@
 /*
- * @file ALStackEncoder.swift
- * @description Define ALStackEncoder class
+ * @file ASStackEncoder.swift
+ * @description Define ASStackEncoder class
  * @par Copyright
  *   Copyright (C) 2025 Steel Wheels Project
  */
@@ -8,7 +8,7 @@
 import MultiDataKit
 import Foundation
 
-public extension ALStack
+public extension ASStack
 {
         func encode() -> String {
                 return encode(indent: 0)

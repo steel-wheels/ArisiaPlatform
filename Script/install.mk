@@ -1,6 +1,6 @@
 # install_xc.mk
 
-PROJECT_NAME	?= ArisiaScript
+PROJECT_NAME	?= ArisiaPlatform
 DERIVED_BASE	= $(HOME)/build/derived-data/
 PRODUCT_PATH	= Build/Products/Release
 

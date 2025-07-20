@@ -5,7 +5,7 @@
  *   Copyright (C) 2025 Steel Wheels Project
  */
 
-import ArisiaScript
+import ArisiaPlatform
 import MultiDataKit
 import Foundation
 
@@ -38,7 +38,7 @@ private func testParser(script scr: String) -> Bool
 {
         print("[script] \(scr)")
 
-        let parser = ALFrameParser()
+        let parser = ASFrameParser()
         let result: Bool
         switch parser.parse(string: scr) {
         case .success(let frame):

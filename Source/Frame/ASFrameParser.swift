@@ -1,6 +1,6 @@
 /*
- * @file ALFrameParser.swift
- * @description Define ALFrameParser class
+ * @file ASFrameParser.swift
+ * @description Define ASFrameParser class
  * @par Copyright
  *   Copyright (C) 2025 Steel Wheels Project
  */
@@ -8,13 +8,13 @@
 import MultiDataKit
 import Foundation
 
-public class ALFrameParser
+public class ASFrameParser
 {
         public init() {
 
         }
 
-        public func parse(string str: String) -> Result<ALFrame, NSError>
+        public func parse(string str: String) -> Result<ASFrame, NSError>
         {
                 let stream = MIStringStream(string: str)
                 switch MITokenizer.tokenize(stream: stream) {
@@ -25,7 +25,7 @@ public class ALFrameParser
                 }
         }
 
-        private func parse(tokens: Array<MIToken>) -> Result<ALFrame, NSError>
+        private func parse(tokens: Array<MIToken>) -> Result<ASFrame, NSError>
         {
                 #if false
                 print("Token {")
@@ -38,7 +38,7 @@ public class ALFrameParser
                 return parseFrame(index: &index, tokens: tokens)
         }
 
-        private func parseFrame(index: inout Int, tokens: Array<MIToken>) -> Result<ALFrame, NSError>
+        private func parseFrame(index: inout Int, tokens: Array<MIToken>) -> Result<ASFrame, NSError>
         {
                 #if false
                 print("(\(#function))")
@@ -47,7 +47,7 @@ public class ALFrameParser
                         return .failure(err)
                 }
 
-                let newframe = ALFrame()
+                let newframe = ASFrame()
                 while(index < tokens.count) {
                         if tokens[index].isSymbol(c: "}") {
                                 index += 1 // for last "}"
@@ -65,7 +65,7 @@ public class ALFrameParser
                 return .success(newframe)
         }
 
-        private func parseSlot(index: inout Int, tokens: Array<MIToken>) -> Result<(String, ALFrameValue), NSError>
+        private func parseSlot(index: inout Int, tokens: Array<MIToken>) -> Result<(String, ASFrameValue), NSError>
         {
                 #if false
                 print("(\(#function))")
@@ -86,7 +86,7 @@ public class ALFrameParser
                 }
 
                 // get value
-                let value: ALFrameValue
+                let value: ASFrameValue
                 switch parseValue(index: &index, tokens: tokens) {
                 case .success(let val):
                         value = val
@@ -97,7 +97,7 @@ public class ALFrameParser
                 return .success((ident, value))
         }
 
-        private func parseValue(index: inout Int, tokens: Array<MIToken>) -> Result<ALFrameValue, NSError>
+        private func parseValue(index: inout Int, tokens: Array<MIToken>) -> Result<ASFrameValue, NSError>
         {
                 #if false
                 print("(\(#function))")
@@ -106,7 +106,7 @@ public class ALFrameParser
                 if let err = checkIndex(index: index, tokens: tokens) {
                         return .failure(err)
                 }
-                let value: ALFrameValue
+                let value: ASFrameValue
                 switch tokens[index].value {
                 case .bool(let val):
                         value = .value(MIValue(booleanValue: val))
@@ -206,9 +206,9 @@ public class ALFrameParser
                 return .success(result)
         }
 
-        private func parseArrayValue(index: inout Int, tokens: Array<MIToken>) -> Result<Array<ALFrameValue>, NSError>
+        private func parseArrayValue(index: inout Int, tokens: Array<MIToken>) -> Result<Array<ASFrameValue>, NSError>
         {
-                var result: Array<ALFrameValue> = []
+                var result: Array<ASFrameValue> = []
                 var is1st = true
                 while requireSymbol(index: &index, symbol: "]", tokens: tokens) != nil {
                         if is1st {

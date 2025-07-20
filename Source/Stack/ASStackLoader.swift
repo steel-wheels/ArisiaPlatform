@@ -1,6 +1,6 @@
 /*
- * @file ALStackLoader.swift
- * @description Define ALStackLoader class
+ * @file ASStackLoader.swift
+ * @description Define ASStackLoader class
  * @par Copyright
  *   Copyright (C) 2025 Steel Wheels Project
  */
@@ -8,38 +8,38 @@
 import MultiDataKit
 import Foundation
 
-public class ALStackLoader
+public class ASStackLoader
 {
         public static let ManifestFileName = "manifest.json"
 
-        public static func load(packageDirectory pkgdir: URL) -> Result<ALStack, NSError> {
+        public static func load(packageDirectory pkgdir: URL) -> Result<ASStack, NSError> {
                 /* load manifest file */
-                let mfile = pkgdir.appending(path: ALStackLoader.ManifestFileName)
+                let mfile = pkgdir.appending(path: ASStackLoader.ManifestFileName)
                 let script: String
                 do {
                         script = try String(contentsOf: mfile, encoding: .utf8)
                 } catch {
-                        let err = MIError.error(errorCode: .fileError, message: "Failed to load \(ALStackLoader.ManifestFileName) from \(mfile.path)")
+                        let err = MIError.error(errorCode: .fileError, message: "Failed to load \(ASStackLoader.ManifestFileName) from \(mfile.path)")
                         return .failure(err)
                 }
                 /* parse manifest file */
                 switch MIJsonFile.load(string: script) {
                 case .success(let value):
-                        return ALStackLoader.load(value: value, packageDir: pkgdir)
+                        return ASStackLoader.load(value: value, packageDir: pkgdir)
                 case .failure(let err):
                         return .failure(err)
                 }
         }
 
-        private static func load(value val: MIValue, packageDir pkgdir: URL) -> Result<ALStack, NSError> {
+        private static func load(value val: MIValue, packageDir pkgdir: URL) -> Result<ASStack, NSError> {
                 switch val.value {
                 case .dictionaryValue(let dict):
-                        let result = ALStack(packageDirectory: pkgdir)
+                        let result = ASStack(packageDirectory: pkgdir)
 
                         /* parse "scripts" section */
                         let scrfiles: Array<String>
                         if let scrval = dict["scripts"] {
-                                switch ALStackLoader.load(scripts: scrval) {
+                                switch ASStackLoader.load(scripts: scrval) {
                                 case .success(let files):
                                         scrfiles = files
                                 case .failure(let err):

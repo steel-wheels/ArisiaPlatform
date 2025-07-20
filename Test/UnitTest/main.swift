@@ -5,7 +5,7 @@
  *   Copyright (C) 2025 Steel Wheels Project
  */
 
-import ArisiaScript
+import ArisiaPlatform
 import Foundation
 
 func UnitTest() -> Void

@@ -1,4 +1,4 @@
-# ArisiaScript Framework
+# ArisiaPlatform  Framework
 The framework to defines [ArisiaScript Programming Language](./Document/ArisiaLanguage.md) and implements parser and code generator.
 
 ## Related links
