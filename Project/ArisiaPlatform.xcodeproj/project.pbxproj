@@ -13,6 +13,8 @@
 		0505BFDC2E226ADD0023EE05 /* ASStackLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0505BFDA2E226ADD0023EE05 /* ASStackLoader.swift */; };
 		0505BFE22E22A0F90023EE05 /* ASStackEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0505BFE12E22A0F90023EE05 /* ASStackEncoder.swift */; };
 		0505BFE32E22A0F90023EE05 /* ASStackEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0505BFE12E22A0F90023EE05 /* ASStackEncoder.swift */; };
+		051BC3D92E2DED6200BCACF1 /* ASFrameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051BC3D82E2DED6200BCACF1 /* ASFrameManager.swift */; };
+		051BC3DA2E2DED6200BCACF1 /* ASFrameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051BC3D82E2DED6200BCACF1 /* ASFrameManager.swift */; };
 		055037262E232C8A00670753 /* Hello.astack in CopyFiles */ = {isa = PBXBuildFile; fileRef = 055037252E232C6200670753 /* Hello.astack */; };
 		055037282E232EED00670753 /* Hello.astack in CopyFiles */ = {isa = PBXBuildFile; fileRef = 055037252E232C6200670753 /* Hello.astack */; };
 		05596BFA2E196BB90001384E /* MultiDataKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05596BF92E196BB90001384E /* MultiDataKit.xcframework */; };
@@ -116,6 +118,7 @@
 		0505BFDA2E226ADD0023EE05 /* ASStackLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASStackLoader.swift; sourceTree = "<group>"; };
 		0505BFE12E22A0F90023EE05 /* ASStackEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASStackEncoder.swift; sourceTree = "<group>"; };
 		051A82B92E196A54004A9C4B /* ArisiaPlatform.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ArisiaPlatform.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		051BC3D82E2DED6200BCACF1 /* ASFrameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASFrameManager.swift; sourceTree = "<group>"; };
 		055037252E232C6200670753 /* Hello.astack */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Hello.astack; sourceTree = "<group>"; };
 		05596BF92E196BB90001384E /* MultiDataKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MultiDataKit.xcframework; path = ../../../Library/Frameworks/MultiDataKit.xcframework; sourceTree = "<group>"; };
 		05596C002E196C020001384E /* ASFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASFrame.swift; sourceTree = "<group>"; };
@@ -185,6 +188,7 @@
 				05596C002E196C020001384E /* ASFrame.swift */,
 				05A6F2752E1AB6A5005A41E5 /* ASFrameEncoder.swift */,
 				05596C162E1971440001384E /* ASFrameParser.swift */,
+				051BC3D82E2DED6200BCACF1 /* ASFrameManager.swift */,
 			);
 			path = Frame;
 			sourceTree = "<group>";
@@ -473,6 +477,7 @@
 			files = (
 				0505BFC72E2268BE0023EE05 /* ASStack.swift in Sources */,
 				0505BFDB2E226ADD0023EE05 /* ASStackLoader.swift in Sources */,
+				051BC3D92E2DED6200BCACF1 /* ASFrameManager.swift in Sources */,
 				05596C172E1971440001384E /* ASFrameParser.swift in Sources */,
 				0505BFE32E22A0F90023EE05 /* ASStackEncoder.swift in Sources */,
 				05596C022E196C030001384E /* ASFrame.swift in Sources */,
@@ -487,6 +492,7 @@
 			files = (
 				0505BFC62E2268BE0023EE05 /* ASStack.swift in Sources */,
 				05596C182E1971440001384E /* ASFrameParser.swift in Sources */,
+				051BC3DA2E2DED6200BCACF1 /* ASFrameManager.swift in Sources */,
 				0505BFDC2E226ADD0023EE05 /* ASStackLoader.swift in Sources */,
 				05596C012E196C020001384E /* ASFrame.swift in Sources */,
 				0505BFE22E22A0F90023EE05 /* ASStackEncoder.swift in Sources */,

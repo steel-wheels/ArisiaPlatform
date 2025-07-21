@@ -16,7 +16,7 @@ import  UIKit
 
 public class ASDropView: MFDropView
 {
-        public typealias CallbackFunction = (_ frame: ASFrame) -> Void
+        public typealias CallbackFunction = (_ point: CGPoint, _ name: String, _ frame: ASFrame) -> Void
 
         public var droppingCallback: CallbackFunction? = nil
 
@@ -27,7 +27,7 @@ public class ASDropView: MFDropView
                         switch loadFrame(fileName: "Frames/Button.as"){
                         case .success(let frame):
                                 if let cbfunc = droppingCallback {
-                                        cbfunc(frame)
+                                        cbfunc(pt, "button", frame)
                                 } else {
                                         NSLog("DropCallback: \(frame.encode())")
                                 }
