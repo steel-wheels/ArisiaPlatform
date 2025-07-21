@@ -16,13 +16,21 @@ import  UIKit
 
 public class ASDropView: MFDropView
 {
+        public typealias CallbackFunction = (_ frame: ASFrame) -> Void
+
+        public var droppingCallback: CallbackFunction? = nil
+
         #if os(OSX)
         open override func didDropped(point pt: CGPoint, symbol sym: MISymbol) {
                 switch sym {
                 case .buttonHorizontalTopPress:
                         switch loadFrame(fileName: "Frames/Button.as"){
                         case .success(let frame):
-                                NSLog("Loaded: \(frame.encode())")
+                                if let cbfunc = droppingCallback {
+                                        cbfunc(frame)
+                                } else {
+                                        NSLog("DropCallback: \(frame.encode())")
+                                }
                         case .failure(let err):
                                 NSLog("[Error] " + MIError.toString(error: err))
                         }
