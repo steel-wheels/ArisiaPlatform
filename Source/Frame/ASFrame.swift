@@ -11,7 +11,7 @@ import Foundation
 public enum ASFrameValue
 {
         case value(MIValue)                     // scalar value only
-        case text(String)
+        case event(String)
         case frame(ASFrame)
         case path(Array<String>)
         case array(Array<ASFrameValue>)

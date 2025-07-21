@@ -60,8 +60,8 @@ public extension ASFrame
                                 locres += encode(value: elm, indent: 0)
                         }
                         result = locres + "]"
-                case .text(let str):
-                        result = "%{" + str + "}%"
+                case .event(let str):
+                        result = "event() %{" + str + "}%"
                 }
                 return result
         }

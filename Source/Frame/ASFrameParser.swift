@@ -128,6 +128,13 @@ public class ASFrameParser
                         switch ident {
                         case "nil":
                                 value = .value(MIValue())
+                        case "event":
+                                switch parseEventFunction(index: &index, tokens: tokens) {
+                                case .success(let val):
+                                        value = val
+                                case .failure(let err):
+                                        return .failure(err)
+                                }
                         default:
                                 switch parsePath(index: &index, paths: [ident], tokens: tokens) {
                                 case .success(let paths):
@@ -229,6 +236,16 @@ public class ASFrameParser
                 return .success(result)
         }
 
+        private func parseEventFunction(index: inout Int, tokens: Array<MIToken>) -> Result<ASFrameValue, NSError>
+        {
+                switch requireText(index: &index, tokens: tokens) {
+                case .success(let text):
+                        return .success(.event(text))
+                case .failure(let err):
+                        return .failure(err)
+                }
+        }
+
         private func requireIdentifier(index: inout Int, tokens: Array<MIToken>) -> Result<String, NSError> {
                 if let err = checkIndex(index: index, tokens: tokens) {
                         return .failure(err)
@@ -238,6 +255,21 @@ public class ASFrameParser
                         return .success(ident)
                 } else {
                         let err = MIError.parseError(message: "identifier is required",
+                                                     line: MIToken.lastLine(tokens: tokens))
+                        return .failure(err)
+                }
+        }
+
+        private func requireText(index: inout Int, tokens: Array<MIToken>) -> Result<String, NSError> {
+                if let err = checkIndex(index: index, tokens: tokens) {
+                        return .failure(err)
+                }
+                switch tokens[index].value {
+                case .text(let text):
+                        index += 1
+                        return .success(text)
+                default:
+                        let err = MIError.parseError(message: "Text section is required",
                                                      line: MIToken.lastLine(tokens: tokens))
                         return .failure(err)
                 }
