@@ -12,11 +12,13 @@ import Foundation
 @MainActor public class ASFrameManager
 {
         private var mRootFrame        : ASFrame
-        private var mTargetView       : MIStack
 
-        public init(targetView target: MIStack){
+        public var rootFrame: ASFrame { get {
+                return mRootFrame
+        }}
+
+        public init(){
                 mRootFrame      = ASFrame()
-                mTargetView     = target
         }
 
         public func add(contentsOf frame: ASFrame){
