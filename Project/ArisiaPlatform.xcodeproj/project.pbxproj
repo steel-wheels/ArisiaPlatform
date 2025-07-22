@@ -15,6 +15,12 @@
 		0505BFE32E22A0F90023EE05 /* ASStackEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0505BFE12E22A0F90023EE05 /* ASStackEncoder.swift */; };
 		051BC3D92E2DED6200BCACF1 /* ASFrameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051BC3D82E2DED6200BCACF1 /* ASFrameManager.swift */; };
 		051BC3DA2E2DED6200BCACF1 /* ASFrameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051BC3D82E2DED6200BCACF1 /* ASFrameManager.swift */; };
+		05348C1F2E2FCA4900485D66 /* Frame.js in Resources */ = {isa = PBXBuildFile; fileRef = 05348C1D2E2FCA4900485D66 /* Frame.js */; };
+		05348C202E2FCA4900485D66 /* Frame.js in Resources */ = {isa = PBXBuildFile; fileRef = 05348C1D2E2FCA4900485D66 /* Frame.js */; };
+		05348C232E2FCA9800485D66 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 05348C222E2FCA9800485D66 /* Makefile */; };
+		05348C242E2FCA9800485D66 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 05348C222E2FCA9800485D66 /* Makefile */; };
+		05348C292E2FCEBC00485D66 /* ASFrameCompiler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05348C282E2FCEBC00485D66 /* ASFrameCompiler.swift */; };
+		05348C2A2E2FCEBC00485D66 /* ASFrameCompiler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05348C282E2FCEBC00485D66 /* ASFrameCompiler.swift */; };
 		055037262E232C8A00670753 /* Hello.astack in CopyFiles */ = {isa = PBXBuildFile; fileRef = 055037252E232C6200670753 /* Hello.astack */; };
 		055037282E232EED00670753 /* Hello.astack in CopyFiles */ = {isa = PBXBuildFile; fileRef = 055037252E232C6200670753 /* Hello.astack */; };
 		05596BFA2E196BB90001384E /* MultiDataKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05596BF92E196BB90001384E /* MultiDataKit.xcframework */; };
@@ -119,6 +125,12 @@
 		0505BFE12E22A0F90023EE05 /* ASStackEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASStackEncoder.swift; sourceTree = "<group>"; };
 		051A82B92E196A54004A9C4B /* ArisiaPlatform.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ArisiaPlatform.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		051BC3D82E2DED6200BCACF1 /* ASFrameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASFrameManager.swift; sourceTree = "<group>"; };
+		05348C1A2E2FCA3900485D66 /* Builtin.d.ts */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.typescript; path = Builtin.d.ts; sourceTree = "<group>"; };
+		05348C1B2E2FCA3900485D66 /* Frame.d.ts */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.typescript; path = Frame.d.ts; sourceTree = "<group>"; };
+		05348C1D2E2FCA4900485D66 /* Frame.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Frame.js; sourceTree = "<group>"; };
+		05348C212E2FCA9800485D66 /* Frame.ts */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.typescript; path = Frame.ts; sourceTree = "<group>"; };
+		05348C222E2FCA9800485D66 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		05348C282E2FCEBC00485D66 /* ASFrameCompiler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASFrameCompiler.swift; sourceTree = "<group>"; };
 		055037252E232C6200670753 /* Hello.astack */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Hello.astack; sourceTree = "<group>"; };
 		05596BF92E196BB90001384E /* MultiDataKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MultiDataKit.xcframework; path = ../../../Library/Frameworks/MultiDataKit.xcframework; sourceTree = "<group>"; };
 		05596C002E196C020001384E /* ASFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASFrame.swift; sourceTree = "<group>"; };
@@ -201,9 +213,38 @@
 			path = Controls;
 			sourceTree = "<group>";
 		};
+		05348C192E2FCA0B00485D66 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				05348C1C2E2FCA3900485D66 /* types */,
+				05348C222E2FCA9800485D66 /* Makefile */,
+				05348C212E2FCA9800485D66 /* Frame.ts */,
+				05348C1D2E2FCA4900485D66 /* Frame.js */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		05348C1C2E2FCA3900485D66 /* types */ = {
+			isa = PBXGroup;
+			children = (
+				05348C1A2E2FCA3900485D66 /* Builtin.d.ts */,
+				05348C1B2E2FCA3900485D66 /* Frame.d.ts */,
+			);
+			path = types;
+			sourceTree = "<group>";
+		};
+		05348C272E2FCDA400485D66 /* Compiler */ = {
+			isa = PBXGroup;
+			children = (
+				05348C282E2FCEBC00485D66 /* ASFrameCompiler.swift */,
+			);
+			path = Compiler;
+			sourceTree = "<group>";
+		};
 		055037232E232BAE00670753 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				05348C192E2FCA0B00485D66 /* Library */,
 				05F722732E2D342F005CB923 /* Frames */,
 				055037242E232C0E00670753 /* Test */,
 			);
@@ -268,6 +309,7 @@
 			children = (
 				051A82B32E19698A004A9C4B /* Frame */,
 				05596C152E19712F0001384E /* Stack */,
+				05348C272E2FCDA400485D66 /* Compiler */,
 				05259BB32E2D1F1D00ED2BC5 /* Controls */,
 			);
 			name = Source;
@@ -456,6 +498,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05348C1F2E2FCA4900485D66 /* Frame.js in Resources */,
 				05F722792E2D34CD005CB923 /* Button.as in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -464,6 +507,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05348C202E2FCA4900485D66 /* Frame.js in Resources */,
 				05F7227A2E2D34CD005CB923 /* Button.as in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -475,7 +519,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05348C242E2FCA9800485D66 /* Makefile in Sources */,
 				0505BFC72E2268BE0023EE05 /* ASStack.swift in Sources */,
+				05348C292E2FCEBC00485D66 /* ASFrameCompiler.swift in Sources */,
 				0505BFDB2E226ADD0023EE05 /* ASStackLoader.swift in Sources */,
 				051BC3D92E2DED6200BCACF1 /* ASFrameManager.swift in Sources */,
 				05596C172E1971440001384E /* ASFrameParser.swift in Sources */,
@@ -490,8 +536,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05348C232E2FCA9800485D66 /* Makefile in Sources */,
 				0505BFC62E2268BE0023EE05 /* ASStack.swift in Sources */,
 				05596C182E1971440001384E /* ASFrameParser.swift in Sources */,
+				05348C2A2E2FCEBC00485D66 /* ASFrameCompiler.swift in Sources */,
 				051BC3DA2E2DED6200BCACF1 /* ASFrameManager.swift in Sources */,
 				0505BFDC2E226ADD0023EE05 /* ASStackLoader.swift in Sources */,
 				05596C012E196C020001384E /* ASFrame.swift in Sources */,
