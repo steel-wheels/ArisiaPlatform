@@ -8,23 +8,31 @@
 import MultiDataKit
 import Foundation
 
+public enum ASFrameType
+{
+        case box
+        case button
+}
+
 public enum ASFrameValue
 {
         case value(MIValue)                     // scalar value only
         case event(String)
         case frame(ASFrame)
         case path(Array<String>)
-        case array(Array<ASFrameValue>)
 }
 
 public class ASFrame
 {
+        private var mType:  ASFrameType
         private var mSlots: Dictionary<String, ASFrameValue> = [:]
 
-        public init(){
+        public init(type typ: ASFrameType){
+                mType  = typ
                 mSlots = [:]
         }
 
+        public var type:  ASFrameType { get { return mType }}
         public var slots: Dictionary<String, ASFrameValue> { get { return mSlots }}
 
         public func set(slotName name: String, value val: ASFrameValue) {

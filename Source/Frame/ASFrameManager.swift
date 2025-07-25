@@ -18,7 +18,7 @@ import Foundation
         }}
 
         public init(){
-                mRootFrame      = ASFrame()
+                mRootFrame      = ASFrame(type: .box)
         }
 
         public func add(contentsOf frame: ASFrame){

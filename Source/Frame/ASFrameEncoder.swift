@@ -48,18 +48,6 @@ public extension ASFrame
                                 is1stpath = false
                         }
                         result = locres
-                case .array(let elms):
-                        var locres = "["
-                        var is1stpath = true
-                        for elm in elms {
-                                if is1stpath {
-                                        is1stpath = false
-                                } else {
-                                        locres += ", "
-                                }
-                                locres += encode(value: elm, indent: 0)
-                        }
-                        result = locres + "]"
                 case .event(let str):
                         result = "event() %{" + str + "}%"
                 }

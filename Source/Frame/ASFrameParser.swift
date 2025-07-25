@@ -47,7 +47,7 @@ public class ASFrameParser
                         return .failure(err)
                 }
 
-                let newframe = ASFrame()
+                let newframe = ASFrame(type: .box)
                 while(index < tokens.count) {
                         if tokens[index].isSymbol(c: "}") {
                                 index += 1 // for last "}"
@@ -152,7 +152,7 @@ public class ASFrameParser
                                 index += 1
                                 switch parseArrayValue(index: &index, tokens: tokens){
                                 case .success(let vals):
-                                        value = .array(vals)
+                                        value = .value(MIValue(arrayValue: vals))
                                 case .failure(let err):
                                         return .failure(err)
                                 }
@@ -213,9 +213,9 @@ public class ASFrameParser
                 return .success(result)
         }
 
-        private func parseArrayValue(index: inout Int, tokens: Array<MIToken>) -> Result<Array<ASFrameValue>, NSError>
+        private func parseArrayValue(index: inout Int, tokens: Array<MIToken>) -> Result<Array<MIValue>, NSError>
         {
-                var result: Array<ASFrameValue> = []
+                var result: Array<MIValue> = []
                 var is1st = true
                 while requireSymbol(index: &index, symbol: "]", tokens: tokens) != nil {
                         if is1st {
@@ -228,7 +228,13 @@ public class ASFrameParser
 
                         switch parseValue(index: &index, tokens: tokens){
                         case .success(let val):
-                                result.append(val)
+                                switch val {
+                                case .value(let nval):
+                                        result.append(nval)
+                                default:
+                                        let err = MIError.parseError(message: "Array element must be scalar", line: MIToken.lastLine(tokens: tokens))
+                                        return .failure(err)
+                                }
                         case .failure(let err):
                                 return .failure(err)
                         }
