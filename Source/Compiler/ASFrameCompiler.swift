@@ -140,15 +140,16 @@ import Foundation
 
         private func exportObject(path pth: Array<String>, object obj: NSObject, properties props: Array<String>){
                 let varname = pth.joined(separator: "_")
-                let stmt    = "/* define object: \(varname) */"
                 mContext.setObject(obj, forKeyedSubscript: varname as NSString)
+                mScript.append("/* define object: \(varname) */")
+
                 for prop in props {
                         defineProperty(objectName: varname, propertyName: prop)
                 }
-                mScript.append(stmt)
         }
 
         private func defineProperty(objectName objname: String, propertyName propname: String) {
+                mScript.append("/* define property \(propname) for object: \(objname) */")
                 let stmt: String = "Object.defineProperty(\(objname), '\(propname)', {\n"
                                  + "  get()  { return \(objname)._value(\"\(propname)\") ; },\n"
                                  + "  set(v) { \(objname)._setValue(\"\(propname)\", v) ; }\n"
