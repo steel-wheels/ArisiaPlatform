@@ -12,14 +12,34 @@ import Foundation
 
 @MainActor public class ASFrameCompiler
 {
-        private var mContext: MFContext
+        private var mContext:           MFContext
+        private var mConsoleStortage:   MITextStorage
+        private var mScript:            Array<String>
 
-        public init(context ctxt: MFContext){
-                mContext = ctxt
+        public init(context ctxt: MFContext, consoleStorage strg: MITextStorage){
+                mContext         = ctxt
+                mConsoleStortage = strg
+                mScript          = []
+
+                /* add console object */
+                let console = MFConsole(storage: strg)
+                ctxt.setObject(console, forKeyedSubscript: "console" as NSString)
         }
         
         public func compile(frame frm: ASFrame, into ownerview: MFStack) -> NSError? {
-                return compile(frame: frm, path: [], into: ownerview)
+                if let err = compile(frame: frm, path: ["root"], into: ownerview) {
+                        return err
+                }
+
+                /* Evaluate the script */
+                let scr = mScript.joined(separator: "\n")
+                NSLog("JavaScript: \(scr)")
+                let ecnt = mContext.execute(script: scr)
+                if(ecnt == 0){
+                        return nil // no error
+                } else {
+                        return MIError.error(errorCode: .parseError, message: "Some evaluation error: \(ecnt)")
+                }
         }
 
         private func compile(frame ownerframe: ASFrame, path pth: Array<String>, into ownerview: MFStack) -> NSError? {
@@ -59,6 +79,9 @@ import Foundation
                         }
                 }
                 ownerview.addArrangedSubView(stack)
+
+                let props: Array<String> = []
+                exportObject(path: pth, object: stack, properties: props)
                 return nil
         }
 
@@ -107,7 +130,30 @@ import Foundation
                         }
                 }
                 ownerview.addArrangedSubView(button)
+
+                let props: Array<String> = [
+                        MFButton.TitleSlotName
+                ]
+                exportObject(path: pth, object: button, properties: props)
                 return nil
+        }
+
+        private func exportObject(path pth: Array<String>, object obj: NSObject, properties props: Array<String>){
+                let varname = pth.joined(separator: "_")
+                let stmt    = "/* define object: \(varname) */"
+                mContext.setObject(obj, forKeyedSubscript: varname as NSString)
+                for prop in props {
+                        defineProperty(objectName: varname, propertyName: prop)
+                }
+                mScript.append(stmt)
+        }
+
+        private func defineProperty(objectName objname: String, propertyName propname: String) {
+                let stmt: String = "Object.defineProperty(\(objname), '\(propname)', {\n"
+                                 + "  get()  { return \(objname)._value(\"\(propname)\") ; },\n"
+                                 + "  set(v) { \(objname)._setValue(\"\(propname)\", v) ; }\n"
+                                 + "}) ;"
+                mScript.append(stmt)
         }
 }
 
