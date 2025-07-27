@@ -24,7 +24,7 @@ public class ASDropView: MFDropView
         open override func didDropped(point pt: CGPoint, symbol sym: MISymbol) {
                 switch sym {
                 case .buttonHorizontalTopPress:
-                        switch loadFrame(fileName: "Frames/Button.as"){
+                        switch ASFrameManager.loadButtonFrame(){
                         case .success(let frame):
                                 if let cbfunc = droppingCallback {
                                         cbfunc(pt, "button", frame)
@@ -40,28 +40,5 @@ public class ASDropView: MFDropView
                 }
         }
         #endif
-
-        private func loadFrame(fileName fname: String) -> Result<ASFrame, NSError> {
-                if let resdir = FileManager.default.resourceDirectory(forClass: ASDropView.self) {
-                        let file = resdir.appending(path: fname)
-                        let text: String
-                        do {
-                                text = try String(contentsOf: file, encoding: .utf8)
-                        } catch {
-                                let err = MIError.error(errorCode: .urlError, message: "Failed to load from \(file.path)")
-                                return .failure(err)
-                        }
-                        let parser = ASFrameParser()
-                        switch parser.parse(string: text) {
-                        case .success(let frame):
-                                return .success(frame)
-                        case .failure(let err):
-                                return .failure(err)
-                        }
-                } else {
-                        let err = MIError.error(errorCode: .urlError, message: "No resource directory")
-                        return .failure(err)
-                }
-        }
 }
 

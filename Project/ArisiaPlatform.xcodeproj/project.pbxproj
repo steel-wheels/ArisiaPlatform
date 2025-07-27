@@ -31,6 +31,10 @@
 		05A6F2762E1AB6A5005A41E5 /* ASFrameEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A6F2752E1AB6A5005A41E5 /* ASFrameEncoder.swift */; };
 		05A6F2772E1AB6A5005A41E5 /* ASFrameEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A6F2752E1AB6A5005A41E5 /* ASFrameEncoder.swift */; };
 		05B0088F2E2D135F00662427 /* MultiDataKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05596BF92E196BB90001384E /* MultiDataKit.xcframework */; };
+		05D5893E2E359F1500DFBAFB /* Box.as in Resources */ = {isa = PBXBuildFile; fileRef = 05D5893D2E359F1500DFBAFB /* Box.as */; };
+		05D5893F2E359F1500DFBAFB /* Box.as in Resources */ = {isa = PBXBuildFile; fileRef = 05D5893D2E359F1500DFBAFB /* Box.as */; };
+		05D589402E359F2800DFBAFB /* Box.as in CopyFiles */ = {isa = PBXBuildFile; fileRef = 05D5893D2E359F1500DFBAFB /* Box.as */; };
+		05D589412E359F3400DFBAFB /* Box.as in CopyFiles */ = {isa = PBXBuildFile; fileRef = 05D5893D2E359F1500DFBAFB /* Box.as */; };
 		05F722222E2D2DB3005CB923 /* ASDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F722212E2D2DB3005CB923 /* ASDropView.swift */; };
 		05F722232E2D2DB3005CB923 /* ASDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F722212E2D2DB3005CB923 /* ASDropView.swift */; };
 		05F722252E2D2E5E005CB923 /* MultiUIKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05F722242E2D2E5E005CB923 /* MultiUIKit.xcframework */; };
@@ -103,6 +107,7 @@
 			dstPath = Frames;
 			dstSubfolderSpec = 7;
 			files = (
+				05D589402E359F2800DFBAFB /* Box.as in CopyFiles */,
 				05F7227B2E2D34DB005CB923 /* Button.as in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -113,6 +118,7 @@
 			dstPath = Frames;
 			dstSubfolderSpec = 7;
 			files = (
+				05D589412E359F3400DFBAFB /* Box.as in CopyFiles */,
 				05F7227D2E2D34F3005CB923 /* Button.as in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -139,6 +145,7 @@
 		05A6F2662E1AB2EA005A41E5 /* UnitTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UnitTest; sourceTree = BUILT_PRODUCTS_DIR; };
 		05A6F2752E1AB6A5005A41E5 /* ASFrameEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASFrameEncoder.swift; sourceTree = "<group>"; };
 		05B008902E2D145900662427 /* ArisiaPlatform.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ArisiaPlatform.xcframework; path = ../../../Library/Frameworks/ArisiaPlatform.xcframework; sourceTree = "<group>"; };
+		05D5893D2E359F1500DFBAFB /* Box.as */ = {isa = PBXFileReference; lastKnownFileType = text; path = Box.as; sourceTree = "<group>"; };
 		05F722212E2D2DB3005CB923 /* ASDropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASDropView.swift; sourceTree = "<group>"; };
 		05F722242E2D2E5E005CB923 /* MultiUIKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MultiUIKit.xcframework; path = ../../../Library/Frameworks/MultiUIKit.xcframework; sourceTree = "<group>"; };
 		05F722272E2D2F0C005CB923 /* MultiFrameKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MultiFrameKit.xcframework; path = ../../../Library/Frameworks/MultiFrameKit.xcframework; sourceTree = "<group>"; };
@@ -328,6 +335,7 @@
 		05F722732E2D342F005CB923 /* Frames */ = {
 			isa = PBXGroup;
 			children = (
+				05D5893D2E359F1500DFBAFB /* Box.as */,
 				05F722782E2D34CD005CB923 /* Button.as */,
 			);
 			path = Frames;
@@ -500,6 +508,7 @@
 			files = (
 				05348C1F2E2FCA4900485D66 /* Frame.js in Resources */,
 				05F722792E2D34CD005CB923 /* Button.as in Resources */,
+				05D5893F2E359F1500DFBAFB /* Box.as in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -509,6 +518,7 @@
 			files = (
 				05348C202E2FCA4900485D66 /* Frame.js in Resources */,
 				05F7227A2E2D34CD005CB923 /* Button.as in Resources */,
+				05D5893E2E359F1500DFBAFB /* Box.as in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

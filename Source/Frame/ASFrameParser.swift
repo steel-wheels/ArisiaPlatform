@@ -47,7 +47,7 @@ public class ASFrameParser
                         return .failure(err)
                 }
 
-                let newframe = ASFrame(type: .box)
+                let newframe = ASFrame()
                 while(index < tokens.count) {
                         if tokens[index].isSymbol(c: "}") {
                                 index += 1 // for last "}"

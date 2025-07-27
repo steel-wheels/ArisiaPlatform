@@ -12,23 +12,31 @@ import Foundation
 
 @MainActor public class ASFrameCompiler
 {
+        private var mContext: MFContext
+
+        public init(context ctxt: MFContext){
+                mContext = ctxt
+        }
+        
         public func compile(frame frm: ASFrame, into ownerview: MFStack) -> NSError? {
                 return compile(frame: frm, path: [], into: ownerview)
         }
 
         private func compile(frame ownerframe: ASFrame, path pth: Array<String>, into ownerview: MFStack) -> NSError? {
                 let result: NSError?
-                switch ownerframe.type {
+                switch ASFrameManager.typeOfFrame(source: ownerframe){
                 case .box:
                         result = compile(boxFrame: ownerframe, path: pth, into: ownerview)
                 case .button:
                         result = compile(buttonFrame: ownerframe, path: pth, into: ownerview)
+                case .none:
+                        result = MIError.error(errorCode: .parseError, message: "Unknown frame class")
                 }
                 return result
         }
 
         private func compile(boxFrame ownerframe: ASFrame, path pth: Array<String>, into ownerview: MFStack) -> NSError? {
-                let stack = MFStack()
+                let stack = MFStack(context: mContext)
                 for (slotname, slotvalue) in ownerframe.slots {
                         switch slotvalue {
                         case .value(let sval):
@@ -55,7 +63,7 @@ import Foundation
         }
 
         private func compile(buttonFrame ownerframe: ASFrame, path pth: Array<String>, into ownerview: MFStack) -> NSError? {
-                let button = MFButton()
+                let button = MFButton(context: mContext)
                 for (slotname, slotvalue) in ownerframe.slots {
                         switch slotvalue {
                         case .value(let sval):
@@ -65,6 +73,8 @@ import Foundation
                                                 name: MFButton.TitleSlotName,
                                                 value: sval
                                         )
+                                case ASFrameManager.ClassSlotName:
+                                        break
                                 default:
                                         return MIError.error(
                                           errorCode: .parseError,
