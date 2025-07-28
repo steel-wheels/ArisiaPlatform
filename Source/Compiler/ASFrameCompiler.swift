@@ -16,6 +16,16 @@ import Foundation
         private var mConsoleStortage:   MITextStorage
         private var mScript:            Array<String>
 
+        private struct EventDefinition {
+                var name:       String
+                var script:     String
+
+                public init(_ ename: String, _ escr: String) {
+                        name   = ename
+                        script = escr
+                }
+        }
+
         public init(context ctxt: MFContext, consoleStorage strg: MITextStorage){
                 mContext         = ctxt
                 mConsoleStortage = strg
@@ -80,12 +90,17 @@ import Foundation
                 }
                 ownerview.addArrangedSubView(stack)
 
-                let props: Array<String> = []
-                exportObject(path: pth, object: stack, properties: props)
+                exportObject(path:              pth,
+                             frame:             stack,
+                             properties:        [],
+                             eventDefinitions:  []
+                )
                 return nil
         }
 
         private func compile(buttonFrame ownerframe: ASFrame, path pth: Array<String>, into ownerview: MFStack) -> NSError? {
+                var eventdefs: Array<EventDefinition> = []
+
                 let button = MFButton(context: mContext)
                 for (slotname, slotvalue) in ownerframe.slots {
                         switch slotvalue {
@@ -107,10 +122,7 @@ import Foundation
                         case .event(let text):
                                 switch slotname {
                                 case MFButton.ClickedEventName:
-                                        button.setValue(
-                                                name:  "_" + MFButton.ClickedEventName,
-                                                value: MIValue(stringValue: text)
-                                        )
+                                        eventdefs.append(EventDefinition(MFButton.ClickedEventName, text))
                                 default:
                                         return MIError.error(
                                           errorCode: .parseError,
@@ -131,20 +143,25 @@ import Foundation
                 }
                 ownerview.addArrangedSubView(button)
 
-                let props: Array<String> = [
-                        MFButton.TitleSlotName
-                ]
-                exportObject(path: pth, object: button, properties: props)
+                exportObject(path:              pth,
+                             frame:             button,
+                             properties:        [MFButton.TitleSlotName, MFButton.ClickedEventName],
+                             eventDefinitions:  eventdefs
+                )
                 return nil
         }
 
-        private func exportObject(path pth: Array<String>, object obj: NSObject, properties props: Array<String>){
+        private func exportObject(path pth: Array<String>, frame frm: MFFrame, properties props: Array<String>,
+                                  eventDefinitions events: Array<EventDefinition>) {
                 let varname = pth.joined(separator: "_")
-                mContext.setObject(obj, forKeyedSubscript: varname as NSString)
+                mContext.setObject(frm.core, forKeyedSubscript: varname as NSString)
                 mScript.append("/* define object: \(varname) */")
 
                 for prop in props {
                         defineProperty(objectName: varname, propertyName: prop)
+                }
+                for event in events {
+                        defineEvent(objectName: varname, eventDefinition: event)
                 }
         }
 
@@ -154,6 +171,12 @@ import Foundation
                                  + "  get()  { return \(objname)._value(\"\(propname)\") ; },\n"
                                  + "  set(v) { \(objname)._setValue(\"\(propname)\", v) ; }\n"
                                  + "}) ;"
+                mScript.append(stmt)
+        }
+
+        private func defineEvent(objectName objname: String, eventDefinition event: EventDefinition) {
+                mScript.append("/* define event \(event.name) for object: \(objname) */")
+                let stmt: String = "\(objname).\(event.name) = function(){ \(event.script) } ;"
                 mScript.append(stmt)
         }
 }
