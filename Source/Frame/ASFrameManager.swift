@@ -11,14 +11,8 @@ import Foundation
 
 @MainActor public class ASFrameManager
 {
-        public static let ClassSlotName        = "class"
-
-        public enum FrameType: String {
-                case box                = "Box"
-                case button             = "Button"
-        }
-
-        private var mRootFrame        : ASFrame
+        private var mRootFrame          : ASFrame
+        private var mUniqueIndex        : Int
 
         public var rootFrame: ASFrame { get {
                 return mRootFrame
@@ -27,47 +21,25 @@ import Foundation
         public init(){
                 switch ASFrameManager.loadBoxFrame() {
                 case .success(let frame):
-                        mRootFrame = frame
+                        mRootFrame   = frame
+                        mUniqueIndex = ASFrameManager.setFrameIds(frame: mRootFrame, frameId: 0)
                 case .failure(let err):
                         NSLog("[Error] \(MIError.errorToString(error: err)) at \(#file)")
-                        mRootFrame      = ASFrame()
+                        mRootFrame   = ASFrame()
+                        mUniqueIndex = ASFrameManager.setFrameIds(frame: mRootFrame, frameId: 0)
                 }
         }
 
         public func add(contentsOf frame: ASFrame){
+                mUniqueIndex = ASFrameManager.setFrameIds(frame: frame, frameId: mUniqueIndex)
                 for (name, val) in frame.slots {
                         mRootFrame.set(slotName: name, value: val)
                 }
         }
 
         public func add(point pt: CGPoint, name nm: String, frame frm: ASFrame){
+                mUniqueIndex = ASFrameManager.setFrameIds(frame: frm, frameId: mUniqueIndex)
                 mRootFrame.set(slotName: nm, value: .frame(frm))
-        }
-
-        public static func typeOfFrame(source src: ASFrame) -> FrameType? {
-                guard let val = src.value(slotName: ClassSlotName) else {
-                        NSLog("[Error] No class slot at \(#file)")
-                        return nil
-                }
-                switch val {
-                case .value(let sval):
-                        switch sval.value {
-                        case .stringValue(let str):
-                                switch str {
-                                case "Box":
-                                        return .box
-                                case "Button":
-                                        return .button
-                                default:
-                                        NSLog("[Error] Unknown frame class \(str) at \(#file)")
-                                }
-                        default:
-                                break
-                        }
-                default:
-                        break
-                }
-                return nil
         }
 
         public static func loadBoxFrame() -> Result<ASFrame, NSError> {
@@ -99,5 +71,19 @@ import Foundation
                         let err = MIError.error(errorCode: .urlError, message: "No resource directory")
                         return .failure(err)
                 }
+        }
+
+        private static func setFrameIds(frame frm: ASFrame, frameId fid: Int) -> Int {
+                frm.setFrameId(fid)
+                var result   = fid + 1
+                for (_, val) in frm.slots {
+                        switch val {
+                        case .frame(let child):
+                                result = setFrameIds(frame: child, frameId: result)
+                        case .event(_), .path(_), .value(_):
+                                break
+                        }
+                }
+                return result
         }
 }

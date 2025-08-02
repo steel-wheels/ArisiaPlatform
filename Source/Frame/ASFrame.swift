@@ -33,4 +33,98 @@ public class ASFrame
         public func value(slotName name: String) -> ASFrameValue? {
                 return mSlots[name]
         }
+
+        public func set(slotName name: String, stringValue str: String) {
+                let val: ASFrameValue = .value(MIValue(stringValue: str))
+                self.set(slotName: name, value: val)
+        }
+
+        public func stringValue(slotName name: String) -> String? {
+                if let val = self.value(slotName: name) {
+                        switch val {
+                        case .value(let mival):
+                                switch mival.value {
+                                case .stringValue(let str):
+                                        return str
+                                default:
+                                        break
+                                }
+                        default:
+                                break
+                        }
+                }
+                return nil
+        }
+
+        public func set(slotName name: String, intValue ival: Int) {
+                let val: ASFrameValue = .value(MIValue(signedIntValue: ival))
+                self.set(slotName: name, value: val)
+        }
+
+        public func intValue(slotName name: String) -> Int? {
+                if let val = self.value(slotName: name) {
+                        switch val {
+                        case .value(let mival):
+                                switch mival.value {
+                                case .signedIntValue(let val):
+                                        return val
+                                default:
+                                        break
+                                }
+                        default:
+                                break
+                        }
+                }
+                return nil
+        }
+}
+
+extension ASFrame
+{
+        public enum FrameClass: String {
+                case box        = "Box"
+                case button     = "Button"
+
+                public func toString() -> String {
+                        return self.rawValue
+                }
+
+                public static func decode(string str: String) -> FrameClass? {
+                        return FrameClass(rawValue: str)
+                }
+        }
+
+        public static let ClassSlotName         = "class"
+        public static let FrameIdSlotName       = "frameid"
+
+        public func setFrameClass(_ fclass: FrameClass){
+                self.set(slotName: ASFrame.ClassSlotName, stringValue: fclass.toString())
+        }
+
+        public func flameClass() -> FrameClass {
+                if let str = self.stringValue(slotName: ASFrame.ClassSlotName) {
+                        if let cls = FrameClass.decode(string: str) {
+                                return cls
+                        } else {
+                                NSLog("[Error] Unknown frame class \(str) at \(#function)")
+                                return .box
+                        }
+                } else {
+                        NSLog("[Error] No frame class name at \(#function)")
+                        return .box
+                }
+        }
+
+        public func setFrameId(_ fid: Int){
+                self.set(slotName: ASFrame.FrameIdSlotName, intValue: fid)
+        }
+
+        public func frameId() -> Int {
+                if let val = self.intValue(slotName: ASFrame.FrameIdSlotName) {
+                        return val
+                } else {
+                        NSLog("[Error] No frame id at \(#function)")
+                        return -1
+                }
+        }
 }

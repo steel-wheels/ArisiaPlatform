@@ -54,13 +54,11 @@ import Foundation
 
         private func compile(frame ownerframe: ASFrame, path pth: Array<String>, into ownerview: MFStack) -> NSError? {
                 let result: NSError?
-                switch ASFrameManager.typeOfFrame(source: ownerframe){
+                switch ownerframe.flameClass() {
                 case .box:
                         result = compile(boxFrame: ownerframe, path: pth, into: ownerview)
                 case .button:
                         result = compile(buttonFrame: ownerframe, path: pth, into: ownerview)
-                case .none:
-                        result = MIError.error(errorCode: .parseError, message: "Unknown frame class")
                 }
                 return result
         }
@@ -70,7 +68,12 @@ import Foundation
                 for (slotname, slotvalue) in ownerframe.slots {
                         switch slotvalue {
                         case .value(let sval):
-                                stack.setValue(name: slotname, value: sval)
+                                switch slotname {
+                                case ASFrame.ClassSlotName, ASFrame.FrameIdSlotName:
+                                        break
+                                default:
+                                        stack.setValue(name: slotname, value: sval)
+                                }
                         case .frame(let sframe):
                                 var spath = pth ; spath.append(slotname)
                                 if let err = compile(frame: sframe, path: spath, into: stack) {
@@ -111,7 +114,7 @@ import Foundation
                                                 name: MFButton.TitleSlotName,
                                                 value: sval
                                         )
-                                case ASFrameManager.ClassSlotName:
+                                case ASFrame.ClassSlotName, ASFrame.FrameIdSlotName:
                                         break
                                 default:
                                         return MIError.error(
