@@ -64,7 +64,7 @@ import Foundation
         }
 
         private func compile(boxFrame ownerframe: ASFrame, path pth: Array<String>, into ownerview: MFStack) -> NSError? {
-                let stack = MFStack(context: mContext)
+                let stack = MFStack(context: mContext, frameId: ownerframe.frameId())
                 for (slotname, slotvalue) in ownerframe.slots {
                         switch slotvalue {
                         case .value(let sval):
@@ -104,7 +104,7 @@ import Foundation
         private func compile(buttonFrame ownerframe: ASFrame, path pth: Array<String>, into ownerview: MFStack) -> NSError? {
                 var eventdefs: Array<EventDefinition> = []
 
-                let button = MFButton(context: mContext)
+                let button = MFButton(context: mContext, frameId: ownerframe.frameId())
                 for (slotname, slotvalue) in ownerframe.slots {
                         switch slotvalue {
                         case .value(let sval):
