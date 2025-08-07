@@ -42,6 +42,27 @@ import Foundation
                 mRootFrame.set(slotName: nm, value: .frame(frm))
         }
 
+        public func search(coreTag ctag: Int) -> ASFrame? {
+                return search(frame: mRootFrame, coreTag: ctag)
+        }
+
+        private func search(frame frm: ASFrame, coreTag ctag: Int) -> ASFrame? {
+                if frm.frameId() == ctag {
+                        return frm
+                }
+                for (_, val) in frm.slots {
+                        switch val {
+                        case .frame(let child):
+                                if let result = search(frame: child, coreTag: ctag) {
+                                        return result
+                                }
+                        default:
+                                break
+                        }
+                }
+                return nil
+        }
+
         public static func loadBoxFrame() -> Result<ASFrame, NSError> {
                 return loadFrame(fileName: "Frames/Box.as")
         }
