@@ -13,6 +13,8 @@
 		0505BFDC2E226ADD0023EE05 /* ASStackLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0505BFDA2E226ADD0023EE05 /* ASStackLoader.swift */; };
 		0505BFE22E22A0F90023EE05 /* ASStackEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0505BFE12E22A0F90023EE05 /* ASStackEncoder.swift */; };
 		0505BFE32E22A0F90023EE05 /* ASStackEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0505BFE12E22A0F90023EE05 /* ASStackEncoder.swift */; };
+		050910522E46308A002358A9 /* ASFrameEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050910512E46308A002358A9 /* ASFrameEditor.swift */; };
+		050910532E46308A002358A9 /* ASFrameEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050910512E46308A002358A9 /* ASFrameEditor.swift */; };
 		051BC3D92E2DED6200BCACF1 /* ASFrameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051BC3D82E2DED6200BCACF1 /* ASFrameManager.swift */; };
 		051BC3DA2E2DED6200BCACF1 /* ASFrameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051BC3D82E2DED6200BCACF1 /* ASFrameManager.swift */; };
 		05348C1F2E2FCA4900485D66 /* Frame.js in Resources */ = {isa = PBXBuildFile; fileRef = 05348C1D2E2FCA4900485D66 /* Frame.js */; };
@@ -31,6 +33,14 @@
 		05A6F2762E1AB6A5005A41E5 /* ASFrameEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A6F2752E1AB6A5005A41E5 /* ASFrameEncoder.swift */; };
 		05A6F2772E1AB6A5005A41E5 /* ASFrameEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A6F2752E1AB6A5005A41E5 /* ASFrameEncoder.swift */; };
 		05B0088F2E2D135F00662427 /* MultiDataKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05596BF92E196BB90001384E /* MultiDataKit.xcframework */; };
+		05B04EB42E46CFB50042534D /* ArisiaPlatform.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05B008902E2D145900662427 /* ArisiaPlatform.xcframework */; };
+		05B04EB52E46CFB50042534D /* ArisiaPlatform.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 05B008902E2D145900662427 /* ArisiaPlatform.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		05B04EB72E46CFD30042534D /* MultiDataKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05596BF92E196BB90001384E /* MultiDataKit.xcframework */; };
+		05B04EB82E46CFD30042534D /* MultiDataKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 05596BF92E196BB90001384E /* MultiDataKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		05B04EB92E46CFD30042534D /* MultiFrameKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05F722272E2D2F0C005CB923 /* MultiFrameKit.xcframework */; };
+		05B04EBA2E46CFD30042534D /* MultiFrameKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 05F722272E2D2F0C005CB923 /* MultiFrameKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		05B04EBB2E46CFD30042534D /* MultiUIKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05F722242E2D2E5E005CB923 /* MultiUIKit.xcframework */; };
+		05B04EBC2E46CFD30042534D /* MultiUIKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 05F722242E2D2E5E005CB923 /* MultiUIKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		05D5893E2E359F1500DFBAFB /* Box.as in Resources */ = {isa = PBXBuildFile; fileRef = 05D5893D2E359F1500DFBAFB /* Box.as */; };
 		05D5893F2E359F1500DFBAFB /* Box.as in Resources */ = {isa = PBXBuildFile; fileRef = 05D5893D2E359F1500DFBAFB /* Box.as */; };
 		05D589402E359F2800DFBAFB /* Box.as in CopyFiles */ = {isa = PBXBuildFile; fileRef = 05D5893D2E359F1500DFBAFB /* Box.as */; };
@@ -101,6 +111,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
+		05B04EB62E46CFB50042534D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				05B04EBA2E46CFD30042534D /* MultiFrameKit.xcframework in Embed Frameworks */,
+				05B04EB82E46CFD30042534D /* MultiDataKit.xcframework in Embed Frameworks */,
+				05B04EBC2E46CFD30042534D /* MultiUIKit.xcframework in Embed Frameworks */,
+				05B04EB52E46CFB50042534D /* ArisiaPlatform.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		05F722742E2D34A8005CB923 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -129,6 +153,7 @@
 		0505BFC52E2268BE0023EE05 /* ASStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASStack.swift; sourceTree = "<group>"; };
 		0505BFDA2E226ADD0023EE05 /* ASStackLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASStackLoader.swift; sourceTree = "<group>"; };
 		0505BFE12E22A0F90023EE05 /* ASStackEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASStackEncoder.swift; sourceTree = "<group>"; };
+		050910512E46308A002358A9 /* ASFrameEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASFrameEditor.swift; sourceTree = "<group>"; };
 		051A82B92E196A54004A9C4B /* ArisiaPlatform.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ArisiaPlatform.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		051BC3D82E2DED6200BCACF1 /* ASFrameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASFrameManager.swift; sourceTree = "<group>"; };
 		05348C1A2E2FCA3900485D66 /* Builtin.d.ts */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.typescript; path = Builtin.d.ts; sourceTree = "<group>"; };
@@ -145,6 +170,7 @@
 		05A6F2662E1AB2EA005A41E5 /* UnitTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UnitTest; sourceTree = BUILT_PRODUCTS_DIR; };
 		05A6F2752E1AB6A5005A41E5 /* ASFrameEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASFrameEncoder.swift; sourceTree = "<group>"; };
 		05B008902E2D145900662427 /* ArisiaPlatform.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ArisiaPlatform.xcframework; path = ../../../Library/Frameworks/ArisiaPlatform.xcframework; sourceTree = "<group>"; };
+		05B04EA52E46CE9D0042534D /* ViewTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ViewTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05D5893D2E359F1500DFBAFB /* Box.as */ = {isa = PBXFileReference; lastKnownFileType = text; path = Box.as; sourceTree = "<group>"; };
 		05F722212E2D2DB3005CB923 /* ASDropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASDropView.swift; sourceTree = "<group>"; };
 		05F722242E2D2E5E005CB923 /* MultiUIKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MultiUIKit.xcframework; path = ../../../Library/Frameworks/MultiUIKit.xcframework; sourceTree = "<group>"; };
@@ -166,6 +192,11 @@
 		05A6F2672E1AB2EA005A41E5 /* UnitTest */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = UnitTest;
+			sourceTree = "<group>";
+		};
+		05B04EA62E46CE9D0042534D /* ViewTest */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ViewTest;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -198,6 +229,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		05B04EA22E46CE9D0042534D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				05B04EB92E46CFD30042534D /* MultiFrameKit.xcframework in Frameworks */,
+				05B04EB72E46CFD30042534D /* MultiDataKit.xcframework in Frameworks */,
+				05B04EBB2E46CFD30042534D /* MultiUIKit.xcframework in Frameworks */,
+				05B04EB42E46CFB50042534D /* ArisiaPlatform.xcframework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -216,6 +258,7 @@
 			isa = PBXGroup;
 			children = (
 				05F722212E2D2DB3005CB923 /* ASDropView.swift */,
+				050910512E46308A002358A9 /* ASFrameEditor.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -307,6 +350,7 @@
 				056B2FB72E0A4F52004E0EFC /* ArisiaPlatform.framework */,
 				051A82B92E196A54004A9C4B /* ArisiaPlatform.framework */,
 				05A6F2662E1AB2EA005A41E5 /* UnitTest */,
+				05B04EA52E46CE9D0042534D /* ViewTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -326,6 +370,7 @@
 		05A6F2612E1AB28E005A41E5 /* Test */ = {
 			isa = PBXGroup;
 			children = (
+				05B04EA62E46CE9D0042534D /* ViewTest */,
 				05A6F2672E1AB2EA005A41E5 /* UnitTest */,
 			);
 			name = Test;
@@ -455,6 +500,29 @@
 			productReference = 05A6F2662E1AB2EA005A41E5 /* UnitTest */;
 			productType = "com.apple.product-type.tool";
 		};
+		05B04EA42E46CE9D0042534D /* ViewTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 05B04EB32E46CE9F0042534D /* Build configuration list for PBXNativeTarget "ViewTest" */;
+			buildPhases = (
+				05B04EA12E46CE9D0042534D /* Sources */,
+				05B04EA22E46CE9D0042534D /* Frameworks */,
+				05B04EA32E46CE9D0042534D /* Resources */,
+				05B04EB62E46CFB50042534D /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				05B04EA62E46CE9D0042534D /* ViewTest */,
+			);
+			name = ViewTest;
+			packageProductDependencies = (
+			);
+			productName = ViewTest;
+			productReference = 05B04EA52E46CE9D0042534D /* ViewTest.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -477,6 +545,9 @@
 					05A6F2652E1AB2EA005A41E5 = {
 						CreatedOnToolsVersion = 16.4;
 					};
+					05B04EA42E46CE9D0042534D = {
+						CreatedOnToolsVersion = 16.4;
+					};
 				};
 			};
 			buildConfigurationList = 056B2FB12E0A4F52004E0EFC /* Build configuration list for PBXProject "ArisiaPlatform" */;
@@ -497,6 +568,7 @@
 				051A82B82E196A54004A9C4B /* ArisiaPlatform_iOS */,
 				05596BF02E196B090001384E /* Install */,
 				05A6F2652E1AB2EA005A41E5 /* UnitTest */,
+				05B04EA42E46CE9D0042534D /* ViewTest */,
 			);
 		};
 /* End PBXProject section */
@@ -522,6 +594,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		05B04EA32E46CE9D0042534D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -529,6 +608,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				050910522E46308A002358A9 /* ASFrameEditor.swift in Sources */,
 				05348C242E2FCA9800485D66 /* Makefile in Sources */,
 				0505BFC72E2268BE0023EE05 /* ASStack.swift in Sources */,
 				05348C292E2FCEBC00485D66 /* ASFrameCompiler.swift in Sources */,
@@ -546,6 +626,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				050910532E46308A002358A9 /* ASFrameEditor.swift in Sources */,
 				05348C232E2FCA9800485D66 /* Makefile in Sources */,
 				0505BFC62E2268BE0023EE05 /* ASStack.swift in Sources */,
 				05596C182E1971440001384E /* ASFrameParser.swift in Sources */,
@@ -560,6 +641,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		05A6F2622E1AB2EA005A41E5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		05B04EA12E46CE9D0042534D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -905,6 +993,62 @@
 			};
 			name = Release;
 		};
+		05B04EB12E46CE9F0042534D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ../Test/ViewTest/ViewTest.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = TR2DNF3P93;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.github.steel-wheels.ArisiaScript.ViewTest";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		05B04EB22E46CE9F0042534D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ../Test/ViewTest/ViewTest.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = TR2DNF3P93;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.github.steel-wheels.ArisiaScript.ViewTest";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -949,6 +1093,15 @@
 			buildConfigurations = (
 				05A6F26B2E1AB2EA005A41E5 /* Debug */,
 				05A6F26C2E1AB2EA005A41E5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		05B04EB32E46CE9F0042534D /* Build configuration list for PBXNativeTarget "ViewTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				05B04EB12E46CE9F0042534D /* Debug */,
+				05B04EB22E46CE9F0042534D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
