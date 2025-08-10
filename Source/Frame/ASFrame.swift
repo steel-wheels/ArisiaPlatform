@@ -14,6 +14,21 @@ public enum ASFrameValue
         case event(String)
         case frame(ASFrame)
         case path(Array<String>)
+
+        public func clone() -> ASFrameValue {
+                let result: ASFrameValue
+                switch self {
+                case .value(let val):
+                        result = .value(val)
+                case .event(let estr):
+                        result = .event(estr)
+                case .frame(let frm):
+                        result = .frame(frm.clone())
+                case .path(let pth):
+                        result = .path(pth)
+                }
+                return result
+        }
 }
 
 public class ASFrame
@@ -76,6 +91,14 @@ public class ASFrame
                         }
                 }
                 return nil
+        }
+
+        public func clone() -> ASFrame {
+                let result = ASFrame()
+                for (name, val) in mSlots {
+                        result.set(slotName: name, value: val.clone())
+                }
+                return result
         }
 }
 

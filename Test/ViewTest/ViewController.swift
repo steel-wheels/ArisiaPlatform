@@ -20,8 +20,10 @@ class ViewController: NSViewController
                 // Do any additional setup after loading the view.
                 let frame = ASFrame()
                 frame.set(slotName: "title", value: .value(MIValue(stringValue: "Hello")))
+                frame.set(slotName: "value0", value: .value(MIValue(stringValue: "10.0")))
+                frame.set(slotName: "value1", value: .value(MIValue(stringValue: "-12.3")))
 
-                mFrameEditor.setTarget(frame: frame)
+                mFrameEditor.set(target: frame)
         }
 
         override var representedObject: Any? {
