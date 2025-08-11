@@ -19,10 +19,12 @@ public class ASFrameEditor: MIStack
         private var mFrameView:         MIStack?  = nil
         private var mUpdateButton:      MIButton? = nil
         private var mCancelButton:      MIButton? = nil
-        private var mEditFields:        Array<MITextField> = []
+        private var mEditFields:        Dictionary<String, MITextField> = [:]
 
         private var mTargetFrame:       ASFrame?  = nil
         private var mCachedFrame:       ASFrame?  = nil
+
+        private var mIsModified:        Bool = false
 
         open override func setup(frame frm: CGRect) {
                 super.setup(frame: frm)
@@ -71,7 +73,7 @@ public class ASFrameEditor: MIStack
                         return
                 }
                 frameview.removeAllSubviews()
-                mEditFields = []
+                mEditFields = [:]
 
                 for (name, value) in frm.slots {
                         switch value {
@@ -102,12 +104,14 @@ public class ASFrameEditor: MIStack
                                         let subview = allocateIntField(name: name, value: Int(uval))
                                         frameview.addArrangedSubView(subview)
                                 case .dictionaryValue(_), .arrayValue(_), .nilValue:
-                                        NSLog("[Error] Array/Dictionary value is not supported at \(#function)")
+                                        NSLog("[Error] Array/Dictionary value is not supported at \(#file)")
                                 @unknown default:
-                                        NSLog("[Error] supported type value at \(#function)")
+                                        NSLog("[Error] supported type value at \(#file)")
                                 }
                         }
                 }
+
+                updateButtonStatus()
 
                 frameview.requireDisplay()
         }
@@ -142,12 +146,71 @@ public class ASFrameEditor: MIStack
                         (_ str: String) -> Void in
                         NSLog("ASFrameEditor: field callback: \(str)")
                         self.updateSlot(name: nm, value: str)
+                        self.mIsModified = true
+                        self.updateButtonStatus()
                 })
                 result.addArrangedSubView(field)
 
-                mEditFields.append(field)
+                mEditFields[nm] = field
 
                 return result
+        }
+
+        private func store(frame frm: ASFrame){
+                for (name, value) in frm.slots {
+                        switch value {
+                        case .event(let str):
+                                storeEventField(name: name, value: str)
+                        case .frame(_):
+                                // not supported
+                                break
+                        case .path(_):
+                                // not supported
+                                break
+                        case .value(let mval):
+                                switch mval.value {
+                                case .booleanValue(let ival):
+                                        storeBoolField(name: name, value: ival)
+                                case .signedIntValue(let ival):
+                                        storeIntField(name: name, value: ival)
+                                case .unsignedIntValue(let ival):
+                                        storeIntField(name: name, value: Int(ival))
+                                case .floatValue(let ival):
+                                        storeFloatField(name: name, value: ival)
+                                case .stringValue(let ival):
+                                        storeStringField(name: name, value: ival)
+                                case .dictionaryValue(_), .arrayValue(_), .nilValue:
+                                        NSLog("[Error] Array/Dictionary value is not supported at \(#file)")
+                                @unknown default:
+                                        NSLog("[Error] supported type value at \(#file)")
+                                }
+                        }
+                }
+                mIsModified = false
+        }
+
+        private func storeEventField(name nm: String, value val: String) {
+                storeStringField(name: nm, value: val)
+        }
+
+        private func storeBoolField(name nm: String, value val: Bool) {
+                storeStringField(name: nm, value: "\(val)")
+        }
+
+        private func storeIntField(name nm: String, value val: Int) {
+                storeStringField(name: nm, value: "\(val)")
+        }
+
+        private func storeFloatField(name nm: String, value val: Double) {
+                storeStringField(name: nm, value: "\(val)")
+        }
+
+        private func storeStringField(name nm: String, value val: String) {
+                if let field = mEditFields[nm] {
+                        field.stringValue = val
+                } else {
+                        NSLog("[Error] field \(nm) is not found at \(#file)")
+                }
         }
 
         private func updateSlot(name nm: String, value str: String) {
@@ -158,19 +221,28 @@ public class ASFrameEditor: MIStack
         }
 
         private func updateButtonPressed() {
-                if let view = mFrameView, let cache = mCachedFrame {
+                if let cache = mCachedFrame {
                         mTargetFrame = cache
                         mCachedFrame = cache.clone()
-                        view.requireDisplay()
                 }
         }
 
         private func cancelButtonPressed() {
                 if let view = mFrameView, let target = mTargetFrame {
-                        //mTargetFrame = do not touch
+                        /* Restore source values */
                         mCachedFrame = target.clone()
+                        store(frame: target)
                         view.requireDisplay()
                 }
+        }
+
+        private func updateButtonStatus() {
+                guard let updatebtn = mUpdateButton, let cancelbtn = mCancelButton else {
+                        NSLog("[Error] No buttons are defined at \(#file)")
+                        return
+                }
+                updatebtn.isEnabled     = mIsModified
+                cancelbtn.isEnabled     = mIsModified
         }
 }
 
