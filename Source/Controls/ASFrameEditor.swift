@@ -113,6 +113,7 @@ public class ASFrameEditor: MIStack
 
                 updateButtonStatus()
 
+                frameview.invalidateIntrinsicContentSize()
                 frameview.requireDisplay()
         }
 
