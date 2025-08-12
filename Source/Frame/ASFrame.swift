@@ -120,6 +120,19 @@ extension ASFrame
         public static let ClassSlotName         = "class"
         public static let FrameIdSlotName       = "frameid"
 
+        public static func isBuiltinSlotName(name nm: String) -> Bool {
+                let bnames: Array<String> = [
+                        ASFrame.ClassSlotName,
+                        ASFrame.FrameIdSlotName
+                ]
+                for bname in bnames {
+                        if bname == nm {
+                                return true
+                        }
+                }
+                return false
+        }
+
         public func setFrameClass(_ fclass: FrameClass){
                 self.set(slotName: ASFrame.ClassSlotName, stringValue: fclass.toString())
         }

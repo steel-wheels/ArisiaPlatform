@@ -79,6 +79,10 @@ public class ASFrameEditor: MIStack
                 mEditFields = [:]
 
                 for (name, value) in frm.slots {
+                        /* Skip built-in frame name */
+                        if ASFrame.isBuiltinSlotName(name: name){
+                                continue
+                        }
                         switch value {
                         case .event(let estr):
                                 let subview = allocateEventField(name: name, value: estr)
@@ -151,7 +155,7 @@ public class ASFrameEditor: MIStack
                 field.stringValue = val
                 field.setCallback({
                         (_ str: String) -> Void in
-                        NSLog("ASFrameEditor: field callback: \(str)")
+                        //NSLog("ASFrameEditor: field callback: \(str)")
                         self.updateSlot(name: nm, value: str)
                         self.mIsModified = true
                         self.updateButtonStatus()
@@ -165,6 +169,10 @@ public class ASFrameEditor: MIStack
 
         private func store(frame frm: ASFrame){
                 for (name, value) in frm.slots {
+                        /* Skip built-in frame name */
+                        if ASFrame.isBuiltinSlotName(name: name){
+                                continue
+                        }
                         switch value {
                         case .event(let str):
                                 storeEventField(name: name, value: str)
