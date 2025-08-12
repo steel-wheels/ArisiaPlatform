@@ -17,6 +17,7 @@ import  UIKit
 public class ASFrameEditor: MIStack
 {
         private var mFrameView:         MIStack?  = nil
+        private var mButtons:           MIStack?  = nil
         private var mUpdateButton:      MIButton? = nil
         private var mCancelButton:      MIButton? = nil
         private var mEditFields:        Dictionary<String, MITextField> = [:]
@@ -35,6 +36,8 @@ public class ASFrameEditor: MIStack
 
                 let buttons = MIStack()
                 buttons.axis = .horizontal
+                buttons.distribution = .fillEqually
+                mButtons = buttons
 
                 let updatebtn = MIButton()
                 updatebtn.title = "Update"
@@ -61,13 +64,13 @@ public class ASFrameEditor: MIStack
                 self.addArrangedSubView(buttons)
         }
 
-        public func set(target frame: ASFrame) {
+        public func set(target frame: ASFrame, width wid: MIContentSize.Length) {
                 mTargetFrame    = frame
                 mCachedFrame    = frame.clone()
-                load(frame: frame)
+                load(frame: frame, width: wid)
         }
 
-        private func load(frame frm: ASFrame){
+        private func load(frame frm: ASFrame, width wid: MIContentSize.Length){
                 guard let frameview = mFrameView else {
                         NSLog("[Error] Can not happen at \(#function)")
                         return
@@ -111,9 +114,12 @@ public class ASFrameEditor: MIStack
                         }
                 }
 
-                updateButtonStatus()
+                if let buttons = mButtons {
+                        buttons.set(contentSize: MIContentSize(width: wid,
+                                                               height: .none))
+                }
 
-                frameview.invalidateIntrinsicContentSize()
+                updateButtonStatus()
                 frameview.requireDisplay()
         }
 
