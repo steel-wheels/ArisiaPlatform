@@ -17,6 +17,8 @@ import  UIKit
 
 public class ASFrameEditor: MIStack
 {
+        public typealias UpdatedCallback = (_ frameid: Int) -> Void
+
         private var mFrameView:         MIStack?  = nil
         private var mButtons:           MIStack?  = nil
         private var mUpdateButton:      MIButton? = nil
@@ -26,6 +28,7 @@ public class ASFrameEditor: MIStack
         private var mValues:            Dictionary<String, MIValue>     = [:]
         private var mEditFields:        Dictionary<String, MITextField> = [:]
 
+        private var mCallback:          UpdatedCallback? = nil
         private var mIsModified:        Bool = false
 
         open override func setup(frame frm: CGRect) {
@@ -65,9 +68,10 @@ public class ASFrameEditor: MIStack
                 self.addArrangedSubView(buttons)
         }
 
-        public func set(target frame: ASFrame, width wid: MIContentSize.Length) {
-                mFrame  = frame
-                mValues = load(from: frame)
+        public func set(target frame: ASFrame, width wid: MIContentSize.Length, updatedCallback cbfunc: @escaping UpdatedCallback) {
+                mFrame    = frame
+                mValues   = load(from: frame)
+                mCallback = cbfunc
                 set(values: mValues, width: wid)
         }
 
@@ -125,6 +129,9 @@ public class ASFrameEditor: MIStack
                 }
                 store(to: frame, from: mValues)
                 mIsModified = false
+                if let cbfunc = mCallback {
+                        cbfunc(frame.frameId())
+                }
         }
 
         private func cancelButtonPressed() {
