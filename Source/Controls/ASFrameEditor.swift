@@ -7,6 +7,7 @@
 
 import MultiFrameKit
 import MultiUIKit
+import MultiDataKit
 import JavaScriptCore
 #if os(OSX)
 import  AppKit
@@ -20,10 +21,10 @@ public class ASFrameEditor: MIStack
         private var mButtons:           MIStack?  = nil
         private var mUpdateButton:      MIButton? = nil
         private var mCancelButton:      MIButton? = nil
-        private var mEditFields:        Dictionary<String, MITextField> = [:]
 
-        private var mTargetFrame:       ASFrame?  = nil
-        private var mCachedFrame:       ASFrame?  = nil
+        private var mFrame:             ASFrame?  = nil
+        private var mValues:            Dictionary<String, MIValue>     = [:]
+        private var mEditFields:        Dictionary<String, MITextField> = [:]
 
         private var mIsModified:        Bool = false
 
@@ -65,57 +66,23 @@ public class ASFrameEditor: MIStack
         }
 
         public func set(target frame: ASFrame, width wid: MIContentSize.Length) {
-                mTargetFrame    = frame
-                mCachedFrame    = frame.clone()
-                load(frame: frame, width: wid)
+                mFrame  = frame
+                mValues = load(from: frame)
+                set(values: mValues, width: wid)
         }
 
-        private func load(frame frm: ASFrame, width wid: MIContentSize.Length){
+        private func set(values vals: Dictionary<String, MIValue>,  width wid: MIContentSize.Length) {
                 guard let frameview = mFrameView else {
                         NSLog("[Error] Can not happen at \(#function)")
                         return
                 }
+
                 frameview.removeAllSubviews()
                 mEditFields = [:]
 
-                for (name, value) in frm.slots {
-                        /* Skip built-in frame name */
-                        if ASFrame.isBuiltinSlotName(name: name){
-                                continue
-                        }
-                        switch value {
-                        case .event(let estr):
-                                let subview = allocateEventField(name: name, value: estr)
-                                frameview.addArrangedSubView(subview)
-                        case .frame(_):
-                                // not supported
-                                break
-                        case .path(_):
-                                // not supported
-                                break
-                        case .value(let mval):
-                                switch mval.value {
-                                case .booleanValue(let bval):
-                                        let subview = allocateBooleantField(name: name, value: bval)
-                                        frameview.addArrangedSubView(subview)
-                                case .floatValue(let fval):
-                                        let subview = allocateFloatField(name: name, value: fval)
-                                        frameview.addArrangedSubView(subview)
-                                case .signedIntValue(let ival):
-                                        let subview = allocateIntField(name: name, value: ival)
-                                        frameview.addArrangedSubView(subview)
-                                case .stringValue(let sval):
-                                        let subview = allocateStringField(name: name, value: sval)
-                                        frameview.addArrangedSubView(subview)
-                                case .unsignedIntValue(let uval):
-                                        let subview = allocateIntField(name: name, value: Int(uval))
-                                        frameview.addArrangedSubView(subview)
-                                case .dictionaryValue(_), .arrayValue(_), .nilValue:
-                                        NSLog("[Error] Array/Dictionary value is not supported at \(#file)")
-                                @unknown default:
-                                        NSLog("[Error] supported type value at \(#file)")
-                                }
-                        }
+                for (name, val) in vals {
+                        let subview = allocateValueField(name: name, value: val)
+                        frameview.addArrangedSubView(subview)
                 }
 
                 if let buttons = mButtons {
@@ -127,23 +94,7 @@ public class ASFrameEditor: MIStack
                 frameview.requireDisplay()
         }
 
-        private func allocateEventField(name nm: String, value val: String) -> MIStack {
-                return allocateStringField(name: nm, value: val)
-        }
-
-        private func allocateBooleantField(name nm: String, value val: Bool) -> MIStack {
-                return allocateStringField(name: nm, value: "\(val)")
-        }
-
-        private func allocateIntField(name nm: String, value val: Int) -> MIStack {
-                return allocateStringField(name: nm, value: "\(val)")
-        }
-
-        private func allocateFloatField(name nm: String, value val: Double) -> MIStack {
-                return allocateStringField(name: nm, value: "\(val)")
-        }
-
-        private func allocateStringField(name nm: String, value val: String) -> MIStack {
+        private func allocateValueField(name nm: String, value val: MIValue) -> MIStack {
                 let result = MIStack()
                 result.axis = .vertical
 
@@ -152,11 +103,11 @@ public class ASFrameEditor: MIStack
                 result.addArrangedSubView(label)
 
                 let field = MITextField()
-                field.stringValue = val
+                field.set(value: val)
                 field.setCallback({
                         (_ str: String) -> Void in
                         //NSLog("ASFrameEditor: field callback: \(str)")
-                        self.updateSlot(name: nm, value: str)
+                        self.mValues[nm] = MIValue(stringValue: str)
                         self.mIsModified = true
                         self.updateButtonStatus()
                 })
@@ -167,87 +118,52 @@ public class ASFrameEditor: MIStack
                 return result
         }
 
-        private func store(frame frm: ASFrame){
-                for (name, value) in frm.slots {
-                        /* Skip built-in frame name */
+        private func updateButtonPressed() {
+                guard let frame = mFrame else {
+                        NSLog("[Error] No frame is defined at \(#file)")
+                        return
+                }
+                store(to: frame, from: mValues)
+                mIsModified = false
+        }
+
+        private func cancelButtonPressed() {
+                guard let frame = mFrame else {
+                        NSLog("[Error] No frame is defined at \(#file)")
+                        return
+                }
+                mValues = load(from: frame)
+                for (name, val) in mValues {
+                        if let field = mEditFields[name] {
+                                field.set(value: val)
+                        }
+                }
+                mIsModified = false
+
+                if let view = mFrameView {
+                        view.requireDisplay()
+                }
+        }
+
+        private func load(from frame: ASFrame) ->  Dictionary<String, MIValue> {
+                var result:  Dictionary<String, MIValue>  = [:]
+                for (name, value) in frame.slots {
                         if ASFrame.isBuiltinSlotName(name: name){
                                 continue
                         }
                         switch value {
-                        case .event(let str):
-                                storeEventField(name: name, value: str)
-                        case .frame(_):
-                                // not supported
+                        case .value(let ival):
+                                result[name] = ival
+                        case .event(_), .frame(_), .path(_):
                                 break
-                        case .path(_):
-                                // not supported
-                                break
-                        case .value(let mval):
-                                switch mval.value {
-                                case .booleanValue(let ival):
-                                        storeBoolField(name: name, value: ival)
-                                case .signedIntValue(let ival):
-                                        storeIntField(name: name, value: ival)
-                                case .unsignedIntValue(let ival):
-                                        storeIntField(name: name, value: Int(ival))
-                                case .floatValue(let ival):
-                                        storeFloatField(name: name, value: ival)
-                                case .stringValue(let ival):
-                                        storeStringField(name: name, value: ival)
-                                case .dictionaryValue(_), .arrayValue(_), .nilValue:
-                                        NSLog("[Error] Array/Dictionary value is not supported at \(#file)")
-                                @unknown default:
-                                        NSLog("[Error] supported type value at \(#file)")
-                                }
                         }
                 }
-                mIsModified = false
+                return result
         }
 
-        private func storeEventField(name nm: String, value val: String) {
-                storeStringField(name: nm, value: val)
-        }
-
-        private func storeBoolField(name nm: String, value val: Bool) {
-                storeStringField(name: nm, value: "\(val)")
-        }
-
-        private func storeIntField(name nm: String, value val: Int) {
-                storeStringField(name: nm, value: "\(val)")
-        }
-
-        private func storeFloatField(name nm: String, value val: Double) {
-                storeStringField(name: nm, value: "\(val)")
-        }
-
-        private func storeStringField(name nm: String, value val: String) {
-                if let field = mEditFields[nm] {
-                        field.stringValue = val
-                } else {
-                        NSLog("[Error] field \(nm) is not found at \(#file)")
-                }
-        }
-
-        private func updateSlot(name nm: String, value str: String) {
-                /* update cache */
-                if let target = mCachedFrame {
-                        target.set(slotName: nm, stringValue: str)
-                }
-        }
-
-        private func updateButtonPressed() {
-                if let cache = mCachedFrame {
-                        mTargetFrame = cache
-                        mCachedFrame = cache.clone()
-                }
-        }
-
-        private func cancelButtonPressed() {
-                if let view = mFrameView, let target = mTargetFrame {
-                        /* Restore source values */
-                        mCachedFrame = target.clone()
-                        store(frame: target)
-                        view.requireDisplay()
+        private func store(to frame: ASFrame, from values: Dictionary<String, MIValue>) {
+                for (name, val) in values {
+                        frame.set(slotName: name, value: .value(val))
                 }
         }
 
@@ -260,4 +176,5 @@ public class ASFrameEditor: MIStack
                 cancelbtn.isEnabled     = mIsModified
         }
 }
+
 
