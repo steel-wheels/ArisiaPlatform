@@ -25,7 +25,8 @@ public class ASFrameEditor: MIStack
         private var mCancelButton:      MIButton? = nil
 
         private var mFrame:             ASFrame?  = nil
-        private var mValues:            Dictionary<String, MIValue>     = [:]
+        private var mImmediateValues:   Dictionary<String, MIValue>     = [:]
+        private var mEventValues:       Dictionary<String, String>      = [:]
         private var mEditFields:        Dictionary<String, MITextField> = [:]
 
         private var mCallback:          UpdatedCallback? = nil
@@ -69,13 +70,14 @@ public class ASFrameEditor: MIStack
         }
 
         public func set(target frame: ASFrame, width wid: MIContentSize.Length, updatedCallback cbfunc: @escaping UpdatedCallback) {
-                mFrame    = frame
-                mValues   = load(from: frame)
-                mCallback = cbfunc
-                set(values: mValues, width: wid)
+                mFrame             = frame
+                mImmediateValues   = loadImmediates(from: frame)
+                mEventValues       = loadEvents(from: frame)
+                mCallback          = cbfunc
+                setViewContent(width: wid)
         }
 
-        private func set(values vals: Dictionary<String, MIValue>,  width wid: MIContentSize.Length) {
+        private func setViewContent(width wid: MIContentSize.Length) {
                 guard let frameview = mFrameView else {
                         NSLog("[Error] Can not happen at \(#function)")
                         return
@@ -84,8 +86,13 @@ public class ASFrameEditor: MIStack
                 frameview.removeAllSubviews()
                 mEditFields = [:]
 
-                for (name, val) in vals {
-                        let subview = allocateValueField(name: name, value: val)
+                for (name, val) in mImmediateValues {
+                        let subview = allocateValueField(name: name, isEvent: false, value: val)
+                        frameview.addArrangedSubView(subview)
+                }
+
+                for (name, val) in mEventValues {
+                        let subview = allocateValueField(name: name, isEvent: true, value: MIValue(stringValue: val))
                         frameview.addArrangedSubView(subview)
                 }
 
@@ -98,7 +105,7 @@ public class ASFrameEditor: MIStack
                 frameview.requireDisplay()
         }
 
-        private func allocateValueField(name nm: String, value val: MIValue) -> MIStack {
+        private func allocateValueField(name nm: String, isEvent isevt: Bool, value val: MIValue) -> MIStack {
                 let result = MIStack()
                 result.axis = .vertical
 
@@ -111,7 +118,11 @@ public class ASFrameEditor: MIStack
                 field.setCallback({
                         (_ str: String) -> Void in
                         //NSLog("ASFrameEditor: field callback: \(str)")
-                        self.mValues[nm] = MIValue(stringValue: str)
+                        if isevt {
+                                self.mEventValues[nm] = str
+                        } else {
+                                self.mImmediateValues[nm] = MIValue(stringValue: str)
+                        }
                         self.mIsModified = true
                         self.updateButtonStatus()
                 })
@@ -127,7 +138,8 @@ public class ASFrameEditor: MIStack
                         NSLog("[Error] No frame is defined at \(#file)")
                         return
                 }
-                store(to: frame, from: mValues)
+                storeImmediates(to: frame, from: mImmediateValues)
+                storeEvents(to: frame, from: mEventValues)
                 mIsModified = false
                 if let cbfunc = mCallback {
                         cbfunc(frame.frameId())
@@ -139,12 +151,21 @@ public class ASFrameEditor: MIStack
                         NSLog("[Error] No frame is defined at \(#file)")
                         return
                 }
-                mValues = load(from: frame)
-                for (name, val) in mValues {
+
+                mImmediateValues = loadImmediates(from: frame)
+                for (name, val) in mImmediateValues {
                         if let field = mEditFields[name] {
                                 field.set(value: val)
                         }
                 }
+
+                mEventValues = loadEvents(from: frame)
+                for (name, val) in mEventValues {
+                        if let field = mEditFields[name] {
+                                field.set(value: MIValue(stringValue: val))
+                        }
+                }
+
                 mIsModified = false
 
                 if let view = mFrameView {
@@ -152,7 +173,7 @@ public class ASFrameEditor: MIStack
                 }
         }
 
-        private func load(from frame: ASFrame) ->  Dictionary<String, MIValue> {
+        private func loadImmediates(from frame: ASFrame) ->  Dictionary<String, MIValue> {
                 var result:  Dictionary<String, MIValue>  = [:]
                 for (name, value) in frame.slots {
                         if ASFrame.isBuiltinSlotName(name: name){
@@ -168,9 +189,31 @@ public class ASFrameEditor: MIStack
                 return result
         }
 
-        private func store(to frame: ASFrame, from values: Dictionary<String, MIValue>) {
+        private func loadEvents(from frame: ASFrame) ->  Dictionary<String, String> {
+                var result:  Dictionary<String, String>  = [:]
+                for (name, value) in frame.slots {
+                        if ASFrame.isBuiltinSlotName(name: name){
+                                continue
+                        }
+                        switch value {
+                        case .event(let str):
+                                result[name] = str
+                        case .value(_), .frame(_), .path(_):
+                                break
+                        }
+                }
+                return result
+        }
+
+        private func storeImmediates(to frame: ASFrame, from values: Dictionary<String, MIValue>) {
                 for (name, val) in values {
                         frame.set(slotName: name, value: .value(val))
+                }
+        }
+
+        private func storeEvents(to frame: ASFrame, from values: Dictionary<String, String>) {
+                for (name, val) in values {
+                        frame.set(slotName: name, value: .value(MIValue(stringValue: val)))
                 }
         }
 
