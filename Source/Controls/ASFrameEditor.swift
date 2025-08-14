@@ -213,7 +213,7 @@ public class ASFrameEditor: MIStack
 
         private func storeEvents(to frame: ASFrame, from values: Dictionary<String, String>) {
                 for (name, val) in values {
-                        frame.set(slotName: name, value: .value(MIValue(stringValue: val)))
+                        frame.set(slotName: name, value: .event(val))
                 }
         }
 
