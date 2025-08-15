@@ -10,51 +10,29 @@ import Foundation
 
 public class ASStack
 {
-        private var mPackageDirectory:          URL
-        private var mFrameScriptURLs:           Array<URL>
-        private var mFrameTable:                Dictionary<String, ASFrame>
+        private var mFrames: Array<ASFrame>
 
-        public var frameScriptURLs: Array<URL> { get{ return mFrameScriptURLs }}
-
-        public init(packageDirectory pkgdir: URL) {
-                mPackageDirectory       = pkgdir
-                mFrameScriptURLs        = []
-                mFrameTable             = [:]
+        public init() {
+                mFrames = []
         }
 
-        public func add(frameScriptPath path: String) {
-                let path = mPackageDirectory.appending(path: path)
-                mFrameScriptURLs.append(path)
+        public func countOfFrames() -> Int {
+                return mFrames.count
         }
 
-        public func loadFrame(at index: Int) -> Result<ASFrame, NSError> {
-                guard index < mFrameScriptURLs.count else {
-                        let err = MIError.error(errorCode: .fileError, message: "No frame at \(index)")
-                        return .failure(err)
-                }
-                /* load from cache */
-                let url = mFrameScriptURLs[index]
-                if let frame = mFrameTable[url.path] {
-                        return .success(frame)
-                }
-                /* allocate frame */
-                let script: String
-                do {
-                        script = try String(contentsOf: url, encoding: .utf8)
-                } catch {
-                        let err = MIError.error(errorCode: .fileError, message: "Failed to load script from \(url.path)")
-                        return .failure(err)
-                }
-                //NSLog("(\(#function): loaded text: \(text)")
-                let parser = ASFrameParser()
-                switch parser.parse(string: script) {
-                case .success(let frame):
-                        // save the loaded frame
-                        mFrameTable[url.path] = frame
-                        return .success(frame)
-                case .failure(let err):
-                        return .failure(err)
+        public func append(frame frm: ASFrame){
+                mFrames.append(frm)
+        }
+
+        public func clear() {
+                mFrames = []
+        }
+
+        public func frame(at index: Int) -> ASFrame? {
+                if 0 <= index && index < mFrames.count {
+                        return mFrames[index]
+                } else {
+                        return nil
                 }
         }
 }
-
