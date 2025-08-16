@@ -22,23 +22,23 @@ import Foundation
                 switch ASFrameManager.loadBoxFrame() {
                 case .success(let frame):
                         mRootFrame   = frame
-                        mUniqueIndex = ASFrameManager.setFrameIds(frame: mRootFrame, frameId: 0)
+                        mUniqueIndex = ASFrame.setFrameIds(frame: mRootFrame, frameId: 0)
                 case .failure(let err):
                         NSLog("[Error] \(MIError.errorToString(error: err)) at \(#file)")
                         mRootFrame   = ASFrame()
-                        mUniqueIndex = ASFrameManager.setFrameIds(frame: mRootFrame, frameId: 0)
+                        mUniqueIndex = ASFrame.setFrameIds(frame: mRootFrame, frameId: 0)
                 }
         }
 
         public func add(contentsOf frame: ASFrame){
-                mUniqueIndex = ASFrameManager.setFrameIds(frame: frame, frameId: mUniqueIndex)
+                mUniqueIndex = ASFrame.setFrameIds(frame: frame, frameId: mUniqueIndex)
                 for (name, val) in frame.slots {
                         mRootFrame.set(slotName: name, value: val)
                 }
         }
 
         public func add(point pt: CGPoint, name nm: String, frame frm: ASFrame){
-                mUniqueIndex = ASFrameManager.setFrameIds(frame: frm, frameId: mUniqueIndex)
+                mUniqueIndex = ASFrame.setFrameIds(frame: frm, frameId: mUniqueIndex)
                 mRootFrame.set(slotName: nm, value: .frame(frm))
         }
 
@@ -92,19 +92,5 @@ import Foundation
                         let err = MIError.error(errorCode: .urlError, message: "No resource directory")
                         return .failure(err)
                 }
-        }
-
-        private static func setFrameIds(frame frm: ASFrame, frameId fid: Int) -> Int {
-                frm.setFrameId(fid)
-                var result   = fid + 1
-                for (_, val) in frm.slots {
-                        switch val {
-                        case .frame(let child):
-                                result = setFrameIds(frame: child, frameId: result)
-                        case .event(_), .path(_), .value(_):
-                                break
-                        }
-                }
-                return result
         }
 }

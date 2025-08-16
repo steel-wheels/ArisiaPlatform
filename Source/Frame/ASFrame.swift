@@ -163,4 +163,18 @@ extension ASFrame
                         return -1
                 }
         }
+
+        public static func setFrameIds(frame frm: ASFrame, frameId fid: Int) -> Int {
+                frm.setFrameId(fid)
+                var result   = fid + 1
+                for (_, val) in frm.slots {
+                        switch val {
+                        case .frame(let child):
+                                result = setFrameIds(frame: child, frameId: result)
+                        case .event(_), .path(_), .value(_):
+                                break
+                        }
+                }
+                return result
+        }
 }

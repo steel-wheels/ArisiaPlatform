@@ -22,9 +22,10 @@ public class ASDocument
 
         public func loadScripts() -> NSError? {
                 mStack.clear()
-                for url in mManifest.scriotURLs {
+                for path in mManifest.scriptPaths {
                         /* load from file */
                         let script: String
+                        let url = mManifest.packageDirectory.appendingPathComponent(path)
                         do {
                                 script = try String(contentsOf: url, encoding: .utf8)
                         } catch {
@@ -35,11 +36,53 @@ public class ASDocument
                         let parser = ASFrameParser()
                         switch parser.parse(string: script) {
                         case .success(let frame):
-                                mStack.append(frame: frame)
+                                NSLog("loadScript -> frame -> \(frame.encode())")
+                                mStack.append(path: path, frame: frame)
                         case .failure(let err):
                                 return err
                         }
                 }
+                return nil
+        }
+
+        public func save(to pkgdir: URL) -> NSError? {
+                let fmgr = FileManager.default
+
+                /* remove directory if it exist */
+                if fmgr.fileExists(atPath: pkgdir.path) {
+                        do {
+                                try fmgr.removeItem(at: pkgdir)
+                        } catch {
+                                return MIError.error(errorCode: .fileError, message: "Failed to remove \(pkgdir.path)")
+                        }
+                }
+
+                /* make directory */
+                do {
+                        try fmgr.createDirectory(at: pkgdir, withIntermediateDirectories: false)
+                } catch {
+                        return MIError.error(errorCode: .fileError, message: "Failed to create \(pkgdir.path)")
+                }
+
+                /* put manifest file */
+                let manfile  = pkgdir.appendingPathComponent(ASManifest.FileName)
+                let manifest = mManifest.toString().data(using: .utf8)
+                guard fmgr.createFile(atPath: manfile.path, contents: manifest) else {
+                        return MIError.error(errorCode: .fileError, message: "Failed to create \(manfile.path)")
+                }
+
+                /* save frames */
+                for frec in mStack.frameRecords {
+                        let url = pkgdir.appendingPathComponent(frec.path)
+                        let scr = frec.frame.encode()
+                        if !fmgr.createFile(atPath: url.path, contents: scr.data(using: .utf8)) {
+                                return MIError.error(errorCode: .fileError, message: "Failed to create \(url.path)")
+                        }
+                }
+
+                /* replace package directory */
+                mManifest.set(packageDirectory: pkgdir)
+
                 return nil
         }
 

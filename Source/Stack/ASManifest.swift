@@ -13,28 +13,31 @@ public class ASManifest
         public static let FileName = "manifest.json"
 
         private var mPackageDir:        URL
-        private var mScriptURLs:        Array<URL>
+        private var mScriptPaths:       Array<String>   // file offsets against the package dir
 
-        public var packageDirectory: URL { get { return mPackageDir }}
-        public var scriotURLs: Array<URL> { get { return mScriptURLs }}
+        public var packageDirectory: URL           { get { return mPackageDir  }}
+        public var scriptPaths:      Array<String> { get { return mScriptPaths }}
 
         public init(packageDirectory pkgdir: URL){
                 mPackageDir     = pkgdir
-                mScriptURLs     = []
+                mScriptPaths    = []
         }
 
-        public func add(scriptURL url: URL){
-                mScriptURLs.append(url)
+        public func set(packageDirectory url: URL){
+                mPackageDir = url
+        }
+
+        public func add(scriptPath pth: String){
+                mScriptPaths.append(pth)
         }
 
         public func toString() -> String {
-                var result = "manifest: {\n"
+                let pathstrs = mScriptPaths.map{ "\"" + $0 + "\"" }
 
+                var result = "{\n"
                 result += "  scripts: [\n"
-                for scr in mScriptURLs {
-                        result += "    \"\(scr.path)\"\n"
-                }
-                result += "  }\n"
+                result += pathstrs.joined(separator: ",\n")
+                result += "  \n]\n"
 
                 result += "}\n"
                 return result
@@ -74,8 +77,7 @@ public class ASManifest
                                 for sval in svals {
                                         switch sval.value {
                                         case .stringValue(let str):
-                                                let url = URL(fileURLWithPath: str)
-                                                result.add(scriptURL: url)
+                                                result.add(scriptPath: str)
                                         default:
                                                 let err = MIError.error(errorCode: .fileError, message: "The item scripts section in \(ASManifest.FileName) must have string URL")
                                                 return .failure(err)
