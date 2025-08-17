@@ -18,16 +18,9 @@ import Foundation
                 return mRootFrame
         }}
 
-        public init(){
-                switch ASFrameManager.loadBoxFrame() {
-                case .success(let frame):
-                        mRootFrame   = frame
-                        mUniqueIndex = ASFrame.setFrameIds(frame: mRootFrame, frameId: 0)
-                case .failure(let err):
-                        NSLog("[Error] \(MIError.errorToString(error: err)) at \(#file)")
-                        mRootFrame   = ASFrame()
-                        mUniqueIndex = ASFrame.setFrameIds(frame: mRootFrame, frameId: 0)
-                }
+        public init(frame frm: ASFrame){
+                mRootFrame   = frm
+                mUniqueIndex = ASFrame.setFrameIds(frame: frm, frameId: 0)
         }
 
         public func add(contentsOf frame: ASFrame){
