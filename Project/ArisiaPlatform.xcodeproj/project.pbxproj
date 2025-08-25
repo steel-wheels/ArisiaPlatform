@@ -45,8 +45,8 @@
 		05D589412E359F3400DFBAFB /* Box.as in CopyFiles */ = {isa = PBXBuildFile; fileRef = 05D5893D2E359F1500DFBAFB /* Box.as */; };
 		05E0DADB2E4E126600763D7B /* ASDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E0DADA2E4E126600763D7B /* ASDocument.swift */; };
 		05E0DADC2E4E126600763D7B /* ASDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E0DADA2E4E126600763D7B /* ASDocument.swift */; };
-		05E0DADE2E4EA4BE00763D7B /* ASManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E0DADD2E4EA4BE00763D7B /* ASManifest.swift */; };
-		05E0DADF2E4EA4BE00763D7B /* ASManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E0DADD2E4EA4BE00763D7B /* ASManifest.swift */; };
+		05E0DADE2E4EA4BE00763D7B /* ASResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E0DADD2E4EA4BE00763D7B /* ASResource.swift */; };
+		05E0DADF2E4EA4BE00763D7B /* ASResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E0DADD2E4EA4BE00763D7B /* ASResource.swift */; };
 		05F722222E2D2DB3005CB923 /* ASDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F722212E2D2DB3005CB923 /* ASDropView.swift */; };
 		05F722232E2D2DB3005CB923 /* ASDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F722212E2D2DB3005CB923 /* ASDropView.swift */; };
 		05F722252E2D2E5E005CB923 /* MultiUIKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05F722242E2D2E5E005CB923 /* MultiUIKit.xcframework */; };
@@ -168,13 +168,16 @@
 		05596C002E196C020001384E /* ASFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASFrame.swift; sourceTree = "<group>"; };
 		05596C162E1971440001384E /* ASFrameParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASFrameParser.swift; sourceTree = "<group>"; };
 		056B2FB72E0A4F52004E0EFC /* ArisiaPlatform.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ArisiaPlatform.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0596487D2E5A054C003A2595 /* Image.as */ = {isa = PBXFileReference; lastKnownFileType = text; path = Image.as; sourceTree = "<group>"; };
+		0596487F2E5A0585003A2595 /* images.key */ = {isa = PBXFileReference; lastKnownFileType = file; path = images.key; sourceTree = "<group>"; };
+		059648802E5A0585003A2595 /* no-image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "no-image.png"; sourceTree = "<group>"; };
 		05A6F2662E1AB2EA005A41E5 /* UnitTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UnitTest; sourceTree = BUILT_PRODUCTS_DIR; };
 		05A6F2752E1AB6A5005A41E5 /* ASFrameEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASFrameEncoder.swift; sourceTree = "<group>"; };
 		05B008902E2D145900662427 /* ArisiaPlatform.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ArisiaPlatform.xcframework; path = ../../../Library/Frameworks/ArisiaPlatform.xcframework; sourceTree = "<group>"; };
 		05B04EA52E46CE9D0042534D /* ViewTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ViewTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05D5893D2E359F1500DFBAFB /* Box.as */ = {isa = PBXFileReference; lastKnownFileType = text; path = Box.as; sourceTree = "<group>"; };
 		05E0DADA2E4E126600763D7B /* ASDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASDocument.swift; sourceTree = "<group>"; };
-		05E0DADD2E4EA4BE00763D7B /* ASManifest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASManifest.swift; sourceTree = "<group>"; };
+		05E0DADD2E4EA4BE00763D7B /* ASResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASResource.swift; sourceTree = "<group>"; };
 		05F722212E2D2DB3005CB923 /* ASDropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASDropView.swift; sourceTree = "<group>"; };
 		05F722242E2D2E5E005CB923 /* MultiUIKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MultiUIKit.xcframework; path = ../../../Library/Frameworks/MultiUIKit.xcframework; sourceTree = "<group>"; };
 		05F722272E2D2F0C005CB923 /* MultiFrameKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MultiFrameKit.xcframework; path = ../../../Library/Frameworks/MultiFrameKit.xcframework; sourceTree = "<group>"; };
@@ -298,8 +301,9 @@
 		055037232E232BAE00670753 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				05348C192E2FCA0B00485D66 /* Library */,
 				05F722732E2D342F005CB923 /* Frames */,
+				0596487E2E5A0555003A2595 /* Images */,
+				05348C192E2FCA0B00485D66 /* Library */,
 				055037242E232C0E00670753 /* Test */,
 			);
 			name = Resource;
@@ -329,7 +333,7 @@
 			isa = PBXGroup;
 			children = (
 				05E0DADA2E4E126600763D7B /* ASDocument.swift */,
-				05E0DADD2E4EA4BE00763D7B /* ASManifest.swift */,
+				05E0DADD2E4EA4BE00763D7B /* ASResource.swift */,
 				0505BFC52E2268BE0023EE05 /* ASStack.swift */,
 			);
 			path = Stack;
@@ -371,6 +375,15 @@
 			path = ../Source;
 			sourceTree = "<group>";
 		};
+		0596487E2E5A0555003A2595 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				0596487F2E5A0585003A2595 /* images.key */,
+				059648802E5A0585003A2595 /* no-image.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 		05A6F2612E1AB28E005A41E5 /* Test */ = {
 			isa = PBXGroup;
 			children = (
@@ -384,6 +397,7 @@
 		05F722732E2D342F005CB923 /* Frames */ = {
 			isa = PBXGroup;
 			children = (
+				0596487D2E5A054C003A2595 /* Image.as */,
 				05D5893D2E359F1500DFBAFB /* Box.as */,
 				05F722782E2D34CD005CB923 /* Button.as */,
 			);
@@ -612,7 +626,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				05E0DADF2E4EA4BE00763D7B /* ASManifest.swift in Sources */,
+				05E0DADF2E4EA4BE00763D7B /* ASResource.swift in Sources */,
 				050910522E46308A002358A9 /* ASFrameEditor.swift in Sources */,
 				052E02662E4C07A200636E13 /* ASTextField.swift in Sources */,
 				05348C242E2FCA9800485D66 /* Makefile in Sources */,
@@ -631,7 +645,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				05E0DADE2E4EA4BE00763D7B /* ASManifest.swift in Sources */,
+				05E0DADE2E4EA4BE00763D7B /* ASResource.swift in Sources */,
 				050910532E46308A002358A9 /* ASFrameEditor.swift in Sources */,
 				05348C232E2FCA9800485D66 /* Makefile in Sources */,
 				052E02652E4C07A200636E13 /* ASTextField.swift in Sources */,

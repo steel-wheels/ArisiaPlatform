@@ -14,6 +14,7 @@ import Foundation
 {
         private var mContext:           MFContext
         private var mConsoleStortage:   MITextStorage
+        private var mResource:          ASResource
         private var mScript:            Array<String>
 
         private struct EventDefinition {
@@ -26,9 +27,10 @@ import Foundation
                 }
         }
 
-        public init(context ctxt: MFContext, consoleStorage strg: MITextStorage){
+        public init(context ctxt: MFContext, consoleStorage strg: MITextStorage, resource res: ASResource){
                 mContext         = ctxt
                 mConsoleStortage = strg
+                mResource        = res
                 mScript          = []
 
                 /* add console object */
@@ -59,6 +61,8 @@ import Foundation
                         result = compile(boxFrame: ownerframe, path: pth, into: ownerview)
                 case .button:
                         result = compile(buttonFrame: ownerframe, path: pth, into: ownerview)
+                case .image:
+                        result = compile(imageFrame: ownerframe, path: pth, into: ownerview)
                 }
                 return result
         }
@@ -152,6 +156,48 @@ import Foundation
                              eventDefinitions:  eventdefs
                 )
                 return nil
+        }
+
+        private func compile(imageFrame ownerframe: ASFrame, path pth: Array<String>, into ownerview: MFStack) -> NSError? {
+                let image = MFImageView(context: mContext, frameId: ownerframe.frameId())
+
+                for (slotname, slotvalue) in ownerframe.slots {
+                        switch slotvalue {
+                        case .value(let val):
+                                switch slotname {
+                                case MFImageView.FileSlotName:
+                                        let url = fileSlotToURL(file: val.toString())
+                                        image.setValue(
+                                                name: MFImageView.FileSlotName,
+                                                value: MIValue(stringValue: url))
+                                case ASFrame.ClassSlotName, ASFrame.FrameIdSlotName:
+                                        break
+                                default:
+                                        return MIError.error(
+                                          errorCode: .parseError,
+                                          message: "The image does not have \"\(slotname)\" slot"
+                                        )
+                                }
+                        case .event(_), .frame(_), .path(_):
+                                return MIError.error(
+                                        errorCode: .parseError,
+                                        message: "The image can not have event/frame/path slot"
+                                )
+                        }
+                }
+
+                ownerview.addArrangedSubView(image)
+                exportObject(path:              pth,
+                             frame:             image,
+                             properties:        [MFImageView.FileSlotName],
+                             eventDefinitions:  []
+                )
+                return nil
+        }
+
+        private func fileSlotToURL(file fl: String) -> String {
+                let furl = mResource.packageDirectory.appendingPathComponent(fl)
+                return furl.path
         }
 
         private func exportObject(path pth: Array<String>, frame frm: MFFrame, properties props: Array<String>,

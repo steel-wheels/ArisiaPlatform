@@ -10,22 +10,23 @@ import Foundation
 
 public class ASDocument
 {
-        private var mManifest:          ASManifest
+        private var mResource:          ASResource
         private var mStack:             ASStack
 
-        public var stack: ASStack { return mStack }
+        public var stack:    ASStack    { return mStack }
+        public var resource: ASResource { return mResource }
 
-        public init(manifest man: ASManifest){
-                mManifest       = man
+        public init(resource res: ASResource){
+                mResource       = res
                 mStack          = ASStack()
         }
 
         public func loadScripts() -> NSError? {
                 mStack.clear()
-                for path in mManifest.scriptPaths {
+                for path in mResource.scriptPaths {
                         /* load from file */
                         let script: String
-                        let url = mManifest.packageDirectory.appendingPathComponent(path)
+                        let url = mResource.packageDirectory.appendingPathComponent(path)
                         do {
                                 script = try String(contentsOf: url, encoding: .utf8)
                         } catch {
@@ -64,9 +65,9 @@ public class ASDocument
                         return MIError.error(errorCode: .fileError, message: "Failed to create \(pkgdir.path)")
                 }
 
-                /* put manifest file */
-                let manfile  = pkgdir.appendingPathComponent(ASManifest.FileName)
-                let manifest = mManifest.toString().data(using: .utf8)
+                /* put resource file */
+                let manfile  = pkgdir.appendingPathComponent(ASResource.FileName)
+                let manifest = mResource.toString().data(using: .utf8)
                 guard fmgr.createFile(atPath: manfile.path, contents: manifest) else {
                         return MIError.error(errorCode: .fileError, message: "Failed to create \(manfile.path)")
                 }
@@ -81,16 +82,16 @@ public class ASDocument
                 }
 
                 /* replace package directory */
-                mManifest.set(packageDirectory: pkgdir)
+                mResource.set(packageDirectory: pkgdir)
 
                 return nil
         }
 
         public static func load(packageDirectory pkgdir: URL) -> Result<ASDocument, NSError> {
-                switch ASManifest.load(packageDirectory: pkgdir) {
-                case .success(let manifest):
+                switch ASResource.load(packageDirectory: pkgdir) {
+                case .success(let resource):
                         //NSLog("MANIFEST: \(manifest.toString())")
-                        let newdoc = ASDocument(manifest: manifest)
+                        let newdoc = ASDocument(resource: resource)
                         if let err = newdoc.loadScripts() {
                                 return .failure(err)
                         } else {

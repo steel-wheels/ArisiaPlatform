@@ -107,6 +107,7 @@ extension ASFrame
         public enum FrameClass: String {
                 case box        = "Box"
                 case button     = "Button"
+                case image      = "Image"
 
                 public func toString() -> String {
                         return self.rawValue

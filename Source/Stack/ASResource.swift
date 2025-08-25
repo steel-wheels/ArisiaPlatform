@@ -1,14 +1,20 @@
 /*
- * @file ASManifest.swift
- * @description Define ASManifest class
+ * @file ASResource.swift
+ * @description Define ASResource class
  * @par Copyright
  *   Copyright (C) 2025 Steel Wheels Project
  */
 
 import MultiDataKit
+import MultiUIKit
 import Foundation
+#if os(OSX)
+import  AppKit
+#else   // os(OSX)
+import  UIKit
+#endif  // os(OSX)
 
-public class ASManifest
+public class ASResource
 {
         public static let FileName = "manifest.json"
 
@@ -43,29 +49,29 @@ public class ASManifest
                 return result
         }
 
-        public static func load(packageDirectory pkgdir: URL) -> Result<ASManifest, NSError> {
+        public static func load(packageDirectory pkgdir: URL) -> Result<ASResource, NSError> {
                 /* load manifest file */
-                let mfile = pkgdir.appending(path: ASManifest.FileName)
+                let mfile = pkgdir.appending(path: ASResource.FileName)
                 let script: String
                 do {
                         script = try String(contentsOf: mfile, encoding: .utf8)
                 } catch {
-                        let err = MIError.error(errorCode: .fileError, message: "Failed to load \(ASManifest.FileName) from \(mfile.path)")
+                        let err = MIError.error(errorCode: .fileError, message: "Failed to load \(ASResource.FileName) from \(mfile.path)")
                         return .failure(err)
                 }
                 /* parse manifest file */
                 switch MIJsonFile.load(string: script) {
                 case .success(let value):
-                        return ASManifest.load(value: value, packageDir: pkgdir)
+                        return ASResource.load(value: value, packageDir: pkgdir)
                 case .failure(let err):
                         return .failure(err)
                 }
         }
 
-        private static func load(value val: MIValue, packageDir pkgdir: URL) -> Result<ASManifest, NSError> {
+        private static func load(value val: MIValue, packageDir pkgdir: URL) -> Result<ASResource, NSError> {
                 switch val.value {
                 case .dictionaryValue(let dict):
-                        let result = ASManifest(packageDirectory: pkgdir)
+                        let result = ASResource(packageDirectory: pkgdir)
 
                         /* parse "scripts" section */
                         guard let scrval = dict["scripts"] else {
@@ -79,13 +85,13 @@ public class ASManifest
                                         case .stringValue(let str):
                                                 result.add(scriptPath: str)
                                         default:
-                                                let err = MIError.error(errorCode: .fileError, message: "The item scripts section in \(ASManifest.FileName) must have string URL")
+                                                let err = MIError.error(errorCode: .fileError, message: "The item scripts section in \(ASResource.FileName) must have string URL")
                                                 return .failure(err)
                                         }
                                 }
                                 return .success(result)
                         default:
-                                let err = MIError.error(errorCode: .fileError, message: "The scripts section in \(ASManifest.FileName) must have array of URLs")
+                                let err = MIError.error(errorCode: .fileError, message: "The scripts section in \(ASResource.FileName) must have array of URLs")
                                 return .failure(err)
                         }
                 default:
