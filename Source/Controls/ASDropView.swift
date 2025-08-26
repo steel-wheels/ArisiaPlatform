@@ -35,6 +35,17 @@ public class ASDropView: MFDropView
                                 NSLog("[Error] " + MIError.toString(error: err))
                         }
                         break
+                case .photo:
+                        switch ASFrameManager.loadImageFrame() {
+                        case .success(let frame):
+                                if let cbfunc = droppingCallback {
+                                        cbfunc(pt, "image", frame)
+                                } else {
+                                        NSLog("DropCallback: \(frame.encode())")
+                                }
+                        case .failure(let err):
+                                NSLog("[Error] " + MIError.toString(error: err))
+                        }
                 default:
                         NSLog("[Error] The drop item is ignored: \(sym.name)")
                 }

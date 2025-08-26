@@ -64,6 +64,10 @@ import Foundation
                 return loadFrame(fileName: "Frames/Button.as")
         }
 
+        public static func loadImageFrame() -> Result<ASFrame, NSError> {
+                return loadFrame(fileName: "Frames/Image.as")
+        }
+
         public static func loadFrame(fileName fname: String) -> Result<ASFrame, NSError> {
                 if let resdir = FileManager.default.resourceDirectory(forClass: ASDropView.self) {
                         let file = resdir.appending(path: fname)

@@ -166,10 +166,17 @@ import Foundation
                         case .value(let val):
                                 switch slotname {
                                 case MFImageView.FileSlotName:
-                                        let url = fileSlotToURL(file: val.toString())
-                                        image.setValue(
-                                                name: MFImageView.FileSlotName,
-                                                value: MIValue(stringValue: url))
+                                        if let file = val.stringValue {
+                                                let url = fileSlotToURL(file: file)
+                                                image.setValue(
+                                                        name: MFImageView.FileSlotName,
+                                                        value: MIValue(stringValue: url))
+                                        } else {
+                                                return MIError.error(
+                                                  errorCode: .parseError,
+                                                  message: "The value type at \"\(slotname)\" slot"
+                                                )
+                                        }
                                 case ASFrame.ClassSlotName, ASFrame.FrameIdSlotName:
                                         break
                                 default:
