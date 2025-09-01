@@ -69,15 +69,15 @@ public class ASFrameEditor: MIStack
                 self.addArrangedSubView(buttons)
         }
 
-        public func set(target frame: ASFrame, width wid: MIContentSize.Length, updatedCallback cbfunc: @escaping UpdatedCallback) {
+        public func set(target frame: ASFrame, updatedCallback cbfunc: @escaping UpdatedCallback) {
                 mFrame             = frame
                 mImmediateValues   = loadImmediates(from: frame)
                 mEventValues       = loadEvents(from: frame)
                 mCallback          = cbfunc
-                setViewContent(width: wid)
+                setViewContent()
         }
 
-        private func setViewContent(width wid: MIContentSize.Length) {
+        private func setViewContent() {
                 guard let frameview = mFrameView else {
                         NSLog("[Error] Can not happen at \(#function)")
                         return
@@ -94,11 +94,6 @@ public class ASFrameEditor: MIStack
                 for (name, val) in mEventValues {
                         let subview = allocateValueField(name: name, isEvent: true, value: MIValue(stringValue: val))
                         frameview.addArrangedSubView(subview)
-                }
-
-                if let buttons = mButtons {
-                        buttons.set(contentSize: MIContentSize(width: wid,
-                                                               height: .none))
                 }
 
                 updateButtonStatus()
