@@ -26,7 +26,7 @@ class ViewController: NSViewController
                 frame.set(slotName: "value0", value: .value(MIValue(stringValue: "10.0")))
                 frame.set(slotName: "value1", value: .value(MIValue(stringValue: "-12.3")))
 
-                mFrameEditor.set(target: frame, width: .none, updatedCallback: {
+                mFrameEditor.set(target: frame, updatedCallback: {
                         (_ frameid: Int) -> Void in
                         NSLog("Updated callback: frame-id: \(frameid)")
                 })
