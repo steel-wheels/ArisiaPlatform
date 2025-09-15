@@ -49,8 +49,8 @@
 		05E0DADF2E4EA4BE00763D7B /* ASResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E0DADD2E4EA4BE00763D7B /* ASResource.swift */; };
 		05E65FB82E5CADCC009C157E /* Image.as in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0596487D2E5A054C003A2595 /* Image.as */; };
 		05E65FB92E5CADE1009C157E /* Image.as in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0596487D2E5A054C003A2595 /* Image.as */; };
-		05F722222E2D2DB3005CB923 /* ASBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F722212E2D2DB3005CB923 /* ASBox.swift */; };
-		05F722232E2D2DB3005CB923 /* ASBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F722212E2D2DB3005CB923 /* ASBox.swift */; };
+		05F722222E2D2DB3005CB923 /* ASDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F722212E2D2DB3005CB923 /* ASDropView.swift */; };
+		05F722232E2D2DB3005CB923 /* ASDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F722212E2D2DB3005CB923 /* ASDropView.swift */; };
 		05F722252E2D2E5E005CB923 /* MultiUIKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05F722242E2D2E5E005CB923 /* MultiUIKit.xcframework */; };
 		05F722262E2D2E6E005CB923 /* MultiUIKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05F722242E2D2E5E005CB923 /* MultiUIKit.xcframework */; };
 		05F722282E2D2F0C005CB923 /* MultiFrameKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05F722272E2D2F0C005CB923 /* MultiFrameKit.xcframework */; };
@@ -182,7 +182,7 @@
 		05D5893D2E359F1500DFBAFB /* Box.as */ = {isa = PBXFileReference; lastKnownFileType = text; path = Box.as; sourceTree = "<group>"; };
 		05E0DADA2E4E126600763D7B /* ASDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASDocument.swift; sourceTree = "<group>"; };
 		05E0DADD2E4EA4BE00763D7B /* ASResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASResource.swift; sourceTree = "<group>"; };
-		05F722212E2D2DB3005CB923 /* ASBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASBox.swift; sourceTree = "<group>"; };
+		05F722212E2D2DB3005CB923 /* ASDropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASDropView.swift; sourceTree = "<group>"; };
 		05F722242E2D2E5E005CB923 /* MultiUIKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MultiUIKit.xcframework; path = ../../../Library/Frameworks/MultiUIKit.xcframework; sourceTree = "<group>"; };
 		05F722272E2D2F0C005CB923 /* MultiFrameKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MultiFrameKit.xcframework; path = ../../../Library/Frameworks/MultiFrameKit.xcframework; sourceTree = "<group>"; };
 		05F722782E2D34CD005CB923 /* Button.as */ = {isa = PBXFileReference; lastKnownFileType = text; path = Button.as; sourceTree = "<group>"; };
@@ -267,7 +267,7 @@
 		05259BB32E2D1F1D00ED2BC5 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
-				05F722212E2D2DB3005CB923 /* ASBox.swift */,
+				05F722212E2D2DB3005CB923 /* ASDropView.swift */,
 				050910512E46308A002358A9 /* ASFrameEditor.swift */,
 				052E02642E4C07A200636E13 /* ASTextField.swift */,
 			);
@@ -641,7 +641,7 @@
 				05596C172E1971440001384E /* ASFrameParser.swift in Sources */,
 				05596C022E196C030001384E /* ASFrame.swift in Sources */,
 				05A6F2772E1AB6A5005A41E5 /* ASFrameEncoder.swift in Sources */,
-				05F722222E2D2DB3005CB923 /* ASBox.swift in Sources */,
+				05F722222E2D2DB3005CB923 /* ASDropView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -660,7 +660,7 @@
 				051BC3DA2E2DED6200BCACF1 /* ASFrameManager.swift in Sources */,
 				05596C012E196C020001384E /* ASFrame.swift in Sources */,
 				05A6F2762E1AB6A5005A41E5 /* ASFrameEncoder.swift in Sources */,
-				05F722232E2D2DB3005CB923 /* ASBox.swift in Sources */,
+				05F722232E2D2DB3005CB923 /* ASDropView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

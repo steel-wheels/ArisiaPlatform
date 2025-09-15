@@ -69,7 +69,7 @@ import Foundation
         }
 
         public static func loadFrame(fileName fname: String) -> Result<ASFrame, NSError> {
-                if let resdir = FileManager.default.resourceDirectory(forClass: ASFrame.self) {
+                if let resdir = FileManager.default.resourceDirectory(forClass: ASDropView.self) {
                         let file = resdir.appending(path: fname)
                         let text: String
                         do {
