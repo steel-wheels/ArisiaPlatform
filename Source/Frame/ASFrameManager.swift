@@ -30,7 +30,12 @@ import Foundation
                 }
         }
 
-        public func add(point pt: CGPoint, name nm: String, frame frm: ASFrame){
+        public func add(name nm: String, frame frm: ASFrame, in frameview: MIStack, at point: CGPoint){
+                NSLog("dropped pt: \(point.x), \(point.y)")
+                for view in frameview.arrangedSubviews {
+                        let subfrm = view.frame
+                        NSLog("sub: \(subfrm.origin.x), \(subfrm.origin.y) \(subfrm.size.width)-\(subfrm.size.height)")
+                }
                 mUniqueIndex = ASFrame.setFrameIds(frame: frm, frameId: mUniqueIndex)
                 mRootFrame.set(slotName: nm, value: .frame(frm))
         }

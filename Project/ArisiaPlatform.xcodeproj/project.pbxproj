@@ -13,6 +13,8 @@
 		050910532E46308A002358A9 /* ASFrameEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050910512E46308A002358A9 /* ASFrameEditor.swift */; };
 		051BC3D92E2DED6200BCACF1 /* ASFrameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051BC3D82E2DED6200BCACF1 /* ASFrameManager.swift */; };
 		051BC3DA2E2DED6200BCACF1 /* ASFrameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051BC3D82E2DED6200BCACF1 /* ASFrameManager.swift */; };
+		051C474F2E79A02800F1FC55 /* ASDropDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051C474E2E79A02800F1FC55 /* ASDropDetector.swift */; };
+		051C47502E79A02800F1FC55 /* ASDropDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051C474E2E79A02800F1FC55 /* ASDropDetector.swift */; };
 		052E02652E4C07A200636E13 /* ASTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 052E02642E4C07A200636E13 /* ASTextField.swift */; };
 		052E02662E4C07A200636E13 /* ASTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 052E02642E4C07A200636E13 /* ASTextField.swift */; };
 		05348C1F2E2FCA4900485D66 /* Frame.js in Resources */ = {isa = PBXBuildFile; fileRef = 05348C1D2E2FCA4900485D66 /* Frame.js */; };
@@ -160,6 +162,7 @@
 		050910512E46308A002358A9 /* ASFrameEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASFrameEditor.swift; sourceTree = "<group>"; };
 		051A82B92E196A54004A9C4B /* ArisiaPlatform.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ArisiaPlatform.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		051BC3D82E2DED6200BCACF1 /* ASFrameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASFrameManager.swift; sourceTree = "<group>"; };
+		051C474E2E79A02800F1FC55 /* ASDropDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASDropDetector.swift; sourceTree = "<group>"; };
 		052E02642E4C07A200636E13 /* ASTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASTextField.swift; sourceTree = "<group>"; };
 		05348C1A2E2FCA3900485D66 /* Builtin.d.ts */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.typescript; path = Builtin.d.ts; sourceTree = "<group>"; };
 		05348C1B2E2FCA3900485D66 /* Frame.d.ts */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.typescript; path = Frame.d.ts; sourceTree = "<group>"; };
@@ -260,6 +263,7 @@
 				05A6F2752E1AB6A5005A41E5 /* ASFrameEncoder.swift */,
 				05596C162E1971440001384E /* ASFrameParser.swift */,
 				051BC3D82E2DED6200BCACF1 /* ASFrameManager.swift */,
+				051C474E2E79A02800F1FC55 /* ASDropDetector.swift */,
 			);
 			path = Frame;
 			sourceTree = "<group>";
@@ -634,6 +638,7 @@
 				050910522E46308A002358A9 /* ASFrameEditor.swift in Sources */,
 				052E02662E4C07A200636E13 /* ASTextField.swift in Sources */,
 				05348C242E2FCA9800485D66 /* Makefile in Sources */,
+				051C47502E79A02800F1FC55 /* ASDropDetector.swift in Sources */,
 				0505BFC72E2268BE0023EE05 /* ASStack.swift in Sources */,
 				05E0DADC2E4E126600763D7B /* ASDocument.swift in Sources */,
 				05348C292E2FCEBC00485D66 /* ASFrameCompiler.swift in Sources */,
@@ -653,6 +658,7 @@
 				050910532E46308A002358A9 /* ASFrameEditor.swift in Sources */,
 				05348C232E2FCA9800485D66 /* Makefile in Sources */,
 				052E02652E4C07A200636E13 /* ASTextField.swift in Sources */,
+				051C474F2E79A02800F1FC55 /* ASDropDetector.swift in Sources */,
 				0505BFC62E2268BE0023EE05 /* ASStack.swift in Sources */,
 				05E0DADB2E4E126600763D7B /* ASDocument.swift in Sources */,
 				05596C182E1971440001384E /* ASFrameParser.swift in Sources */,
