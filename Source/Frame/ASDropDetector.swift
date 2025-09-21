@@ -132,13 +132,27 @@ public class ASDropDetector: MIVisitor
                 if isInFrame(point: currentPoint(), view: src) {
                         let subviews = src.arrangedSubviews
                         if subviews.count > 0 {
-                                super.visitAllSubviews(stack: src)
+                                for subview in subviews {
+                                        subview.accept(visitor: self)
+                                        if let _ = mDetectedView {
+                                                return // already detected
+                                        }
+                                }
                         } else {
                                 let center = DetectedPosition(horizontal: .center, vertical: .middle)
                                 mDetectedView = DetectedView(position: center, view: src)
                         }
                 } else {
                         NSLog("Not in stack frame at \(#function)")
+                }
+        }
+
+        public override func visit(button src: MIButton) {
+                dumpPoint(label: "button", view: src)
+                if isInFrame(point: currentPoint(), view: src) {
+                        NSLog("In button frame at \(#function)")
+                        let dpos = detectedPosition(point: currentPoint(), frame: src.buttonFrame())
+                        mDetectedView = DetectedView(position: dpos, view: src)
                 }
         }
 
@@ -195,6 +209,10 @@ public class ASDropDetector: MIVisitor
                 if let imgview = src as? MIImageView {
                         let imgrect = imgview.imageFrame()
                         NSLog(" image:  \(imgrect.description)")
+                }
+                if let btnview = src as? MIButton {
+                        let btnrect = btnview.buttonFrame()
+                        NSLog(" button: \(btnrect.description)")
                 }
                 NSLog("}")
         }
