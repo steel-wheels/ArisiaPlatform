@@ -33,25 +33,84 @@ public enum ASFrameValue
 
 public class ASFrame
 {
-        private var mSlots: Dictionary<String, ASFrameValue> = [:]
+        public struct Slot {
+                var name:       String
+                var value:      ASFrameValue
+        }
+
+        private var mSlots:     Array<Slot> = []
 
         public init(){
-                mSlots = [:]
+                mSlots = []
         }
 
-        public var slots: Dictionary<String, ASFrameValue> { get { return mSlots }}
+        public var slots: Array<Slot> { get { return mSlots }}
+
+        public var frameSlots: Array<Slot> { get {
+                var result: Array<Slot> = []
+                for slot in mSlots {
+                        switch slot.value {
+                        case .frame(_):
+                                result.append(slot)
+                        default:
+                                break ;
+                        }
+                }
+                return result
+        }}
 
         public func set(slotName name: String, value val: ASFrameValue) {
-                mSlots[name] = val
-        }
-
-        public func value(slotName name: String) -> ASFrameValue? {
-                return mSlots[name]
+                for i in 0..<mSlots.count {
+                        let slot = mSlots[i]
+                        if slot.name == name {
+                                mSlots[i] = Slot(name: name, value: val)
+                                break
+                        }
+                }
+                let slot = Slot(name: name, value: val)
+                mSlots.append(slot)
         }
 
         public func set(slotName name: String, stringValue str: String) {
-                let val: ASFrameValue = .value(MIValue(stringValue: str))
-                self.set(slotName: name, value: val)
+                set(slotName: name, value: .value(MIValue(stringValue: str)))
+        }
+
+        public func set(slotName name: String, intValue ival: Int) {
+                set(slotName: name, value: .value(MIValue(signedIntValue: ival)))
+        }
+
+        public func insert(slotName name: String, frame frm: ASFrame, before bid: Int) -> Bool {
+                if bid < mSlots.count {
+                        let newslot = Slot(name: name, value: .frame(frm))
+                        mSlots.insert(newslot, at: bid)
+                        return true
+                } else {
+                        NSLog("[Error] Invalid index before \(bid) at \(#file)")
+                        return false
+                }
+        }
+
+        public func insert(slotName name: String, frame frm: ASFrame, after bid: Int) -> Bool {
+                let nid = bid + 1
+                if nid < mSlots.count {
+                        return insert(slotName: name, frame: frm, before: nid)
+                } else if nid == mSlots.count {
+                        let newslot = Slot(name: name, value: .frame(frm))
+                        mSlots.append(newslot)
+                        return true
+                } else {
+                        NSLog("[Error] Invalid index after \(bid) at \(#file)")
+                        return false
+                }
+        }
+
+        public func value(slotName name: String) -> ASFrameValue? {
+                for slot in slots {
+                        if slot.name == name {
+                                return slot.value
+                        }
+                }
+                return nil
         }
 
         public func stringValue(slotName name: String) -> String? {
@@ -69,11 +128,6 @@ public class ASFrame
                         }
                 }
                 return nil
-        }
-
-        public func set(slotName name: String, intValue ival: Int) {
-                let val: ASFrameValue = .value(MIValue(signedIntValue: ival))
-                self.set(slotName: name, value: val)
         }
 
         public func intValue(slotName name: String) -> Int? {
@@ -95,8 +149,8 @@ public class ASFrame
 
         public func clone() -> ASFrame {
                 let result = ASFrame()
-                for (name, val) in mSlots {
-                        result.set(slotName: name, value: val.clone())
+                for slot in mSlots {
+                        result.set(slotName: slot.name, value: slot.value.clone())
                 }
                 return result
         }
@@ -168,8 +222,8 @@ extension ASFrame
         public static func setFrameIds(frame frm: ASFrame, frameId fid: Int) -> Int {
                 frm.setFrameId(fid)
                 var result   = fid + 1
-                for (_, val) in frm.slots {
-                        switch val {
+                for slot in frm.slots {
+                        switch slot.value {
                         case .frame(let child):
                                 result = setFrameIds(frame: child, frameId: result)
                         case .event(_), .path(_), .value(_):

@@ -11,6 +11,8 @@ import Foundation
 
 @MainActor public class ASFrameManager
 {
+        public typealias DetectedFrame = ASDropDetector.DetectedFrame
+
         private var mRootFrame          : ASFrame
         private var mUniqueIndex        : Int
 
@@ -25,19 +27,57 @@ import Foundation
 
         public func add(contentsOf frame: ASFrame){
                 mUniqueIndex = ASFrame.setFrameIds(frame: frame, frameId: mUniqueIndex)
-                for (name, val) in frame.slots {
-                        mRootFrame.set(slotName: name, value: val)
+                for slot in frame.slots {
+                        mRootFrame.set(slotName: slot.name, value: slot.value)
                 }
         }
 
-        public func add(name nm: String, frame frm: ASFrame, in frameview: MIStack, at point: CGPoint){
-                NSLog("dropped pt: \(point.x), \(point.y)")
-                for view in frameview.arrangedSubviews {
-                        let subfrm = view.frame
-                        NSLog("sub: \(subfrm.origin.x), \(subfrm.origin.y) \(subfrm.size.width)-\(subfrm.size.height)")
+        public func insert(name nm: String, frame frm: ASFrame, at dpoint: DetectedFrame){
+                //NSLog("dropped at \(dpoint.description)")
+                if mRootFrame.frameSlots.count == 0 {
+                        //NSLog("Successed to add 1st item")
+                        mUniqueIndex = ASFrame.setFrameIds(frame: frm, frameId: mUniqueIndex)
+                        mRootFrame.set(slotName: nm, value: .frame(frm))
+                } else if insert(destination: mRootFrame, name: nm, source: frm, at: dpoint) {
+                        //NSLog("Successed to insert")
+                } else {
+                        NSLog("[Error] Failed to insert")
                 }
-                mUniqueIndex = ASFrame.setFrameIds(frame: frm, frameId: mUniqueIndex)
-                mRootFrame.set(slotName: nm, value: .frame(frm))
+        }
+
+        private func insert(destination dstfrm: ASFrame, name nm: String, source srcfrm: ASFrame, at dpoint: DetectedFrame) -> Bool {
+                for slotidx in 0..<dstfrm.slots.count {
+                        let dstslot = dstfrm.slots[slotidx]
+                        switch dstslot.value {
+                        case .frame(let child):
+                                if child.frameId() == dpoint.frameId {
+                                        return doInsert(parent: dstfrm, childIndex: slotidx, name: nm, source: srcfrm, at: dpoint)
+                                } else {
+                                        return insert(destination: child, name: nm, source: srcfrm, at: dpoint)
+                                }
+                        case .event(_), .path(_), .value(_):
+                                break
+                        }
+                }
+                return false
+        }
+
+        private func doInsert(parent parfrm: ASFrame, childIndex childidx: Int, name nm: String, source srcfrm: ASFrame, at dpoint: DetectedFrame) -> Bool {
+                let result: Bool
+                if parfrm.flameClass() == ASFrame.FrameClass.box {
+                        switch dpoint.position.vertical {
+                        case .top:
+                                mUniqueIndex = ASFrame.setFrameIds(frame: srcfrm, frameId: mUniqueIndex)
+                                result = parfrm.insert(slotName: nm, frame: srcfrm, before: childidx)
+                        case .middle, .bottom:
+                                mUniqueIndex = ASFrame.setFrameIds(frame: srcfrm, frameId: mUniqueIndex)
+                                result = parfrm.insert(slotName: nm, frame: srcfrm, after: childidx)
+                        }
+                } else {
+                        NSLog("[Error] Can not happen at \(#function)")
+                        result = false
+                }
+                return result
         }
 
         public func search(coreTag ctag: Int) -> ASFrame? {
@@ -48,8 +88,8 @@ import Foundation
                 if frm.frameId() == ctag {
                         return frm
                 }
-                for (_, val) in frm.slots {
-                        switch val {
+                for slot in frm.slots {
+                        switch slot.value {
                         case .frame(let child):
                                 if let result = search(frame: child, coreTag: ctag) {
                                         return result

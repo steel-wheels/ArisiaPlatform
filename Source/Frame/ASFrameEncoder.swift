@@ -17,11 +17,9 @@ public extension ASFrame
         private func encode(indent: Int) -> String {
                 var result: String = indentString(indent: indent) + "{\n"
 
-                for name in self.slots.keys.sorted() {
-                        if let value = self.value(slotName: name) {
-                                result += indentString(indent: indent + 1) + name + ": "
-                                result += encode(value: value, indent: indent) + "\n"
-                        }
+                for slot in self.slots {
+                        result += indentString(indent: indent + 1) + slot.name + ": "
+                        result += encode(value: slot.value, indent: indent) + "\n"
                 }
 
                 result += indentString(indent: indent) + "}\n"

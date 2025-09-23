@@ -83,33 +83,33 @@ public class ASFrameEditor: MIStack
 
         private func loadSlotValues(from frame: ASFrame) ->  Dictionary<String, SlotValue> {
                 var result:  Dictionary<String, SlotValue>  = [:]
-                for (name, value) in frame.slots {
-                        if ASFrame.isBuiltinSlotName(name: name){
+                for slot in frame.slots {
+                        if ASFrame.isBuiltinSlotName(name: slot.name){
                                 continue
                         }
-                        switch value {
+                        switch slot.value {
                         case .value(let ival):
                                 switch ival .type {
                                 case .nilType, .arrayType, .dictionaryType:
                                         NSLog("[Error] Not supported at \(#file)")
                                 case .booleanType, .signedIntType, .unsignedIntType, .floatType:
-                                        result[name] = .value(ival)
+                                        result[slot.name] = .value(ival)
                                 case .stringType:
-                                        switch name {
+                                        switch slot.name {
                                         case "file":
                                                 if let str = ival.stringValue {
-                                                        result[name] = .url(str)
+                                                        result[slot.name] = .url(str)
                                                 } else {
                                                         NSLog("[Error] Not supported at \(#file)")
                                                 }
                                         default:
-                                                result[name] = .value(ival)
+                                                result[slot.name] = .value(ival)
                                         }
                                 @unknown default:
                                         NSLog("[Error] Unknown type at \(#file)")
                                 }
                         case .event(let str):
-                                result[name] = .event(str)
+                                result[slot.name] = .event(str)
                         case .frame(_), .path(_):
                                 break
                         }

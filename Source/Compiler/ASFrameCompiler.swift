@@ -69,17 +69,17 @@ import Foundation
 
         private func compile(boxFrame ownerframe: ASFrame, path pth: Array<String>, into ownerview: MFStack) -> NSError? {
                 let stack = MFStack(context: mContext, frameId: ownerframe.frameId())
-                for (slotname, slotvalue) in ownerframe.slots {
-                        switch slotvalue {
+                for slot in ownerframe.slots {
+                        switch slot.value {
                         case .value(let sval):
-                                switch slotname {
+                                switch slot.name {
                                 case ASFrame.ClassSlotName, ASFrame.FrameIdSlotName:
                                         break
                                 default:
-                                        stack.setValue(name: slotname, value: sval)
+                                        stack.setValue(name: slot.name, value: sval)
                                 }
                         case .frame(let sframe):
-                                var spath = pth ; spath.append(slotname)
+                                var spath = pth ; spath.append(slot.name)
                                 if let err = compile(frame: sframe, path: spath, into: stack) {
                                         return err
                                 }
@@ -109,10 +109,10 @@ import Foundation
                 var eventdefs: Array<EventDefinition> = []
 
                 let button = MFButton(context: mContext, frameId: ownerframe.frameId())
-                for (slotname, slotvalue) in ownerframe.slots {
-                        switch slotvalue {
+                for slot in ownerframe.slots {
+                        switch slot.value {
                         case .value(let sval):
-                                switch slotname {
+                                switch slot.name {
                                 case MFButton.TitleSlotName:
                                         button.setValue(
                                                 name: MFButton.TitleSlotName,
@@ -123,17 +123,17 @@ import Foundation
                                 default:
                                         return MIError.error(
                                           errorCode: .parseError,
-                                          message: "The button does not have \"\(slotname)\" slot"
+                                          message: "The button does not have \"\(slot.name)\" slot"
                                         )
                                 }
                         case .event(let text):
-                                switch slotname {
+                                switch slot.name {
                                 case MFButton.ClickedEventName:
                                         eventdefs.append(EventDefinition(MFButton.ClickedEventName, text))
                                 default:
                                         return MIError.error(
                                           errorCode: .parseError,
-                                          message: "The button does not have \"\(slotname)\" event"
+                                          message: "The button does not have \"\(slot.name)\" event"
                                         )
                                 }
                         case .path(_):
@@ -161,10 +161,10 @@ import Foundation
         private func compile(imageFrame ownerframe: ASFrame, path pth: Array<String>, into ownerview: MFStack) -> NSError? {
                 let image = MFImageView(context: mContext, frameId: ownerframe.frameId())
 
-                for (slotname, slotvalue) in ownerframe.slots {
-                        switch slotvalue {
+                for slot in ownerframe.slots {
+                        switch slot.value {
                         case .value(let val):
-                                switch slotname {
+                                switch slot.name {
                                 case MFImageView.FileSlotName:
                                         if let file = val.stringValue {
                                                 let url = fileSlotToURL(file: file)
@@ -174,7 +174,7 @@ import Foundation
                                         } else {
                                                 return MIError.error(
                                                   errorCode: .parseError,
-                                                  message: "The value type at \"\(slotname)\" slot"
+                                                  message: "The value type at \"\(slot.name)\" slot"
                                                 )
                                         }
                                 case ASFrame.ClassSlotName, ASFrame.FrameIdSlotName:
@@ -182,7 +182,7 @@ import Foundation
                                 default:
                                         return MIError.error(
                                           errorCode: .parseError,
-                                          message: "The image does not have \"\(slotname)\" slot"
+                                          message: "The image does not have \"\(slot.name)\" slot"
                                         )
                                 }
                         case .event(_), .frame(_), .path(_):

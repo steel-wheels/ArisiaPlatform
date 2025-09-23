@@ -56,27 +56,26 @@ public class ASDropDetector: MIVisitor
                 }}
         }
 
-        public struct DetectedView {
+        public struct DetectedFrame {
                 var     position:       DetectedPosition
-                var     view:           MIInterfaceView
+                var     frameId:        Int
 
-                public init(position pos: DetectedPosition, view vw: MIInterfaceView){
+                public init(position pos: DetectedPosition, frameId fid: Int){
                         self.position   = pos
-                        self.view       = vw
+                        self.frameId    = fid
                 }
 
                 public var description: String { get {
-                        let frmid = view.coreTag
-                        return "{DetectedView frame=\(frmid)  " + position.description + "}"
+                        return "{DetectedView frame=\(self.frameId)  " + position.description + "}"
                 }}
         }
 
         private var mPoints:            Array<CGPoint>
-        private var mDetectedView:      DetectedView?
+        private var mDetectedFrame:      DetectedFrame?
 
         public override init() {
-                mPoints = []
-                mDetectedView = nil
+                mPoints         = []
+                mDetectedFrame  = nil
         }
 
         private func currentPoint() -> CGPoint {
@@ -120,50 +119,50 @@ public class ASDropDetector: MIVisitor
                 }
         }
 
-        public func detect(point pt: CGPoint, in root: MIStack) -> DetectedView? {
-                mPoints       = [pt]
-                mDetectedView = nil
+        public func detect(point pt: CGPoint, in root: MIStack) -> DetectedFrame? {
+                mPoints         = [pt]
+                mDetectedFrame  = nil
                 root.accept(visitor: self)
-                return mDetectedView
+                return mDetectedFrame
         }
 
         public override func visit(stack src: MIStack) {
-                dumpPoint(label: "stack", view: src)
+                //dumpPoint(label: "box", view: src)
                 if isInFrame(point: currentPoint(), view: src) {
                         let subviews = src.arrangedSubviews
                         if subviews.count > 0 {
                                 for subview in subviews {
                                         subview.accept(visitor: self)
-                                        if let _ = mDetectedView {
+                                        if let _ = mDetectedFrame {
                                                 return // already detected
                                         }
                                 }
                         } else {
                                 let center = DetectedPosition(horizontal: .center, vertical: .middle)
-                                mDetectedView = DetectedView(position: center, view: src)
+                                mDetectedFrame = DetectedFrame(position: center, frameId: src.coreTag)
                         }
                 } else {
-                        NSLog("Not in stack frame at \(#function)")
+                        //NSLog("Not in stack frame at \(#function)")
                 }
         }
 
         public override func visit(button src: MIButton) {
-                dumpPoint(label: "button", view: src)
+                //dumpPoint(label: "button", view: src)
                 if isInFrame(point: currentPoint(), view: src) {
-                        NSLog("In button frame at \(#function)")
+                        //NSLog("In button frame at \(#function)")
                         let dpos = detectedPosition(point: currentPoint(), frame: src.buttonFrame())
-                        mDetectedView = DetectedView(position: dpos, view: src)
+                        mDetectedFrame = DetectedFrame(position: dpos, frameId: src.coreTag)
                 }
         }
 
         public override func visit(imageView src: MIImageView) {
-                dumpPoint(label: "image", view: src)
+                //dumpPoint(label: "image", view: src)
                 if isInFrame(point: currentPoint(), view: src) {
-                        NSLog("In image frame at \(#function)")
+                        //NSLog("In image frame at \(#function)")
                         let dpos = detectedPosition(point: currentPoint(), frame: src.imageFrame())
-                        mDetectedView = DetectedView(position: dpos, view: src)
+                        mDetectedFrame = DetectedFrame(position: dpos, frameId: src.coreTag)
                 } else {
-                        NSLog("Not in image frame at \(#function)")
+                        //NSLog("Not in image frame at \(#function)")
                 }
         }
 
