@@ -89,6 +89,7 @@ import Foundation
                         }
                 case .top, .bottom:
                         if let newbox = makeBox(parent: parfrm, slotName: cname, axis: .vertical) {
+                                mUniqueIndex = ASFrame.setFrameIds(frame: srcfrm, frameId: mUniqueIndex)
                                 if dpoint.position == .top {
                                         result = newbox.insert(slotName: nm, frame: srcfrm, before: cname)
                                 } else {
