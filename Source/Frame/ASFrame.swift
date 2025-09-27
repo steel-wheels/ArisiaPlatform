@@ -64,7 +64,7 @@ public class ASFrame
                         let slot = mSlots[i]
                         if slot.name == name {
                                 mSlots[i] = Slot(name: name, value: val)
-                                break
+                                return
                         }
                 }
                 let slot = Slot(name: name, value: val)
@@ -79,29 +79,34 @@ public class ASFrame
                 set(slotName: name, value: .value(MIValue(signedIntValue: ival)))
         }
 
-        public func insert(slotName name: String, frame frm: ASFrame, before bid: Int) -> Bool {
-                if bid < mSlots.count {
-                        let newslot = Slot(name: name, value: .frame(frm))
-                        mSlots.insert(newslot, at: bid)
-                        return true
-                } else {
-                        NSLog("[Error] Invalid index before \(bid) at \(#file)")
-                        return false
+        public func insert(slotName name: String, frame frm: ASFrame, before sname: String) -> Bool {
+                let newslot = Slot(name: name, value: .frame(frm))
+                for i in 0..<mSlots.count {
+                        let slot = mSlots[i]
+                        if slot.name == sname {
+                                mSlots.insert(newslot, at: i)
+                                return true
+                        }
                 }
+                NSLog("[Error] No slot name \(sname) at \(#file)")
+                return false
         }
 
-        public func insert(slotName name: String, frame frm: ASFrame, after bid: Int) -> Bool {
-                let nid = bid + 1
-                if nid < mSlots.count {
-                        return insert(slotName: name, frame: frm, before: nid)
-                } else if nid == mSlots.count {
-                        let newslot = Slot(name: name, value: .frame(frm))
-                        mSlots.append(newslot)
-                        return true
-                } else {
-                        NSLog("[Error] Invalid index after \(bid) at \(#file)")
-                        return false
+        public func insert(slotName name: String, frame frm: ASFrame, after sname: String) -> Bool {
+                let newslot = Slot(name: name, value: .frame(frm))
+                for i in 0..<mSlots.count {
+                        let slot = mSlots[i]
+                        if slot.name == sname {
+                                if i+1 < mSlots.count {
+                                        mSlots.insert(newslot, at: i+1)
+                                } else {
+                                        mSlots.append(newslot)
+                                }
+                                return true
+                        }
                 }
+                NSLog("[Error] No slot name \(sname) at \(#file)")
+                return false
         }
 
         public func value(slotName name: String) -> ASFrameValue? {
@@ -159,7 +164,8 @@ public class ASFrame
 extension ASFrame
 {
         public enum FrameClass: String {
-                case box        = "Box"
+                case vbox       = "VBox"
+                case hbox       = "HBox"
                 case button     = "Button"
                 case image      = "Image"
 
@@ -198,11 +204,11 @@ extension ASFrame
                                 return cls
                         } else {
                                 NSLog("[Error] Unknown frame class \(str) at \(#function)")
-                                return .box
+                                return .vbox
                         }
                 } else {
                         NSLog("[Error] No frame class name at \(#function)")
-                        return .box
+                        return .vbox
                 }
         }
 

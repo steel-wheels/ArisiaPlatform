@@ -51,7 +51,7 @@ import Foundation
                         switch dstslot.value {
                         case .frame(let child):
                                 if child.frameId() == dpoint.frameId {
-                                        return doInsert(parent: dstfrm, childIndex: slotidx, name: nm, source: srcfrm, at: dpoint)
+                                        return doInsert(parent: dstfrm, childName: dstslot.name, name: nm, source: srcfrm, at: dpoint)
                                 } else {
                                         return insert(destination: child, name: nm, source: srcfrm, at: dpoint)
                                 }
@@ -62,22 +62,89 @@ import Foundation
                 return false
         }
 
-        private func doInsert(parent parfrm: ASFrame, childIndex childidx: Int, name nm: String, source srcfrm: ASFrame, at dpoint: DetectedFrame) -> Bool {
+        private func doInsert(parent parfrm: ASFrame, childName cname: String, name nm: String, source srcfrm: ASFrame, at dpoint: DetectedFrame) -> Bool {
                 let result: Bool
-                if parfrm.flameClass() == ASFrame.FrameClass.box {
-                        switch dpoint.position.vertical {
-                        case .top:
-                                mUniqueIndex = ASFrame.setFrameIds(frame: srcfrm, frameId: mUniqueIndex)
-                                result = parfrm.insert(slotName: nm, frame: srcfrm, before: childidx)
-                        case .middle, .bottom:
-                                mUniqueIndex = ASFrame.setFrameIds(frame: srcfrm, frameId: mUniqueIndex)
-                                result = parfrm.insert(slotName: nm, frame: srcfrm, after: childidx)
-                        }
-                } else {
+                switch parfrm.flameClass() {
+                case .hbox:
+                        result = doInsert(hBox: parfrm, childName: cname, name: nm, source: srcfrm, at: dpoint)
+                case .vbox:
+                        result = doInsert(vBox: parfrm, childName: cname, name: nm, source: srcfrm, at: dpoint)
+                default:
                         NSLog("[Error] Can not happen at \(#function)")
                         result = false
                 }
                 return result
+        }
+
+        private func doInsert(hBox parfrm: ASFrame, childName cname: String, name nm: String, source srcfrm: ASFrame, at dpoint: DetectedFrame) -> Bool {
+                let result: Bool
+                switch dpoint.position {
+                case .left, .right, .center:
+                        /* insert into the current box */
+                        mUniqueIndex = ASFrame.setFrameIds(frame: srcfrm, frameId: mUniqueIndex)
+                        if dpoint.position == .right {
+                                result = parfrm.insert(slotName: nm, frame: srcfrm, after: cname)
+                        } else {
+                                result = parfrm.insert(slotName: nm, frame: srcfrm, before: cname)
+                        }
+                case .top, .bottom:
+                        if let newbox = makeBox(parent: parfrm, slotName: cname, axis: .vertical) {
+                                if dpoint.position == .top {
+                                        result = newbox.insert(slotName: nm, frame: srcfrm, before: cname)
+                                } else {
+                                        result = newbox.insert(slotName: nm, frame: srcfrm, after: cname)
+                                }
+                        } else {
+                                NSLog("[Error] Failed to make box at \(#file)")
+                                result = false
+                        }
+                }
+                return result
+        }
+
+        private func doInsert(vBox parfrm: ASFrame, childName cname: String, name nm: String, source srcfrm: ASFrame, at dpoint: DetectedFrame) -> Bool {
+                let result: Bool
+                switch dpoint.position {
+                case .left, .right:
+                        if let newbox = makeBox(parent: parfrm, slotName: cname, axis: .horizontal) {
+                                if dpoint.position == .right {
+                                        result = newbox.insert(slotName: nm, frame: srcfrm, after: cname)
+                                } else {
+                                        result = newbox.insert(slotName: nm, frame: srcfrm, before: cname)
+                                }
+                        } else {
+                                NSLog("[Error] Failed to make box at \(#file)")
+                                result = false
+                        }
+                case .top, .bottom, .center:
+                        /* insert into the current box */
+                        mUniqueIndex = ASFrame.setFrameIds(frame: srcfrm, frameId: mUniqueIndex)
+                        if dpoint.position == .top {
+                                result = parfrm.insert(slotName: nm, frame: srcfrm, before: cname)
+                        } else {
+                                result = parfrm.insert(slotName: nm, frame: srcfrm, after: cname)
+                        }
+                }
+                return result
+        }
+
+        private func makeBox(parent parfrm: ASFrame, slotName sname: String, axis axs: MIStackCore.Axis) -> ASFrame? {
+                if let sval = parfrm.value(slotName: sname)  {
+                        switch sval {
+                        case .frame(let frame):
+                                let box = ASFrame() ;
+                                box.setFrameClass(axs == .horizontal ? .hbox : .vbox)
+                                box.set(slotName: sname, value: .frame(frame))
+                                parfrm.set(slotName: sname, value: .frame(box))
+                                return box
+                        case .value(_), .event(_), .path(_):
+                                NSLog("[Error] Unexpected value at \(#file)")
+                                return nil
+                        }
+                } else {
+                        NSLog("[Error] Unexpected name \(sname) at \(#file)")
+                        return nil
+                }
         }
 
         public func search(coreTag ctag: Int) -> ASFrame? {

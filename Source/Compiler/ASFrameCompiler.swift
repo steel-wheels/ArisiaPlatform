@@ -57,8 +57,10 @@ import Foundation
         private func compile(frame ownerframe: ASFrame, path pth: Array<String>, into ownerview: MFStack) -> NSError? {
                 let result: NSError?
                 switch ownerframe.flameClass() {
-                case .box:
-                        result = compile(boxFrame: ownerframe, path: pth, into: ownerview)
+                case .hbox:
+                        result = compile(boxFrame: ownerframe, axis: .horizontal, path: pth, into: ownerview)
+                case .vbox:
+                        result = compile(boxFrame: ownerframe, axis: .vertical, path: pth, into: ownerview)
                 case .button:
                         result = compile(buttonFrame: ownerframe, path: pth, into: ownerview)
                 case .image:
@@ -67,8 +69,9 @@ import Foundation
                 return result
         }
 
-        private func compile(boxFrame ownerframe: ASFrame, path pth: Array<String>, into ownerview: MFStack) -> NSError? {
+        private func compile(boxFrame ownerframe: ASFrame, axis axs: MIStackCore.Axis, path pth: Array<String>, into ownerview: MFStack) -> NSError? {
                 let stack = MFStack(context: mContext, frameId: ownerframe.frameId())
+                stack.axis = axs
                 for slot in ownerframe.slots {
                         switch slot.value {
                         case .value(let sval):

@@ -10,49 +10,23 @@ import Foundation
 
 public class ASDropDetector: MIVisitor
 {
-        public enum DetectedHorizontalPosition {
-                case left
+        public enum DetectedPosition {
                 case center
+                case top
+                case bottom
+                case left
                 case right
 
                 public var description: String { get {
                         let result: String
                         switch self {
-                        case .left:     result = "left"
                         case .center:   result = "center"
+                        case .top:      result = "top"
+                        case .bottom:   result = "bottom"
+                        case .left:     result = "left"
                         case .right:    result = "right"
                         }
                         return result
-                }}
-        }
-
-        public enum DetectedVerticalPosition {
-                case top
-                case middle
-                case bottom
-
-                public var description: String { get {
-                        let result: String
-                        switch self {
-                        case .top:      result = "top"
-                        case .middle:   result = "middle"
-                        case .bottom:   result = "bottom"
-                        }
-                        return result
-                }}
-        }
-
-        public struct DetectedPosition {
-                var horizontal:         DetectedHorizontalPosition
-                var vertical:           DetectedVerticalPosition
-
-                public init(horizontal h: DetectedHorizontalPosition, vertical v: DetectedVerticalPosition){
-                        self.horizontal = h
-                        self.vertical   = v
-                }
-
-                public var description: String { get {
-                        return "{position holizontal=\(self.horizontal.description) vertical=\(self.vertical.description)}"
                 }}
         }
 
@@ -138,8 +112,7 @@ public class ASDropDetector: MIVisitor
                                         }
                                 }
                         } else {
-                                let center = DetectedPosition(horizontal: .center, vertical: .middle)
-                                mDetectedFrame = DetectedFrame(position: center, frameId: src.coreTag)
+                                mDetectedFrame = DetectedFrame(position: .center, frameId: src.coreTag)
                         }
                 } else {
                         //NSLog("Not in stack frame at \(#function)")
@@ -171,33 +144,63 @@ public class ASDropDetector: MIVisitor
         }
 
         private func detectedPosition(point pt: CGPoint, frame frm: CGRect) -> DetectedPosition {
-                let hpos: DetectedHorizontalPosition
-                if pt.x < frm.origin.x {
-                        hpos = .left
-                } else if pt.x < frm.origin.x + frm.size.width {
-                        hpos = .center
-                } else {
-                        hpos = .right
-                }
-                let vpos: DetectedVerticalPosition
+                let MARGIN: CGFloat = 10.0
+
+                /* horizontal distance */
+                let hmin  = frm.origin.x - MARGIN
+                let hmax  = frm.origin.x + frm.size.width + MARGIN
+                let hdist = ((pt.x < hmin) ? hmin - pt.x : 0.0)
+                          + ((hmax < pt.x) ? pt.x - hmax : 0.0)
+
+                /* vertical distance */
+                let vdist: CGFloat
                 #if os(OSX)
-                if pt.y < frm.origin.y {
-                        vpos = .bottom
-                } else if pt.y <= frm.origin.y + frm.size.height {
-                        vpos = .middle
-                } else {
-                        vpos = .top
-                }
+                let vmin = frm.origin.y - frm.size.height - MARGIN
+                let vmax = frm.origin.y + MARGIN
                 #else
-                if pt.y < frm.origin.y {
-                        vpos = .top
-                } else if pt.y <= frm.origin.y + frm.size.height {
-                        vpos = .middle
-                } else {
-                        vpos = .bottom
-                }
+                let vmin  = frm.origin.y - MARGIN
+                let vmax  = frm.origin.y + frm.size.height + MARGIN
                 #endif
-                return DetectedPosition(horizontal: hpos, vertical: vpos)
+                vdist = ((pt.y < vmin) ? vmin - pt.y : 0.0)
+                      + ((vmax < pt.y) ? pt.y - vmax : 0.0)
+
+                NSLog("(\(#function) pt.x\(pt.x) pt.y:\(pt.y)")
+                NSLog("(\(#function) hmin\(hmin) hmax:\(hmax)")
+                NSLog("(\(#function) vmin\(vmin) vmax:\(vmax)")
+                NSLog("(\(#function) hdist:\(hdist) vdist:\(vdist)")
+
+                let result: DetectedPosition
+                if hdist >= vdist {
+                        /* select horizontal position */
+                        if pt.x < hmin {
+                                result = .left
+                        } else if hmax < pt.x {
+                                result = .right
+                        } else {
+                                result = .center
+                        }
+                } else {
+                        /* select vetical position */
+                        #if os(OSX)
+                        if pt.y < vmin {
+                                result = .bottom
+                        } else if vmax < pt.y {
+                                result = .top
+                        } else {
+                                result = .center
+                        }
+                        #else
+                        if pt.y < vmin {
+                                result = .top
+                        } else if vmax < pt.y {
+                                result = .bottom
+                        } else {
+                                result = .center
+                        }
+                        #endif
+                }
+                NSLog("(\(#function) result = \(result.description)")
+                return result
         }
 
         private func dumpPoint(label lab: String, view src: MIInterfaceView){
