@@ -23,6 +23,8 @@
 		05348C242E2FCA9800485D66 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 05348C222E2FCA9800485D66 /* Makefile */; };
 		05348C292E2FCEBC00485D66 /* ASFrameCompiler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05348C282E2FCEBC00485D66 /* ASFrameCompiler.swift */; };
 		05348C2A2E2FCEBC00485D66 /* ASFrameCompiler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05348C282E2FCEBC00485D66 /* ASFrameCompiler.swift */; };
+		05362C252E89201D00D495FE /* no-image.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 059648802E5A0585003A2595 /* no-image.png */; };
+		05362C272E89203200D495FE /* no-image.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 059648802E5A0585003A2595 /* no-image.png */; };
 		055037262E232C8A00670753 /* Hello.astack in CopyFiles */ = {isa = PBXBuildFile; fileRef = 055037252E232C6200670753 /* Hello.astack */; };
 		055037282E232EED00670753 /* Hello.astack in CopyFiles */ = {isa = PBXBuildFile; fileRef = 055037252E232C6200670753 /* Hello.astack */; };
 		05596BFA2E196BB90001384E /* MultiDataKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05596BF92E196BB90001384E /* MultiDataKit.xcframework */; };
@@ -88,6 +90,26 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		05362C242E89200800D495FE /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Images;
+			dstSubfolderSpec = 7;
+			files = (
+				05362C252E89201D00D495FE /* no-image.png in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		05362C262E89202400D495FE /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Images;
+			dstSubfolderSpec = 7;
+			files = (
+				05362C272E89203200D495FE /* no-image.png in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		055037202E232B5700670753 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -463,6 +485,7 @@
 				051A82B72E196A54004A9C4B /* Resources */,
 				055037272E232EE300670753 /* CopyFiles */,
 				05F7227C2E2D34E6005CB923 /* CopyFiles */,
+				05362C262E89202400D495FE /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -488,6 +511,7 @@
 				056B2FB52E0A4F52004E0EFC /* Resources */,
 				055037202E232B5700670753 /* CopyFiles */,
 				05F722742E2D34A8005CB923 /* CopyFiles */,
+				05362C242E89200800D495FE /* CopyFiles */,
 			);
 			buildRules = (
 			);

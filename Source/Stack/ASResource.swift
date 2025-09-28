@@ -37,6 +37,14 @@ public class ASResource
                 mScriptPaths.append(pth)
         }
 
+        public func URLOfNullImage() -> URL {
+                if let resdir = FileManager.default.resourceDirectory(forClass: ASResource.self) {
+                        return resdir.appendingPathComponent("Images/no-image.png")
+                } else {
+                        fatalError("[Error] No resource directory at \(#file)")
+                }
+        }
+
         public func toString() -> String {
                 let pathstrs = mScriptPaths.map{ "\"" + $0 + "\"" }
 

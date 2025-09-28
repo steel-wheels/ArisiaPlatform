@@ -170,10 +170,15 @@ import Foundation
                                 switch slot.name {
                                 case MFImageView.FileSlotName:
                                         if let file = val.stringValue {
-                                                let url = fileSlotToURL(file: file)
+                                                let url: URL
+                                                if file.count == 0 {
+                                                        url = mResource.URLOfNullImage()
+                                                } else {
+                                                        url = fileSlotToURL(file: file)
+                                                }
                                                 image.setValue(
                                                         name: MFImageView.FileSlotName,
-                                                        value: MIValue(stringValue: url))
+                                                        value: MIValue(stringValue: url.path))
                                         } else {
                                                 return MIError.error(
                                                   errorCode: .parseError,
@@ -205,9 +210,8 @@ import Foundation
                 return nil
         }
 
-        private func fileSlotToURL(file fl: String) -> String {
-                let furl = mResource.packageDirectory.appendingPathComponent(fl)
-                return furl.path
+        private func fileSlotToURL(file fl: String) -> URL {
+                return mResource.packageDirectory.appendingPathComponent(fl)
         }
 
         private func exportObject(path pth: Array<String>, frame frm: MFFrame, properties props: Array<String>,
