@@ -21,7 +21,7 @@ public class ASFrameEditor: MIStack
 
         public enum SlotValue {
                 case    value(MIValue)
-                case    url(String)
+                case    url(URL?)
                 case    event(String)
         }
 
@@ -32,7 +32,7 @@ public class ASFrameEditor: MIStack
 
         private var mFrame:             ASFrame?  = nil
         private var mSlotValues:        Dictionary<String, SlotValue>   = [:]
-        private var mEditFields:        Dictionary<String, MITextField> = [:]
+        private var mEditFields:        Dictionary<String, MIInterfaceView> = [:]
 
         private var mCallback:          UpdatedCallback? = nil
         private var mIsModified:        Bool = false
@@ -98,7 +98,11 @@ public class ASFrameEditor: MIStack
                                         switch slot.name {
                                         case "file":
                                                 if let str = ival.stringValue {
-                                                        result[slot.name] = .url(str)
+                                                        if str.count == 0 {
+                                                                result[slot.name] = .url(nil)
+                                                        } else {
+                                                                result[slot.name] = .url(URL(filePath: str))
+                                                        }
                                                 } else {
                                                         NSLog("[Error] Not supported at \(#file)")
                                                 }
@@ -157,17 +161,17 @@ public class ASFrameEditor: MIStack
                         mEditFields[nm] = field
                         result.addArrangedSubView(field)
                 case .url(let orgval):
-                        let field = MITextField()
-                        field.set(value: MIValue(stringValue: orgval))
-                        field.setCallback({
-                                (_ newval: String) -> Void in
-                                NSLog("ASFrameEditor: field callback: (url) \(nm) \(newval)")
-                                self.mSlotValues[nm] = .url(newval)
+                        let selector = MIFileSelector()
+                        selector.url = orgval
+                        selector.setCallback({
+                                (_ url: URL) -> Void in
+                                NSLog("ASFrameEditor: field callback: (url) \(nm) \(url.path)")
+                                self.mSlotValues[nm] = .url(url)
                                 self.mIsModified = true
                                 self.updateButtonStatus()
                         })
-                        mEditFields[nm] = field
-                        result.addArrangedSubView(field)
+                        mEditFields[nm] = selector
+                        result.addArrangedSubView(selector)
                 case .event(let orgval):
                         let field = MITextField()
                         field.set(value: MIValue(stringValue: orgval))
@@ -204,15 +208,21 @@ public class ASFrameEditor: MIStack
 
                 mSlotValues = self.loadSlotValues(from: frame)
                 for (name, slot) in mSlotValues {
-                        if let field = mEditFields[name] {
+                        if let field = mEditFields[name] as? MITextField {
                                 switch slot {
                                 case .value(let val):
                                         field.set(value: val)
-                                case .url(let path):
-                                        field.set(value: MIValue(stringValue: path))
+                                case .url(let urlp):
+                                        if let url = urlp {
+                                                field.set(value: MIValue(stringValue: url.path))
+                                        } else {
+                                                field.set(value: MIValue(stringValue: ""))
+                                        }
                                 case .event(let estr):
                                         field.set(value: MIValue(stringValue: estr))
                                 }
+                        } else if let _ = mEditFields[name] as? MIFileSelector {
+                                // nothing have to do
                         } else {
                                 NSLog("[Error] No text field at \(#function)")
                         }
@@ -230,8 +240,12 @@ public class ASFrameEditor: MIStack
                         switch slot {
                         case .value(let val):
                                 frame.set(slotName: name, value: .value(val))
-                        case .url(let path):
-                                frame.set(slotName: name, value: .value(MIValue(stringValue: path)))
+                        case .url(let urlp):
+                                if let url = urlp {
+                                        frame.set(slotName: name, value: .value(MIValue(stringValue: url.path)))
+                                } else {
+                                        frame.set(slotName: name, value: .value(MIValue(stringValue: "")))
+                                }
                         case .event(let estr):
                                 frame.set(slotName: name, value: .event(estr))
                         }

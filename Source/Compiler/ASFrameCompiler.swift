@@ -176,9 +176,8 @@ import Foundation
                                                 } else {
                                                         url = fileSlotToURL(file: file)
                                                 }
-                                                image.setValue(
-                                                        name: MFImageView.FileSlotName,
-                                                        value: MIValue(stringValue: url.path))
+                                                NSLog("Reload image from \(url.path) at \(#file)")
+                                                image.reload(from: url)
                                         } else {
                                                 return MIError.error(
                                                   errorCode: .parseError,
