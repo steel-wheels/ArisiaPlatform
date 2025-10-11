@@ -10,49 +10,58 @@ import Foundation
 
 public class ASStack
 {
-        public struct FrameRecord {
-                public var path:        String    // offset against the package directory
-                public var frame:       ASFrame
+        private var mPackage:           ASPackage
+        private var mFrames:            Dictionary<String, ASFrame> // File name in package, Frame
 
-                public init(path pth: String, frame frm: ASFrame){
-                        self.path  = pth
-                        self.frame = frm
+        public init(package pkg: ASPackage) {
+                mPackage        = pkg
+                mFrames         = [:]
+        }
+
+        public var package: ASPackage { get {
+                return mPackage
+        }}
+
+        public var scriptFileNames: Array<String> {
+                return mPackage.scriptFileNames ;
+        }
+
+        public func scriptFileName(at index: Int) -> String? {
+                return mPackage.scriptFileName(at: index)
+        }
+
+        public func script(fileName name: String) -> Result<String, NSError> {
+                return mPackage.script(fileName: name)
+        }
+
+        public func frame(fileName fname: String) -> Result<ASFrame, NSError> {
+                if let frm = mFrames[fname] {
+                        return .success(frm)
+                }
+                switch self.script(fileName: fname) {
+                case .success(let script):
+                        let parser = ASFrameParser()
+                        switch parser.parse(string: script) {
+                        case .success(let frm):
+                                return .success(frm)
+                        case .failure(let err):
+                                return .failure(err)
+                        }
+                case .failure(let err):
+                        return .failure(err)
                 }
         }
 
-        private var mFrames:            Array<FrameRecord>
-
-        public var frameRecords: Array<FrameRecord> { get { return mFrames }}
-
-        public init() {
-                mFrames         = []
+        public func setFrame(fileName name: String, frame frm: ASFrame){
+                mFrames[name] = frm
+                mPackage.setScript(fileName: name, script: frm.encode())
         }
 
-        public func countOfFrames() -> Int {
-                return mFrames.count
+        public func save() -> NSError? {
+                return mPackage.save()
         }
 
-        public func append(path pth: String, frame frm: ASFrame){
-                mFrames.append(FrameRecord(path: pth, frame: frm))
-        }
-
-        public func clear() {
-                mFrames = []
-        }
-
-        public func frameRecord(at index: Int) -> FrameRecord? {
-                if 0 <= index && index < mFrames.count {
-                        return mFrames[index]
-                } else {
-                        return nil
-                }
-        }
-
-        public func frame(at index: Int) -> ASFrame? {
-                if let finfo = frameRecord(at: index) {
-                        return finfo.frame
-                } else {
-                        return nil
-                }
+        public func save(to pkgdir: URL) -> NSError? {
+                return mPackage.save(to: pkgdir)
         }
 }

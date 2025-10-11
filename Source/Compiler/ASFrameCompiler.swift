@@ -14,7 +14,7 @@ import Foundation
 {
         private var mContext:           MFContext
         private var mConsoleStortage:   MITextStorage
-        private var mResource:          ASResource
+        private var mPackage:           ASPackage
         private var mScript:            Array<String>
 
         private struct EventDefinition {
@@ -27,11 +27,11 @@ import Foundation
                 }
         }
 
-        public init(context ctxt: MFContext, consoleStorage strg: MITextStorage, resource res: ASResource){
-                mContext         = ctxt
-                mConsoleStortage = strg
-                mResource        = res
-                mScript          = []
+        public init(context ctxt: MFContext, consoleStorage strg: MITextStorage, package pkg: ASPackage){
+                mContext                = ctxt
+                mConsoleStortage        = strg
+                mPackage                = pkg
+                mScript                 = []
 
                 /* add console object */
                 let console = MFConsole(storage: strg)
@@ -172,9 +172,9 @@ import Foundation
                                         if let file = val.stringValue {
                                                 let url: URL
                                                 if file.count == 0 {
-                                                        url = mResource.URLOfNullImage()
+                                                        url = ASResource.URLOfNullImage()
                                                 } else {
-                                                        url = fileSlotToURL(file: file)
+                                                        url = mPackage.localToFullPath(path: file)
                                                 }
                                                 NSLog("Reload image from \(url.path) at \(#file)")
                                                 image.reload(from: url)
@@ -207,10 +207,6 @@ import Foundation
                              eventDefinitions:  []
                 )
                 return nil
-        }
-
-        private func fileSlotToURL(file fl: String) -> URL {
-                return mResource.packageDirectory.appendingPathComponent(fl)
         }
 
         private func exportObject(path pth: Array<String>, frame frm: MFFrame, properties props: Array<String>,

@@ -32,6 +32,12 @@
 		05596C022E196C030001384E /* ASFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05596C002E196C020001384E /* ASFrame.swift */; };
 		05596C172E1971440001384E /* ASFrameParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05596C162E1971440001384E /* ASFrameParser.swift */; };
 		05596C182E1971440001384E /* ASFrameParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05596C162E1971440001384E /* ASFrameParser.swift */; };
+		055A06562E9406BC00D206BC /* ASManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055A06552E9406BC00D206BC /* ASManifest.swift */; };
+		055A06572E9406BC00D206BC /* ASManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055A06552E9406BC00D206BC /* ASManifest.swift */; };
+		055A065A2E95CF7700D206BC /* Default.astack in Resources */ = {isa = PBXBuildFile; fileRef = 055A06592E95CF7700D206BC /* Default.astack */; };
+		055A065B2E95CF7700D206BC /* Default.astack in Resources */ = {isa = PBXBuildFile; fileRef = 055A06592E95CF7700D206BC /* Default.astack */; };
+		055A065D2E95CF9A00D206BC /* Default.astack in CopyFiles */ = {isa = PBXBuildFile; fileRef = 055A06592E95CF7700D206BC /* Default.astack */; };
+		055A065F2E95CFB800D206BC /* Default.astack in CopyFiles */ = {isa = PBXBuildFile; fileRef = 055A06592E95CF7700D206BC /* Default.astack */; };
 		05A6F2762E1AB6A5005A41E5 /* ASFrameEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A6F2752E1AB6A5005A41E5 /* ASFrameEncoder.swift */; };
 		05A6F2772E1AB6A5005A41E5 /* ASFrameEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A6F2752E1AB6A5005A41E5 /* ASFrameEncoder.swift */; };
 		05B0088F2E2D135F00662427 /* MultiDataKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05596BF92E196BB90001384E /* MultiDataKit.xcframework */; };
@@ -47,8 +53,8 @@
 		05D5893F2E359F1500DFBAFB /* Box.as in Resources */ = {isa = PBXBuildFile; fileRef = 05D5893D2E359F1500DFBAFB /* Box.as */; };
 		05D589402E359F2800DFBAFB /* Box.as in CopyFiles */ = {isa = PBXBuildFile; fileRef = 05D5893D2E359F1500DFBAFB /* Box.as */; };
 		05D589412E359F3400DFBAFB /* Box.as in CopyFiles */ = {isa = PBXBuildFile; fileRef = 05D5893D2E359F1500DFBAFB /* Box.as */; };
-		05E0DADB2E4E126600763D7B /* ASDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E0DADA2E4E126600763D7B /* ASDocument.swift */; };
-		05E0DADC2E4E126600763D7B /* ASDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E0DADA2E4E126600763D7B /* ASDocument.swift */; };
+		05E0DADB2E4E126600763D7B /* ASPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E0DADA2E4E126600763D7B /* ASPackage.swift */; };
+		05E0DADC2E4E126600763D7B /* ASPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E0DADA2E4E126600763D7B /* ASPackage.swift */; };
 		05E0DADE2E4EA4BE00763D7B /* ASResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E0DADD2E4EA4BE00763D7B /* ASResource.swift */; };
 		05E0DADF2E4EA4BE00763D7B /* ASResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E0DADD2E4EA4BE00763D7B /* ASResource.swift */; };
 		05E65FB82E5CADCC009C157E /* Image.as in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0596487D2E5A054C003A2595 /* Image.as */; };
@@ -130,6 +136,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		055A065C2E95CF8A00D206BC /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Stacks;
+			dstSubfolderSpec = 7;
+			files = (
+				055A065D2E95CF9A00D206BC /* Default.astack in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		055A065E2E95CFA500D206BC /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Stacks;
+			dstSubfolderSpec = 7;
+			files = (
+				055A065F2E95CFB800D206BC /* Default.astack in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		05A6F2642E1AB2EA005A41E5 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -196,6 +222,8 @@
 		05596BF92E196BB90001384E /* MultiDataKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MultiDataKit.xcframework; path = ../../../Library/Frameworks/MultiDataKit.xcframework; sourceTree = "<group>"; };
 		05596C002E196C020001384E /* ASFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASFrame.swift; sourceTree = "<group>"; };
 		05596C162E1971440001384E /* ASFrameParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASFrameParser.swift; sourceTree = "<group>"; };
+		055A06552E9406BC00D206BC /* ASManifest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASManifest.swift; sourceTree = "<group>"; };
+		055A06592E95CF7700D206BC /* Default.astack */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Default.astack; sourceTree = "<group>"; };
 		056B2FB72E0A4F52004E0EFC /* ArisiaPlatform.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ArisiaPlatform.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0596487D2E5A054C003A2595 /* Image.as */ = {isa = PBXFileReference; lastKnownFileType = text; path = Image.as; sourceTree = "<group>"; };
 		0596487F2E5A0585003A2595 /* images.key */ = {isa = PBXFileReference; lastKnownFileType = file; path = images.key; sourceTree = "<group>"; };
@@ -205,7 +233,7 @@
 		05B008902E2D145900662427 /* ArisiaPlatform.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ArisiaPlatform.xcframework; path = ../../../Library/Frameworks/ArisiaPlatform.xcframework; sourceTree = "<group>"; };
 		05B04EA52E46CE9D0042534D /* ViewTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ViewTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05D5893D2E359F1500DFBAFB /* Box.as */ = {isa = PBXFileReference; lastKnownFileType = text; path = Box.as; sourceTree = "<group>"; };
-		05E0DADA2E4E126600763D7B /* ASDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASDocument.swift; sourceTree = "<group>"; };
+		05E0DADA2E4E126600763D7B /* ASPackage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASPackage.swift; sourceTree = "<group>"; };
 		05E0DADD2E4EA4BE00763D7B /* ASResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASResource.swift; sourceTree = "<group>"; };
 		05F722212E2D2DB3005CB923 /* ASDropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASDropView.swift; sourceTree = "<group>"; };
 		05F722242E2D2E5E005CB923 /* MultiUIKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MultiUIKit.xcframework; path = ../../../Library/Frameworks/MultiUIKit.xcframework; sourceTree = "<group>"; };
@@ -331,6 +359,7 @@
 		055037232E232BAE00670753 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				055A06582E9561F000D206BC /* Stacks */,
 				05F722732E2D342F005CB923 /* Frames */,
 				0596487E2E5A0555003A2595 /* Images */,
 				05348C192E2FCA0B00485D66 /* Library */,
@@ -362,11 +391,20 @@
 		05596C152E19712F0001384E /* Stack */ = {
 			isa = PBXGroup;
 			children = (
-				05E0DADA2E4E126600763D7B /* ASDocument.swift */,
+				055A06552E9406BC00D206BC /* ASManifest.swift */,
+				05E0DADA2E4E126600763D7B /* ASPackage.swift */,
 				05E0DADD2E4EA4BE00763D7B /* ASResource.swift */,
 				0505BFC52E2268BE0023EE05 /* ASStack.swift */,
 			);
 			path = Stack;
+			sourceTree = "<group>";
+		};
+		055A06582E9561F000D206BC /* Stacks */ = {
+			isa = PBXGroup;
+			children = (
+				055A06592E95CF7700D206BC /* Default.astack */,
+			);
+			path = Stacks;
 			sourceTree = "<group>";
 		};
 		056B2FAD2E0A4F52004E0EFC = {
@@ -486,6 +524,7 @@
 				055037272E232EE300670753 /* CopyFiles */,
 				05F7227C2E2D34E6005CB923 /* CopyFiles */,
 				05362C262E89202400D495FE /* CopyFiles */,
+				055A065E2E95CFA500D206BC /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -512,6 +551,7 @@
 				055037202E232B5700670753 /* CopyFiles */,
 				05F722742E2D34A8005CB923 /* CopyFiles */,
 				05362C242E89200800D495FE /* CopyFiles */,
+				055A065C2E95CF8A00D206BC /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -628,6 +668,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				055A065A2E95CF7700D206BC /* Default.astack in Resources */,
 				05348C1F2E2FCA4900485D66 /* Frame.js in Resources */,
 				05F722792E2D34CD005CB923 /* Button.as in Resources */,
 				05D5893F2E359F1500DFBAFB /* Box.as in Resources */,
@@ -638,6 +679,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				055A065B2E95CF7700D206BC /* Default.astack in Resources */,
 				05348C202E2FCA4900485D66 /* Frame.js in Resources */,
 				05F7227A2E2D34CD005CB923 /* Button.as in Resources */,
 				05D5893E2E359F1500DFBAFB /* Box.as in Resources */,
@@ -658,13 +700,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				055A06562E9406BC00D206BC /* ASManifest.swift in Sources */,
 				05E0DADF2E4EA4BE00763D7B /* ASResource.swift in Sources */,
 				050910522E46308A002358A9 /* ASFrameEditor.swift in Sources */,
 				052E02662E4C07A200636E13 /* ASTextField.swift in Sources */,
 				05348C242E2FCA9800485D66 /* Makefile in Sources */,
 				051C47502E79A02800F1FC55 /* ASDropDetector.swift in Sources */,
 				0505BFC72E2268BE0023EE05 /* ASStack.swift in Sources */,
-				05E0DADC2E4E126600763D7B /* ASDocument.swift in Sources */,
+				05E0DADC2E4E126600763D7B /* ASPackage.swift in Sources */,
 				05348C292E2FCEBC00485D66 /* ASFrameCompiler.swift in Sources */,
 				051BC3D92E2DED6200BCACF1 /* ASFrameManager.swift in Sources */,
 				05596C172E1971440001384E /* ASFrameParser.swift in Sources */,
@@ -678,13 +721,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				055A06572E9406BC00D206BC /* ASManifest.swift in Sources */,
 				05E0DADE2E4EA4BE00763D7B /* ASResource.swift in Sources */,
 				050910532E46308A002358A9 /* ASFrameEditor.swift in Sources */,
 				05348C232E2FCA9800485D66 /* Makefile in Sources */,
 				052E02652E4C07A200636E13 /* ASTextField.swift in Sources */,
 				051C474F2E79A02800F1FC55 /* ASDropDetector.swift in Sources */,
 				0505BFC62E2268BE0023EE05 /* ASStack.swift in Sources */,
-				05E0DADB2E4E126600763D7B /* ASDocument.swift in Sources */,
+				05E0DADB2E4E126600763D7B /* ASPackage.swift in Sources */,
 				05596C182E1971440001384E /* ASFrameParser.swift in Sources */,
 				05348C2A2E2FCEBC00485D66 /* ASFrameCompiler.swift in Sources */,
 				051BC3DA2E2DED6200BCACF1 /* ASFrameManager.swift in Sources */,
