@@ -177,7 +177,11 @@ import Foundation
                                                         url = mPackage.localToFullPath(path: file)
                                                 }
                                                 NSLog("Reload image from \(url.path) at \(#file)")
-                                                image.reload(from: url)
+                                                if let img = MIImage.load(from: url) {
+                                                        image.image = img
+                                                } else {
+                                                        NSLog("[Errir] Failed to load image from \(url.path) at \(#function)")
+                                                }
                                         } else {
                                                 return MIError.error(
                                                   errorCode: .parseError,
