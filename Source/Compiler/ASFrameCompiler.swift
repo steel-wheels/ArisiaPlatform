@@ -15,6 +15,7 @@ import Foundation
         private var mContext:           MFContext
         private var mConsoleStortage:   MITextStorage
         private var mPackage:           ASPackage
+        private var mResource:          ASResource
         private var mScript:            Array<String>
 
         private struct EventDefinition {
@@ -27,10 +28,11 @@ import Foundation
                 }
         }
 
-        public init(context ctxt: MFContext, consoleStorage strg: MITextStorage, package pkg: ASPackage){
+        public init(context ctxt: MFContext, consoleStorage strg: MITextStorage, package pkg: ASPackage, resource res: ASResource){
                 mContext                = ctxt
                 mConsoleStortage        = strg
                 mPackage                = pkg
+                mResource               = res
                 mScript                 = []
 
                 /* add console object */
@@ -172,7 +174,7 @@ import Foundation
                                         if let file = val.stringValue {
                                                 let url: URL
                                                 if file.count == 0 {
-                                                        url = ASResource.URLOfNullImage()
+                                                        url = mResource.URLOfNullImage()
                                                 } else {
                                                         url = mPackage.localToFullPath(path: file)
                                                 }

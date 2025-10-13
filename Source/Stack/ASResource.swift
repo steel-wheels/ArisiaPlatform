@@ -19,7 +19,7 @@ public class ASResource
         public init(){
         }
 
-        public static func URLOfNullImage() -> URL {
+        public func URLOfNullImage() -> URL {
                 if let resdir = FileManager.default.resourceDirectory(forClass: ASResource.self) {
                         return resdir.appendingPathComponent("Images/no-image.png")
                 } else {
