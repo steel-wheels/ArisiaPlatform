@@ -12,10 +12,15 @@ public class ASManifest
 {
         public static let FileName = "manifest.json"
 
+        static let ScriptsDirectoryName = "scripts"
+        static let ImagesDirectoryName  = "images"
+
         private var mScriptFileNames: Array<String>
+        private var mImageFileNames:  Array<String>
 
         public init() {
                 mScriptFileNames = []
+                mImageFileNames  = []
         }
 
         public func addScriptFileName(name nm: String){
@@ -34,14 +39,38 @@ public class ASManifest
                 }
         }
 
+        public func addImagesFileName(name nm: String){
+                mImageFileNames.append(nm)
+        }
+
+        public var imageFileNames: Array<String> { get {
+                return mImageFileNames
+        }}
+
+        public func imageFileName(at index: Int) -> String? {
+                if 0 <= index && index < mImageFileNames.count {
+                        return mImageFileNames[index] ;
+                } else {
+                        return nil
+                }
+        }
+
         public func save(to pkgdir: URL) -> NSError? {
                 let manfile = pkgdir.appending(path: ASManifest.FileName)
 
-                let pathstrs = mScriptFileNames.map{ "\"" + $0 + "\"" }
+                var text = ""
 
-                var text = "{\n"
-                text += "  scripts: [\n"
-                text += pathstrs.joined(separator: ",\n")
+                let scrnames = mScriptFileNames.map{ "\"" + $0 + "\"" }
+                text = "{\n"
+                text += "  \(ASManifest.ScriptsDirectoryName) [\n"
+                text += scrnames.joined(separator: ",\n")
+                text += "  \n]\n"
+                text += "}\n"
+
+                let imgnames = mImageFileNames.map{ "\"" + $0 + "\"" }
+                text = "{\n"
+                text += "  \(ASManifest.ImagesDirectoryName) [\n"
+                text += imgnames.joined(separator: ",\n")
                 text += "  \n]\n"
                 text += "}\n"
 
@@ -79,31 +108,58 @@ public class ASManifest
                 switch val.value {
                 case .dictionaryValue(let dict):
                         let manifest = ASManifest()
-
-                        /* parse "scripts" section */
-                        guard let scrval = dict["scripts"] else {
-                                let err = MIError.error(errorCode: .fileError, message: "\"scripts\" section is required")
-                                return .failure(err)
-                        }
-                        /* parse content of "scripts" section */
-                        switch scrval.value {
-                        case .arrayValue(let svals):
-                                for sval in svals {
-                                        switch sval.value {
-                                        case .stringValue(let str):
-                                                manifest.addScriptFileName(name: str)
-                                        default:
-                                                let err = MIError.error(errorCode: .fileError, message: "The item scripts section in \(ASManifest.FileName) must have string URL")
-                                                return .failure(err)
+                        /* load script section */
+                        switch load(value: dict, category: ASManifest.ScriptsDirectoryName) {
+                        case .success(let names):
+                                if names.count > 0 {
+                                        for name in names {
+                                                manifest.addScriptFileName(name: name)
                                         }
+                                } else {
+                                        let err = MIError.error(errorCode: .fileError, message: "\"\(ASManifest.ScriptsDirectoryName)\" section must have at least one file path")
+                                        return .failure(err)
                                 }
-                                return .success(manifest)
-                        default:
-                                let err = MIError.error(errorCode: .fileError, message: "The scripts section in \(ASManifest.FileName) must have array of URLs")
+                        case .failure(let err):
                                 return .failure(err)
                         }
+                        /* load image section */
+                        switch load(value: dict, category: ASManifest.ImagesDirectoryName) {
+                        case .success(let names):
+                                for name in names {
+                                        manifest.addImagesFileName(name: name)
+                                }
+                        case .failure(let err):
+                                return .failure(err)
+                        }
+                        return .success(manifest)
                 default:
                         let err = MIError.error(errorCode: .fileError, message: "Dictionary info is required")
+                        return .failure(err)
+                }
+        }
+
+        private static func load(value dict: Dictionary<String, MIValue>, category cat: String) -> Result<Array<String>, NSError> {
+                /* parse section */
+                guard let scrval = dict[cat] else {
+                        return .success([])
+                }
+
+                /* parse content of "scripts" section */
+                var result: Array<String> = []
+                switch scrval.value {
+                case .arrayValue(let svals):
+                        for sval in svals {
+                                switch sval.value {
+                                case .stringValue(let str):
+                                        result.append(str)
+                                default:
+                                        let err = MIError.error(errorCode: .fileError, message: "The item in \(cat) section must have path string")
+                                        return .failure(err)
+                                }
+                        }
+                        return .success(result)
+                default:
+                        let err = MIError.error(errorCode: .fileError, message: "The scripts section in \(ASManifest.FileName) must have array of URLs")
                         return .failure(err)
                 }
         }
