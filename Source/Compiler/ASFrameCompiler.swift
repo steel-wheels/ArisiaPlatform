@@ -172,17 +172,16 @@ import Foundation
                                 switch slot.name {
                                 case MFImageView.FileSlotName:
                                         if let file = val.stringValue {
-                                                let url: URL
-                                                if file.count == 0 {
-                                                        url = mResource.URLOfNullImage()
+                                                if let imginfo = loadImage(fileString: file) {
+                                                        NSLog("Reload image from \(imginfo.filePath) at \(#file)")
+                                                        if let img = MIImage.load(from: imginfo.fileURL) {
+                                                                image.image = img
+                                                                mPackage.setImage(fileName: imginfo.filePath, image: img)
+                                                        } else {
+                                                                NSLog("[Errir] Failed to load image from \(imginfo.fileURL.path) at \(#file)")
+                                                        }
                                                 } else {
-                                                        url = mPackage.localToFullPath(path: file)
-                                                }
-                                                NSLog("Reload image from \(url.path) at \(#file)")
-                                                if let img = MIImage.load(from: url) {
-                                                        image.image = img
-                                                } else {
-                                                        NSLog("[Errir] Failed to load image from \(url.path) at \(#function)")
+                                                        NSLog("[Error] Failed to load image at \(#function)")
                                                 }
                                         } else {
                                                 return MIError.error(
@@ -213,6 +212,27 @@ import Foundation
                              eventDefinitions:  []
                 )
                 return nil
+        }
+
+        private func loadImage(fileString file: String) -> ASPackage.ImportedImage? {
+                let srcurl: URL
+                if file.count > 0 {
+                        srcurl = URL(filePath: file)
+                } else {
+                        srcurl = mResource.URLOfNullImage()
+                }
+                if srcurl.isAbsolutePath() {
+                        switch mPackage.imporImage(from: srcurl) {
+                        case .success(let img):
+                                return .some(img)
+                        case .failure(let err):
+                                NSLog("[Error] \(MIError.toString(error: err)) at \(#file))")
+                                return nil
+                        }
+                } else {
+                        let url = mPackage.localToFullPath(path: file)
+                        return ASPackage.ImportedImage(path: file, URL: url)
+                }
         }
 
         private func exportObject(path pth: Array<String>, frame frm: MFFrame, properties props: Array<String>,

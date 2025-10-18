@@ -26,5 +26,14 @@ public class ASResource
                         fatalError("[Error] No resource directory at \(#file)")
                 }
         }
+
+        public func nullImage() -> MIImage {
+                let url = URLOfNullImage()
+                if let img = MIImage.load(from: url) {
+                        return img
+                } else {
+                        fatalError("[Error] Failed to load null image at \(#file)")
+                }
+        }
 }
 

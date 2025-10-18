@@ -6,6 +6,12 @@
  */
 
 import MultiDataKit
+import MultiUIKit
+#if os(OSX)
+import  AppKit
+#else   // os(OSX)
+import  UIKit
+#endif  // os(OSX)
 import Foundation
 
 public class ASPackage
@@ -27,12 +33,14 @@ public class ASPackage
         private var mPackageDirectory:  PackageDirectory
         private var mManifest:          ASManifest
         private var mScripts:           Dictionary<String, String>      // File name, Script
+        private var mImages:            Dictionary<String, MIImage>     // file name. Image
 
         /* Use loadNewPackage or loadPackage() to allocate thie object */
         private init(packageDirectory pkgdir: PackageDirectory, manifest mani: ASManifest) {
                 mPackageDirectory = pkgdir
                 mManifest         = mani
                 mScripts          = [:]
+                mImages           = [:]
         }
 
         public func localToFullPath(path pth: String) -> URL {
@@ -64,6 +72,57 @@ public class ASPackage
                         let err = MIError.error(errorCode: .fileError, message: "Failed to read \(fpath.path)", atFile: #file, function: #function)
                         return .failure(err)
                 }
+        }
+
+        public func setImage(fileName fname: String, image img: MIImage) {
+                mImages[fname] = img
+        }
+
+        public var imageFileNames: Array<String> {
+                return mManifest.imageFileNames
+        }
+
+        public func imageFileName(at index: Int) -> String? {
+                return mManifest.imageFileName(at: index)
+        }
+
+        public func image(fileName fname: String) -> Result<MIImage, NSError> {
+                if let img = mImages[fname] {
+                        return .success(img)
+                }
+                let path = mPackageDirectory.toURL.appending(path: fname)
+                if let img = MIImage.load(from: path) {
+                        mImages[fname] = img
+                        return .success(img)
+                } else {
+                        let err = MIError.error(errorCode: .fileError, message: "Failed to read \(path.path)", atFile: #file, function: #function)
+                        return .failure(err)
+                }
+        }
+
+        public struct ImportedImage {
+                public var filePath:    String
+                public var fileURL:     URL
+
+                public init(path pth: String, URL u: URL) {
+                        self.filePath   = pth
+                        self.fileURL    = u
+                }
+        }
+
+        public func imporImage(from src: URL) -> Result<ImportedImage, NSError> { // <local-path, error>
+                let fmgr    = FileManager.default
+                let fname   = src.lastPathComponent
+
+                /* copy into the package directory */
+                let dst = mPackageDirectory.toURL.appending(path: fname)
+                if let err = fmgr.copyFile(from: src, to: dst) {
+                        return .failure(err)
+                }
+                /* add the file name into image section in manifest */
+                mManifest.addImagesFileName(name: fname)
+                /* return */
+                return .success(ImportedImage(path: fname, URL: dst))
         }
 
         public func save() -> NSError? {
