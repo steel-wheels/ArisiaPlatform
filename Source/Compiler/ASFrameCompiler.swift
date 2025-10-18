@@ -222,7 +222,7 @@ import Foundation
                         srcurl = mResource.URLOfNullImage()
                 }
                 if srcurl.isAbsolutePath() {
-                        switch mPackage.imporImage(from: srcurl) {
+                        switch mPackage.importImage(from: srcurl) {
                         case .success(let img):
                                 return .some(img)
                         case .failure(let err):

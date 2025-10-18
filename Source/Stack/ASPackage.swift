@@ -110,7 +110,7 @@ public class ASPackage
                 }
         }
 
-        public func imporImage(from src: URL) -> Result<ImportedImage, NSError> { // <local-path, error>
+        public func importImage(from src: URL) -> Result<ImportedImage, NSError> { // <local-path, error>
                 let fmgr    = FileManager.default
                 let fname   = src.lastPathComponent
 
