@@ -13,9 +13,47 @@ public class ASStack
         private var mPackage:           ASPackage
         private var mFrames:            Dictionary<String, ASFrame> // File name in package, Frame
 
-        public init(package pkg: ASPackage) {
+        private init(package pkg: ASPackage) {
                 mPackage        = pkg
                 mFrames         = [:]
+        }
+
+        public static func loadNewStack() -> Result<ASStack, NSError> {
+                switch ASPackage.loadNewPackage() {
+                case .success(let pkg):
+                        let stack = ASStack(package: pkg)
+                        return stack.setup()
+                case .failure(let err):
+                        return .failure(err)
+                }
+        }
+
+        public static func load(from pkgdir: URL) -> Result<ASStack, NSError> {
+                switch ASPackage.load(from: pkgdir) {
+                case .success(let pkg):
+                        let stack = ASStack(package: pkg)
+                        return stack.setup()
+                case .failure(let err):
+                        return .failure(err)
+                }
+        }
+
+        private func setup() -> Result<ASStack, NSError> {
+                for sname in mPackage.scriptFileNames {
+                        switch mPackage.script(fileName: sname) {
+                        case .success(let scr):
+                                let parser = ASFrameParser()
+                                switch parser.parse(string: scr) {
+                                case .success(let frame):
+                                        mFrames[sname] = frame
+                                case .failure(let err):
+                                        return .failure(err)
+                                }
+                        case .failure(let err):
+                                return .failure(err)
+                        }
+                }
+                return .success(self)
         }
 
         public var package: ASPackage { get {
@@ -30,6 +68,15 @@ public class ASStack
                 return mPackage.scriptFileName(at: index)
         }
 
+        public func frame(name fname: String) -> ASFrame? {
+                return mFrames[fname]
+        }
+
+        public func save(to url: URL) -> NSError? {
+                return mPackage.save(to: url)
+        }
+
+        /*
         public func script(fileName name: String) -> Result<String, NSError> {
                 return mPackage.script(fileName: name)
         }
@@ -63,5 +110,6 @@ public class ASStack
 
         public func save(to pkgdir: URL) -> NSError? {
                 return mPackage.save(to: pkgdir)
-        }
+        }*/
+
 }

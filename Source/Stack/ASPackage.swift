@@ -125,15 +125,7 @@ public class ASPackage
                 return .success(ImportedImage(path: fname, URL: dst))
         }
 
-        public func save() -> NSError? {
-                return saveFile(to: mPackageDirectory.toURL)
-        }
-
         public func save(to pkgdir: URL) -> NSError? {
-                return saveFile(to: pkgdir)
-        }
-
-        private func saveFile(to pkgdir: URL) -> NSError? {
                 let fmgr = FileManager.default
 
                 /* If the directory is not exist, make it */
