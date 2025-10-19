@@ -72,6 +72,14 @@ public class ASStack
                 return mFrames[fname]
         }
 
+        public func frame(at index: Int) -> ASFrame? {
+                if let fname = scriptFileName(at: index) {
+                        return frame(name: fname)
+                } else {
+                        return nil
+                }
+        }
+
         public func save(to url: URL) -> NSError? {
                 return mPackage.save(to: url)
         }
