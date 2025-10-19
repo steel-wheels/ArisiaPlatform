@@ -80,6 +80,15 @@ public class ASStack
                 }
         }
 
+        public func updateFrame(index idx: Int) {
+                if let fname = scriptFileName(at: idx) {
+                        if let frame = frame(name: fname) {
+                                let scr = frame.encode()
+                                mPackage.setScript(fileName: fname, script: scr)
+                        }
+                }
+        }
+
         public func save(to url: URL) -> NSError? {
                 return mPackage.save(to: url)
         }
