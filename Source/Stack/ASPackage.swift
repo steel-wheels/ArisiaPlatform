@@ -139,10 +139,10 @@ public class ASPackage
                         return err
                 }
                 /* save script files */
-                for fname in mManifest.scriptFileNames {
+                for fname in self.scriptFileNames {
                         switch self.script(fileName: fname) {
                         case .success(let scr):
-                                let scrurl = mPackageDirectory.toURL.appending(path: fname)
+                                let scrurl = pkgdir.appending(path: fname)
                                 do {
                                         try scr.write(to: scrurl, atomically: false, encoding: .utf8)
                                 } catch {
@@ -153,6 +153,19 @@ public class ASPackage
                                 return err
                         }
                 }
+                /* copy image files */
+                if pkgdir != mPackageDirectory.toURL {
+                        for fname in self.imageFileNames {
+                                let srcfile = mPackageDirectory.toURL.appending(path: fname)
+                                let dstfile = pkgdir.appending(path: fname)
+                                if let err = FileManager.default.copyFile(from: srcfile, to: dstfile) {
+                                        return err
+                                }
+                        }
+                }
+
+                /* replace root dir */
+                mPackageDirectory = .user(pkgdir)
                 return nil
         }
 

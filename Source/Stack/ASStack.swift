@@ -11,7 +11,7 @@ import Foundation
 public class ASStack
 {
         private var mPackage:           ASPackage
-        private var mFrames:            Dictionary<String, ASFrame> // File name in package, Frame
+        private var mFrames:            Dictionary<String, ASFrame> // File name, Frame
 
         private init(package pkg: ASPackage) {
                 mPackage        = pkg

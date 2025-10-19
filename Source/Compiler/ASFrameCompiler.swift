@@ -215,12 +215,10 @@ import Foundation
         }
 
         private func loadImage(fileString file: String) -> ASPackage.ImportedImage? {
-                let srcurl: URL
-                if file.count > 0 {
-                        srcurl = URL(filePath: file)
-                } else {
-                        srcurl = mResource.URLOfNullImage()
+                guard file.count > 0 else {
+                        return ASPackage.ImportedImage(path: "", URL: mResource.URLOfNullImage())
                 }
+                let srcurl = URL(filePath: file)
                 if srcurl.isAbsolutePath() {
                         switch mPackage.importImage(from: srcurl) {
                         case .success(let img):

@@ -19,20 +19,20 @@ public class ASResource
         public init(){
         }
 
-        public func URLOfNullImage() -> URL {
-                if let resdir = FileManager.default.resourceDirectory(forClass: ASResource.self) {
-                        return resdir.appendingPathComponent("Images/no-image.png")
-                } else {
-                        fatalError("[Error] No resource directory at \(#file)")
-                }
-        }
-
         public func nullImage() -> MIImage {
                 let url = URLOfNullImage()
                 if let img = MIImage.load(from: url) {
                         return img
                 } else {
                         fatalError("[Error] Failed to load null image at \(#file)")
+                }
+        }
+
+        public func URLOfNullImage() -> URL {
+                if let resdir = FileManager.default.resourceDirectory(forClass: ASResource.self) {
+                        return resdir.appendingPathComponent("Images/no-image.png")
+                } else {
+                        fatalError("[Error] No resource directory at \(#file)")
                 }
         }
 }
