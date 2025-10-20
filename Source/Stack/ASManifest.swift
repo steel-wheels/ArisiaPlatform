@@ -70,8 +70,8 @@ public class ASManifest
                 let imgnames = mImageFileNames.map{ "\"" + $0 + "\"" }
                 text = "{\n"
                 text += "  \(ASManifest.ImagesDirectoryName) [\n"
-                text += imgnames.joined(separator: ",\n")
-                text += "  \n]\n"
+                text += "  " + imgnames.joined(separator: ",\n")
+                text += "  ]\n"
                 text += "}\n"
 
                 do {

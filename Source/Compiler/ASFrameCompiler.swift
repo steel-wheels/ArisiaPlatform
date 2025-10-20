@@ -180,6 +180,8 @@ import Foundation
                                                         } else {
                                                                 NSLog("[Errir] Failed to load image from \(imginfo.fileURL.path) at \(#file)")
                                                         }
+                                                        /* overwrite file path */
+                                                        ownerframe.set(slotName: MFImageView.FileSlotName, stringValue: imginfo.filePath)
                                                 } else {
                                                         NSLog("[Error] Failed to load image at \(#function)")
                                                 }
@@ -222,7 +224,7 @@ import Foundation
                 if srcurl.isAbsolutePath() {
                         switch mPackage.importImage(from: srcurl) {
                         case .success(let img):
-                                return .some(img)
+                                return img
                         case .failure(let err):
                                 NSLog("[Error] \(MIError.toString(error: err)) at \(#file))")
                                 return nil
