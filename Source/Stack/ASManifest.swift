@@ -61,14 +61,14 @@ public class ASManifest
                 var text = "{\n"
 
                 let scrnames = mScriptFileNames.map{ "\"" + $0 + "\"" }
-                text += "  \(ASManifest.ScriptsDirectoryName) [\n"
-                text += scrnames.joined(separator: ",\n")
-                text += "  \n]\n"
+                text += "\(ASManifest.ScriptsDirectoryName): [\n"
+                text += "\t" + scrnames.joined(separator: ",") + "\n"
+                text += "]\n"
 
                 let imgnames = mImageFileNames.map{ "\"" + $0 + "\"" }
-                text += "  \(ASManifest.ImagesDirectoryName) [\n"
-                text += "  " + imgnames.joined(separator: ",\n")
-                text += "  ]\n"
+                text += "\(ASManifest.ImagesDirectoryName): [\n"
+                text += "\t" + imgnames.joined(separator: ",") + "\n"
+                text += "]\n"
 
                 text += "}\n"
 

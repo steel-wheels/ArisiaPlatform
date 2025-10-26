@@ -156,8 +156,15 @@ public class ASFrameParser
                                 case .failure(let err):
                                         return .failure(err)
                                 }
+                        case "{":
+                                switch parseFrame(index: &index, tokens: tokens) {
+                                case .success(let child):
+                                        value = .frame(child)
+                                case .failure(let err):
+                                        return .failure(err)
+                                }
                         default:
-                                let err = MIError.parseError(message: "Unexpected symbol: \(c)",
+                                let err = MIError.parseError(message: "Unexpected symbol \"\(c)\"",
                                                              line: MIToken.lastLine(tokens: tokens))
                                 return .failure(err)
                         }
