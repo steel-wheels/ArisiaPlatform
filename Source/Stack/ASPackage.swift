@@ -43,10 +43,6 @@ public class ASPackage
                 mImages           = [:]
         }
 
-        public func localToFullPath(path pth: String) -> URL {
-                return mPackageDirectory.toURL.appending(path: pth)
-        }
-
         public func setScript(fileName fname: String, script scr: String) {
                 mScripts[fname] = scr
         }
@@ -69,7 +65,7 @@ public class ASPackage
                         mScripts[fname] = scr
                         return .success(scr)
                 } catch {
-                        let err = MIError.error(errorCode: .fileError, message: "Failed to read \(fpath.path)", atFile: #file, function: #function)
+                        let err = MIError.error(errorCode: .fileError, message: "Failed to read script from \(fpath.path)", atFile: #file, function: #function)
                         return .failure(err)
                 }
         }
@@ -87,6 +83,12 @@ public class ASPackage
         }
 
         public func image(fileName fname: String) -> Result<MIImage, NSError> {
+                guard fname.count > 0 else {
+                        /* no name */
+                        let res = ASResource()
+                        return .success(res.nullImage())
+                }
+
                 if let img = mImages[fname] {
                         return .success(img)
                 }
@@ -95,34 +97,24 @@ public class ASPackage
                         mImages[fname] = img
                         return .success(img)
                 } else {
-                        let err = MIError.error(errorCode: .fileError, message: "Failed to read \(path.path)", atFile: #file, function: #function)
+                        let err = MIError.error(errorCode: .fileError, message: "Failed to read image from \(path.path)", atFile: #file, function: #function)
                         return .failure(err)
                 }
         }
 
-        public struct ImportedImage {
-                public var filePath:    String
-                public var fileURL:     URL
-
-                public init(path pth: String, URL u: URL) {
-                        self.filePath   = pth
-                        self.fileURL    = u
-                }
-        }
-
-        public func importImage(from src: URL) -> Result<ImportedImage, NSError> { // <local-path, error>
+        public func importFile(from srcfile: URL) -> Result<String, NSError> { // -> <Path for imported file, Error>
                 let fmgr    = FileManager.default
-                let fname   = src.lastPathComponent
+                let fname   = srcfile.lastPathComponent
 
                 /* copy into the package directory */
-                let dst = mPackageDirectory.toURL.appending(path: fname)
-                if let err = fmgr.copyFile(from: src, to: dst) {
+                let dstfile = mPackageDirectory.toURL.appending(path: fname)
+                if let err = fmgr.copyFile(from: srcfile, to: dstfile) {
                         return .failure(err)
                 }
                 /* add the file name into image section in manifest */
                 mManifest.addImagesFileName(name: fname)
-                /* return */
-                return .success(ImportedImage(path: fname, URL: dst))
+                /* return the path for newfile */
+                return .success(fname)
         }
 
         public func save(to pkgdir: URL) -> NSError? {

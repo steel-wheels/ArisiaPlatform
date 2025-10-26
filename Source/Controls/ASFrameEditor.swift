@@ -21,7 +21,7 @@ public class ASFrameEditor: MIStack
 
         public enum SlotValue {
                 case    value(MIValue)
-                case    url(URL?)
+                case    file(String)    // relative path from package directory
                 case    event(String)
         }
 
@@ -30,8 +30,9 @@ public class ASFrameEditor: MIStack
         private var mUpdateButton:      MIButton? = nil
         private var mCancelButton:      MIButton? = nil
 
-        private var mFrame:             ASFrame?  = nil
-        private var mSlotValues:        Dictionary<String, SlotValue>   = [:]
+        private var mFrame:             ASFrame?   = nil
+        private var mPackage:           ASPackage? = nil
+        private var mSlotValues:        Dictionary<String, SlotValue>       = [:]
         private var mEditFields:        Dictionary<String, MIInterfaceView> = [:]
 
         private var mCallback:          UpdatedCallback? = nil
@@ -74,8 +75,9 @@ public class ASFrameEditor: MIStack
                 self.addArrangedSubView(buttons)
         }
 
-        public func set(target frame: ASFrame, updatedCallback cbfunc: @escaping UpdatedCallback) {
+        public func set(target frame: ASFrame, package pkg: ASPackage, updatedCallback cbfunc: @escaping UpdatedCallback) {
                 mFrame             = frame
+                mPackage           = pkg
                 mSlotValues        = self.loadSlotValues(from: frame)
                 mCallback          = cbfunc
                 setViewContent()
@@ -98,11 +100,7 @@ public class ASFrameEditor: MIStack
                                         switch slot.name {
                                         case "file":
                                                 if let str = ival.stringValue {
-                                                        if str.count == 0 {
-                                                                result[slot.name] = .url(nil)
-                                                        } else {
-                                                                result[slot.name] = .url(URL(filePath: str))
-                                                        }
+                                                        result[slot.name] = .file(str)
                                                 } else {
                                                         NSLog("[Error] Not supported at \(#file)")
                                                 }
@@ -160,15 +158,24 @@ public class ASFrameEditor: MIStack
                         })
                         mEditFields[nm] = field
                         result.addArrangedSubView(field)
-                case .url(let orgval):
+                case .file(let orgval):
                         let selector = MIFileSelector()
-                        selector.url = orgval
+                        if orgval.count > 0 {
+                                selector.url = URL(filePath: orgval)
+                        } else {
+                                selector.url = nil
+                        }
                         selector.setCallback({
                                 (_ url: URL) -> Void in
                                 NSLog("ASFrameEditor: field callback: (url) \(nm) \(url.path)")
-                                self.mSlotValues[nm] = .url(url)
-                                self.mIsModified = true
-                                self.updateButtonStatus()
+                                switch self.urlToPath(at: url) {
+                                case .success(let path):
+                                        self.mSlotValues[nm] = .file(path)
+                                        self.mIsModified = true
+                                        self.updateButtonStatus()
+                                case .failure(let err):
+                                        NSLog("[Error] \(MIError.toString(error: err)) at \(#file)")
+                                }
                         })
                         mEditFields[nm] = selector
                         result.addArrangedSubView(selector)
@@ -186,6 +193,17 @@ public class ASFrameEditor: MIStack
                         result.addArrangedSubView(field)
                 }
                 return result
+        }
+
+        private func urlToPath(at url: URL) -> Result<String, NSError> {
+                guard let pkg = mPackage else {
+                        let err = MIError.error(errorCode: .fileError,
+                                                message: "No package directory",
+                                                atFile: #file,
+                                                function: #function)
+                        return .failure(err)
+                }
+                return pkg.importFile(from: url)
         }
 
         private func updateButtonPressed() {
@@ -212,12 +230,8 @@ public class ASFrameEditor: MIStack
                                 switch slot {
                                 case .value(let val):
                                         field.set(value: val)
-                                case .url(let urlp):
-                                        if let url = urlp {
-                                                field.set(value: MIValue(stringValue: url.path))
-                                        } else {
-                                                field.set(value: MIValue(stringValue: ""))
-                                        }
+                                case .file(let path):
+                                        field.set(value: MIValue(stringValue: path))
                                 case .event(let estr):
                                         field.set(value: MIValue(stringValue: estr))
                                 }
@@ -240,12 +254,8 @@ public class ASFrameEditor: MIStack
                         switch slot {
                         case .value(let val):
                                 frame.set(slotName: name, value: .value(val))
-                        case .url(let urlp):
-                                if let url = urlp {
-                                        frame.set(slotName: name, value: .value(MIValue(stringValue: url.path)))
-                                } else {
-                                        frame.set(slotName: name, value: .value(MIValue(stringValue: "")))
-                                }
+                        case .file(let path):
+                                frame.set(slotName: name, value: .value(MIValue(stringValue: path)))
                         case .event(let estr):
                                 frame.set(slotName: name, value: .event(estr))
                         }

@@ -58,20 +58,18 @@ public class ASManifest
         public func save(to pkgdir: URL) -> NSError? {
                 let manfile = pkgdir.appending(path: ASManifest.FileName)
 
-                var text = ""
+                var text = "{\n"
 
                 let scrnames = mScriptFileNames.map{ "\"" + $0 + "\"" }
-                text = "{\n"
                 text += "  \(ASManifest.ScriptsDirectoryName) [\n"
                 text += scrnames.joined(separator: ",\n")
                 text += "  \n]\n"
-                text += "}\n"
 
                 let imgnames = mImageFileNames.map{ "\"" + $0 + "\"" }
-                text = "{\n"
                 text += "  \(ASManifest.ImagesDirectoryName) [\n"
                 text += "  " + imgnames.joined(separator: ",\n")
                 text += "  ]\n"
+
                 text += "}\n"
 
                 do {

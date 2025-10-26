@@ -39,7 +39,7 @@ import Foundation
                 let console = MFConsole(storage: strg)
                 ctxt.setObject(console, forKeyedSubscript: "console" as NSString)
         }
-        
+
         public func compile(frame frm: ASFrame, into ownerview: MFStack) -> NSError? {
                 if let err = compile(frame: frm, path: ["root"], into: ownerview) {
                         return err
@@ -75,14 +75,12 @@ import Foundation
                 let stack = MFStack(context: mContext, frameId: ownerframe.frameId())
                 stack.axis = axs
                 for slot in ownerframe.slots {
+                        if isUntoucheableSlot(slotName: slot.name) {
+                                continue
+                        }
                         switch slot.value {
                         case .value(let sval):
-                                switch slot.name {
-                                case ASFrame.ClassSlotName, ASFrame.FrameIdSlotName:
-                                        break
-                                default:
-                                        stack.setValue(name: slot.name, value: sval)
-                                }
+                                stack.setValue(name: slot.name, value: sval)
                         case .frame(let sframe):
                                 var spath = pth ; spath.append(slot.name)
                                 if let err = compile(frame: sframe, path: spath, into: stack) {
@@ -91,12 +89,12 @@ import Foundation
                         case .event(_):
                                 return MIError.error(
                                         errorCode: .parseError,
-                                        message: "The frame can not have event slot"
+                                        message: "The \(slot.name) slot can not have event slot"
                                 )
                         case .path(_):
                                 return MIError.error(
                                         errorCode: .parseError,
-                                        message: "The frame can not have path slot"
+                                        message: "The \(slot.name) slot can not have path slot"
                                 )
                         }
                 }
@@ -115,44 +113,46 @@ import Foundation
 
                 let button = MFButton(context: mContext, frameId: ownerframe.frameId())
                 for slot in ownerframe.slots {
-                        switch slot.value {
-                        case .value(let sval):
-                                switch slot.name {
-                                case MFButton.TitleSlotName:
+                        if isUntoucheableSlot(slotName: slot.name) {
+                                continue
+                        }
+                        switch slot.name {
+                        case MFButton.TitleSlotName:
+                                switch slot.value {
+                                case .value(let val):
                                         button.setValue(
                                                 name: MFButton.TitleSlotName,
-                                                value: sval
+                                                value: val
                                         )
-                                case ASFrame.ClassSlotName, ASFrame.FrameIdSlotName:
-                                        break
                                 default:
                                         return MIError.error(
-                                          errorCode: .parseError,
-                                          message: "The button does not have \"\(slot.name)\" slot"
+                                                errorCode: .parseError,
+                                                message: "The \"\(slot.name)\" slot must have string value"
                                         )
                                 }
-                        case .event(let text):
-                                switch slot.name {
-                                case MFButton.ClickedEventName:
-                                        eventdefs.append(EventDefinition(MFButton.ClickedEventName, text))
+                        case MFButton.ClickedEventName:
+                                switch slot.value {
+                                case .event(let event):
+                                        eventdefs.append(EventDefinition(MFButton.ClickedEventName, event))
                                 default:
                                         return MIError.error(
-                                          errorCode: .parseError,
-                                          message: "The button does not have \"\(slot.name)\" event"
+                                                errorCode: .parseError,
+                                                message: "The \"\(slot.name)\" slot must have event description"
                                         )
                                 }
-                        case .path(_):
-                                return MIError.error(
-                                        errorCode: .parseError,
-                                        message: "The button can not have path slot"
-                                )
-                        case .frame(_):
-                                return MIError.error(
-                                        errorCode: .parseError,
-                                        message: "The button can not have frame slot"
-                                )
+                        default:
+                                switch slot.value {
+                                case .value(let val):
+                                        button.setValue(name: slot.name, value: val)
+                                default:
+                                        return MIError.error(
+                                                errorCode: .parseError,
+                                                message: "The \"\(slot.name)\" slot have path slot unexpected value"
+                                        )
+                                }
                         }
                 }
+
                 ownerview.addArrangedSubView(button)
 
                 exportObject(path:              pth,
@@ -167,43 +167,42 @@ import Foundation
                 let image = MFImageView(context: mContext, frameId: ownerframe.frameId())
 
                 for slot in ownerframe.slots {
-                        switch slot.value {
-                        case .value(let val):
-                                switch slot.name {
-                                case MFImageView.FileSlotName:
-                                        if let file = val.stringValue {
-                                                if let imginfo = loadImage(fileString: file) {
-                                                        NSLog("Reload image from \(imginfo.filePath) at \(#file)")
-                                                        if let img = MIImage.load(from: imginfo.fileURL) {
-                                                                image.image = img
-                                                                mPackage.setImage(fileName: imginfo.filePath, image: img)
-                                                        } else {
-                                                                NSLog("[Errir] Failed to load image from \(imginfo.fileURL.path) at \(#file)")
-                                                        }
-                                                        /* overwrite file path */
-                                                        ownerframe.set(slotName: MFImageView.FileSlotName, stringValue: imginfo.filePath)
-                                                } else {
-                                                        NSLog("[Error] Failed to load image at \(#function)")
+                        if isUntoucheableSlot(slotName: slot.name) {
+                                continue
+                        }
+                        switch slot.name {
+                        case MFImageView.FileSlotName:
+                                switch slot.value {
+                                case .value(let val):
+                                        if let path = val.stringValue {
+                                                switch mPackage.image(fileName: path) {
+                                                case .success(let img):
+                                                        image.image = img
+                                                case .failure(let err):
+                                                        return err
                                                 }
                                         } else {
                                                 return MIError.error(
-                                                  errorCode: .parseError,
-                                                  message: "The value type at \"\(slot.name)\" slot"
+                                                        errorCode: .parseError,
+                                                        message: "The \"\(slot.name)\" slot must have string"
                                                 )
                                         }
-                                case ASFrame.ClassSlotName, ASFrame.FrameIdSlotName:
-                                        break
                                 default:
                                         return MIError.error(
-                                          errorCode: .parseError,
-                                          message: "The image does not have \"\(slot.name)\" slot"
+                                                errorCode: .parseError,
+                                                message: "The \"\(slot.name)\" slot must have unexpected type value"
                                         )
                                 }
-                        case .event(_), .frame(_), .path(_):
-                                return MIError.error(
-                                        errorCode: .parseError,
-                                        message: "The image can not have event/frame/path slot"
-                                )
+                        default:
+                                switch slot.value {
+                                case .value(let val):
+                                        image.setValue(name: slot.name, value: val)
+                                default:
+                                        return MIError.error(
+                                                errorCode: .parseError,
+                                                message: "The \"\(slot.name)\" slot have path slot unexpected value"
+                                        )
+                                }
                         }
                 }
 
@@ -216,23 +215,15 @@ import Foundation
                 return nil
         }
 
-        private func loadImage(fileString file: String) -> ASPackage.ImportedImage? {
-                guard file.count > 0 else {
-                        return ASPackage.ImportedImage(path: "", URL: mResource.URLOfNullImage())
+        private func isUntoucheableSlot(slotName name: String) -> Bool {
+                let result: Bool
+                switch name {
+                case ASFrame.ClassSlotName, ASFrame.FrameIdSlotName:
+                        result = true
+                default:
+                        result = false
                 }
-                let srcurl = URL(filePath: file)
-                if srcurl.isAbsolutePath() {
-                        switch mPackage.importImage(from: srcurl) {
-                        case .success(let img):
-                                return img
-                        case .failure(let err):
-                                NSLog("[Error] \(MIError.toString(error: err)) at \(#file))")
-                                return nil
-                        }
-                } else {
-                        let url = mPackage.localToFullPath(path: file)
-                        return ASPackage.ImportedImage(path: file, URL: url)
-                }
+                return result
         }
 
         private func exportObject(path pth: Array<String>, frame frm: MFFrame, properties props: Array<String>,
