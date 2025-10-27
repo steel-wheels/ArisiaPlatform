@@ -47,7 +47,7 @@ public extension ASFrame
                         }
                         result = locres
                 case .event(let str):
-                        result = "event() %{" + str + "}%"
+                        result = "event() %{" + str + "%}"
                 }
                 return result
         }

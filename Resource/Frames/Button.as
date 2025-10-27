@@ -1,7 +1,7 @@
 {
 	class:	"Button"
 	title:	"OK"
-	clicked: event %{
+	clicked: event() %{
 		console.log("button pressed") ;
 	%}
 }

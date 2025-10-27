@@ -251,12 +251,32 @@ public class ASFrameParser
 
         private func parseEventFunction(index: inout Int, tokens: Array<MIToken>) -> Result<ASFrameValue, NSError>
         {
+                switch parseParameters(index: &index, tokens: tokens) {
+                case .success(_):
+                        break
+                case .failure(let err):
+                        return .failure(err)
+                }
                 switch requireText(index: &index, tokens: tokens) {
                 case .success(let text):
                         return .success(.event(text))
                 case .failure(let err):
                         return .failure(err)
                 }
+        }
+
+        private func parseParameters(index: inout Int, tokens: Array<MIToken>) -> Result<Array<String>, NSError>
+        {
+                let result: Array<String> = []
+
+                if let err = requireSymbol(index: &index, symbol: "(", tokens: tokens){
+                        return .failure(err)
+                }
+
+                if let err = requireSymbol(index: &index, symbol: ")", tokens: tokens){
+                        return .failure(err)
+                }
+                return .success(result)
         }
 
         private func requireIdentifier(index: inout Int, tokens: Array<MIToken>) -> Result<String, NSError> {
