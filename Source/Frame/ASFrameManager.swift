@@ -23,12 +23,6 @@ import Foundation
                 mRootFrame   = frm
         }
 
-        public func add(contentsOf frame: ASFrame){
-                for slot in frame.slots {
-                        mRootFrame.set(slotName: slot.name, value: slot.value)
-                }
-        }
-
         public func insert(name nm: String, frame frm: ASFrame, at dpoint: DetectedFrame){
                 //NSLog("dropped at \(dpoint.description)")
                 if mRootFrame.frameSlots.count == 0 {
