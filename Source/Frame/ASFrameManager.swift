@@ -14,7 +14,6 @@ import Foundation
         public typealias DetectedFrame = ASDropDetector.DetectedFrame
 
         private var mRootFrame          : ASFrame
-        private var mUniqueIndex        : Int
 
         public var rootFrame: ASFrame { get {
                 return mRootFrame
@@ -22,11 +21,9 @@ import Foundation
 
         public init(frame frm: ASFrame){
                 mRootFrame   = frm
-                mUniqueIndex = ASFrame.setFrameIds(frame: frm, frameId: 0)
         }
 
         public func add(contentsOf frame: ASFrame){
-                mUniqueIndex = ASFrame.setFrameIds(frame: frame, frameId: mUniqueIndex)
                 for slot in frame.slots {
                         mRootFrame.set(slotName: slot.name, value: slot.value)
                 }
@@ -35,8 +32,6 @@ import Foundation
         public func insert(name nm: String, frame frm: ASFrame, at dpoint: DetectedFrame){
                 //NSLog("dropped at \(dpoint.description)")
                 if mRootFrame.frameSlots.count == 0 {
-                        //NSLog("Successed to add 1st item")
-                        mUniqueIndex = ASFrame.setFrameIds(frame: frm, frameId: mUniqueIndex)
                         mRootFrame.set(slotName: nm, value: .frame(frm))
                 } else if insert(destination: mRootFrame, name: nm, source: frm, at: dpoint) {
                         //NSLog("Successed to insert")
@@ -81,7 +76,6 @@ import Foundation
                 switch dpoint.position {
                 case .left, .right, .center:
                         /* insert into the current box */
-                        mUniqueIndex = ASFrame.setFrameIds(frame: srcfrm, frameId: mUniqueIndex)
                         if dpoint.position == .right {
                                 result = parfrm.insert(slotName: nm, frame: srcfrm, after: cname)
                         } else {
@@ -89,7 +83,6 @@ import Foundation
                         }
                 case .top, .bottom:
                         if let newbox = makeBox(parent: parfrm, slotName: cname, axis: .vertical) {
-                                mUniqueIndex = ASFrame.setFrameIds(frame: srcfrm, frameId: mUniqueIndex)
                                 if dpoint.position == .top {
                                         result = newbox.insert(slotName: nm, frame: srcfrm, before: cname)
                                 } else {
@@ -119,7 +112,6 @@ import Foundation
                         }
                 case .top, .bottom, .center:
                         /* insert into the current box */
-                        mUniqueIndex = ASFrame.setFrameIds(frame: srcfrm, frameId: mUniqueIndex)
                         if dpoint.position == .top {
                                 result = parfrm.insert(slotName: nm, frame: srcfrm, before: cname)
                         } else {
