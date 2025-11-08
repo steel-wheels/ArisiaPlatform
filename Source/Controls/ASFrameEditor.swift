@@ -134,7 +134,6 @@ public class ASFrameEditor: MIStack
                 }
 
                 updateButtonStatus()
-                frameview.requireDisplay()
         }
 
         private func allocateValueField(name nm: String, value sval: SlotValue) -> MIStack {
