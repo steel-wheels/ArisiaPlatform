@@ -5,6 +5,7 @@
  *   Copyright (C) 2025 Steel Wheels Project
  */
 
+import MultiFrameKit
 import MultiUIKit
 import Foundation
 
@@ -112,7 +113,8 @@ public class ASDropDetector: MIVisitor
                                         }
                                 }
                         } else {
-                                mDetectedFrame = DetectedFrame(position: .center, frameId: src.coreTag)
+                                let frmid = MFInterfaceTagToFrameId(interfaceTag: src.tag)
+                                mDetectedFrame = DetectedFrame(position: .center, frameId: frmid)
                         }
                 } else {
                         //NSLog("Not in stack frame at \(#function)")
@@ -123,8 +125,9 @@ public class ASDropDetector: MIVisitor
                 //dumpPoint(label: "button", view: src)
                 if isInFrame(point: currentPoint(), view: src) {
                         //NSLog("In button frame at \(#function)")
-                        let dpos = detectedPosition(point: currentPoint(), frame: src.buttonFrame())
-                        mDetectedFrame = DetectedFrame(position: dpos, frameId: src.coreTag)
+                        let dpos  = detectedPosition(point: currentPoint(), frame: src.buttonFrame())
+                        let frmid = MFInterfaceTagToFrameId(interfaceTag: src.tag)
+                        mDetectedFrame = DetectedFrame(position: dpos, frameId: frmid)
                 }
         }
 
@@ -133,7 +136,8 @@ public class ASDropDetector: MIVisitor
                 if isInFrame(point: currentPoint(), view: src) {
                         //NSLog("In image frame at \(#function)")
                         let dpos = detectedPosition(point: currentPoint(), frame: src.imageFrame())
-                        mDetectedFrame = DetectedFrame(position: dpos, frameId: src.coreTag)
+                        let frmid      = MFInterfaceTagToFrameId(interfaceTag: src.tag)
+                        mDetectedFrame = DetectedFrame(position: dpos, frameId: frmid)
                 } else {
                         //NSLog("Not in image frame at \(#function)")
                 }

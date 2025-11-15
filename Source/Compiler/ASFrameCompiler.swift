@@ -89,8 +89,9 @@ import Foundation
         }
 
         private func compile(boxFrame ownerframe: ASFrame, axis axs: MIStackCore.Axis, path pth: Array<String>, into ownerview: MFStack) -> NSError? {
-                let stack = MFStack(context: mContext, frameId: ownerframe.frameId())
-                stack.axis = axs
+                let stack = MFStack(context: mContext)
+                stack.frameId = ownerframe.frameId()
+                stack.axis    = axs
                 for slot in ownerframe.slots {
                         if isUntoucheableSlot(slotName: slot.name) {
                                 continue
@@ -128,7 +129,8 @@ import Foundation
         private func compile(buttonFrame ownerframe: ASFrame, path pth: Array<String>, into ownerview: MFStack) -> NSError? {
                 var eventdefs: Array<EventDefinition> = []
 
-                let button = MFButton(context: mContext, frameId: ownerframe.frameId())
+                let button = MFButton(context: mContext)
+                button.frameId = ownerframe.frameId()
                 for slot in ownerframe.slots {
                         if isUntoucheableSlot(slotName: slot.name) {
                                 continue
@@ -181,8 +183,9 @@ import Foundation
         }
 
         private func compile(imageFrame ownerframe: ASFrame, path pth: Array<String>, into ownerview: MFStack) -> NSError? {
-                let image = MFImageView(context: mContext, frameId: ownerframe.frameId())
+                let image = MFImageView(context: mContext)
 
+                image.frameId = ownerframe.frameId()
                 for slot in ownerframe.slots {
                         if isUntoucheableSlot(slotName: slot.name) {
                                 continue

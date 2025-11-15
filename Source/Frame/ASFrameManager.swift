@@ -6,6 +6,7 @@
  */
 
 import MultiDataKit
+import MultiFrameKit
 import MultiUIKit
 import Foundation
 
@@ -134,18 +135,18 @@ import Foundation
                 }
         }
 
-        public func search(coreTag ctag: Int) -> ASFrame? {
-                return search(frame: mRootFrame, coreTag: ctag)
+        public func search(frameId fid: Int) -> ASFrame? {
+                return search(frame: mRootFrame, frameId: fid)
         }
 
-        private func search(frame frm: ASFrame, coreTag ctag: Int) -> ASFrame? {
-                if frm.frameId() == ctag {
+        private func search(frame frm: ASFrame, frameId fid: Int) -> ASFrame? {
+                if frm.frameId() == fid {
                         return frm
                 }
                 for slot in frm.slots {
                         switch slot.value {
                         case .frame(let child):
-                                if let result = search(frame: child, coreTag: ctag) {
+                                if let result = search(frame: child, frameId: fid) {
                                         return result
                                 }
                         default:

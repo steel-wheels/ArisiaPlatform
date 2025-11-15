@@ -1,106 +1,36 @@
-
-## Single image
+# empty
 <pre>
-require layout at /Users/tomoo/Project/ArisiaCard/Source/StackViewController.swift
-viewWillLayout start
-Compile: {
-    class: "VBox"
-    frameid: 0
-    image_0:     {
-        class: "Image"
-        file: ""
-    }
+MIStack tag:-1 frame:{x:0.0, y:192.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
+  MFStack tag:-1 frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
+    ASDropView tag:-1 frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
+      MIStack tag:-1 frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
+        MFStack tag:-1 frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
+          MFStack tag:0 frame:{x:0.0, y:0.0, width:160.0, height: 32.0} bounds:{x:0.0, y:0.0, width:160.0, height: 32.0}
+</pre>
 
-}
-JavaScript: /* define object: root_image_0 */
-/* define property file for object: root_image_0 */
-Object.defineProperty(root_image_0, 'file', {
-  get()  { return root_image_0._value("file") ; },
-  set(v) { root_image_0._setValue("file", v) ; }
-}) ;
-/* define object: root */
-Pre-layout
-image size: width=1024.0 height=528.0
-content size: width=1024.0 height=528.0
-viewWillLayout end
+<pre>
 View-layout
-MIStack frame:{x:0.0, y:192.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
-  MFStack frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
-    ASDropView frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
-      MIStack frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
-        MFStack frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
-          MFStack frame:{x:0.0, y:0.0, width:160.0, height: 32.0} bounds:{x:0.0, y:0.0, width:160.0, height: 32.0}
-            MFImageView frame:{x:0.0, y:0.0, width:160.0, height: 32.0} bounds:{x:0.0, y:0.0, width:160.0, height: 32.0}
+MIStack tag:-1 frame:{x:0.0, y:192.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
+  MFStack tag:-1 frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
+    ASDropView tag:-1 frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
+      MIStack tag:-1 frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
+        MFStack tag:-1 frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
+          MFStack tag:0 frame:{x:0.0, y:0.0, width:160.0, height: 32.0} bounds:{x:0.0, y:0.0, width:160.0, height: 32.0}
+            MFImageView tag:2 frame:{x:0.0, y:0.0, width:160.0, height: 32.0} bounds:{x:0.0, y:0.0, width:160.0, height: 32.0}
               [image] size {width:128.00, height:129.00}
 </pre>
 
 <pre>
-Sandbox extension data required immediately for flavor public.file-url, but failed to obtain. (-20)
-No sandbox extension entry in cache when one was expected for item 789514 flavor: public.file-url (error: -9)
-Failed to get a sandbox extension (-9)
-(detectedPosition(point:frame:) pt.x543.42578125 pt.y:119.08203125
-(detectedPosition(point:frame:) hmin438.0 hmax:586.0
-(detectedPosition(point:frame:) vmin60.5 vmax:209.5
-(detectedPosition(point:frame:) hdist:0.0 vdist:0.0
-(detectedPosition(point:frame:) result = center
-require layout at /Users/tomoo/Project/ArisiaCard/Source/StackViewController.swift
-viewWillLayout start
-Compile: {
-    class: "VBox"
-    frameid: 0
-    image_0:     {
-        class: "Image"
-        file: ""
-        frameid: 1
-    }
-
-    image_1:     {
-        class: "Image"
-        file: ""
-    }
-
-}
-JavaScript: /* define object: root_image_0 */
-/* define property file for object: root_image_0 */
-Object.defineProperty(root_image_0, 'file', {
-  get()  { return root_image_0._value("file") ; },
-  set(v) { root_image_0._setValue("file", v) ; }
-}) ;
-/* define object: root_image_1 */
-/* define property file for object: root_image_1 */
-Object.defineProperty(root_image_1, 'file', {
-  get()  { return root_image_1._value("file") ; },
-  set(v) { root_image_1._setValue("file", v) ; }
-}) ;
-/* define object: root */
-Pre-layout
-image size: width=1024.0 height=264.0
-content size: width=1024.0 height=264.0
-image size: width=1024.0 height=264.0
-content size: width=1024.0 height=264.0
-viewWillLayout end
 View-layout
-MIStack frame:{x:0.0, y:192.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
-  MFStack frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
-    ASDropView frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
-      MIStack frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
-        MFStack frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
-          MFStack frame:{x:0.0, y:0.0, width:160.0, height: 32.0} bounds:{x:0.0, y:0.0, width:160.0, height: 32.0}
-            MFImageView frame:{x:0.0, y:0.0, width:160.0, height: 32.0} bounds:{x:0.0, y:0.0, width:160.0, height: 32.0}
-              [image] size {width:128.00, height:129.00}
-            MFImageView frame:{x:0.0, y:0.0, width:160.0, height: 32.0} bounds:{x:0.0, y:0.0, width:160.0, height: 32.0}
-              [image] size {width:128.00, height:129.00}
-viewWillLayout start
-viewWillLayout end
-View-layout
-MIStack frame:{x:0.0, y:192.0, width:1024.0, height: 536.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 536.0}
-  MFStack frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
-    ASDropView frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
-      MIStack frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
-        MFStack frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
-          MFStack frame:{x:0.0, y:0.0, width:1024.0, height: 0.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 0.0}
-            MFImageView frame:{x:0.0, y:0.0, width:1024.0, height: 0.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 0.0}
-              [image] size {width:128.00, height:129.00}
-            MFImageView frame:{x:0.0, y:0.0, width:1024.0, height: 0.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 0.0}
-              [image] size {width:128.00, height:129.00}
+MIStack tag:-1 frame:{x:0.0, y:192.0, width:1032.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1032.0, height: 528.0}
+  MFStack tag:-1 frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
+    ASDropView tag:-1 frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
+      MIStack tag:-1 frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
+        MFStack tag:-1 frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
+          MFStack tag:0 frame:{x:0.0, y:0.0, width:1024.0, height: 0.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 0.0}
+            MFStack tag:2 frame:{x:0.0, y:0.0, width:1024.0, height: 0.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 0.0}
+              MFImageView tag:4 frame:{x:0.0, y:0.0, width:0.0, height: 0.0} bounds:{x:0.0, y:0.0, width:0.0, height: 0.0}
+                [image] size {width:128.00, height:129.00}
+              MFImageView tag:6 frame:{x:0.0, y:0.0, width:0.0, height: 0.0} bounds:{x:0.0, y:0.0, width:0.0, height: 0.0}
+                [image] size {width:128.00, height:129.00}
 </pre>
