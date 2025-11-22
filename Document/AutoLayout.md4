@@ -1,36 +1,5 @@
-# empty
-<pre>
-MIStack tag:-1 frame:{x:0.0, y:192.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
-  MFStack tag:-1 frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
-    ASDropView tag:-1 frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
-      MIStack tag:-1 frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
-        MFStack tag:-1 frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
-          MFStack tag:0 frame:{x:0.0, y:0.0, width:160.0, height: 32.0} bounds:{x:0.0, y:0.0, width:160.0, height: 32.0}
-</pre>
 
-<pre>
-View-layout
-MIStack tag:-1 frame:{x:0.0, y:192.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
-  MFStack tag:-1 frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
-    ASDropView tag:-1 frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
-      MIStack tag:-1 frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
-        MFStack tag:-1 frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
-          MFStack tag:0 frame:{x:0.0, y:0.0, width:160.0, height: 32.0} bounds:{x:0.0, y:0.0, width:160.0, height: 32.0}
-            MFImageView tag:2 frame:{x:0.0, y:0.0, width:160.0, height: 32.0} bounds:{x:0.0, y:0.0, width:160.0, height: 32.0}
-              [image] size {width:128.00, height:129.00}
-</pre>
+## Reference
+* https://gist.github.com/chosa91/d2ab1be40c8207bedff9bfc8853ae6d7
+* https://grachro.hatenablog.com/entry/20140923/1411468076
 
-<pre>
-View-layout
-MIStack tag:-1 frame:{x:0.0, y:192.0, width:1032.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1032.0, height: 528.0}
-  MFStack tag:-1 frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
-    ASDropView tag:-1 frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
-      MIStack tag:-1 frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
-        MFStack tag:-1 frame:{x:0.0, y:0.0, width:1024.0, height: 528.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 528.0}
-          MFStack tag:0 frame:{x:0.0, y:0.0, width:1024.0, height: 0.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 0.0}
-            MFStack tag:2 frame:{x:0.0, y:0.0, width:1024.0, height: 0.0} bounds:{x:0.0, y:0.0, width:1024.0, height: 0.0}
-              MFImageView tag:4 frame:{x:0.0, y:0.0, width:0.0, height: 0.0} bounds:{x:0.0, y:0.0, width:0.0, height: 0.0}
-                [image] size {width:128.00, height:129.00}
-              MFImageView tag:6 frame:{x:0.0, y:0.0, width:0.0, height: 0.0} bounds:{x:0.0, y:0.0, width:0.0, height: 0.0}
-                [image] size {width:128.00, height:129.00}
-</pre>
