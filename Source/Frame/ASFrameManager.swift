@@ -12,7 +12,7 @@ import Foundation
 
 @MainActor public class ASFrameManager
 {
-        public typealias DetectedFrame = ASDropDetector.DetectedFrame
+        public typealias DetectedPoint = MIViewFinder.DetectedPoint
 
         private var mRootFrame          : ASFrame
 
@@ -24,7 +24,7 @@ import Foundation
                 mRootFrame   = frm
         }
 
-        public func insert(name nm: String, frame frm: ASFrame, at dpoint: DetectedFrame){
+        public func insert(name nm: String, frame frm: ASFrame, at dpoint: DetectedPoint){
                 //NSLog("dropped at \(dpoint.description)")
                 if mRootFrame.frameSlots.count == 0 {
                         mRootFrame.set(slotName: nm, value: .frame(frm))
@@ -35,15 +35,17 @@ import Foundation
                 }
         }
 
-        private func insert(destination dstfrm: ASFrame, name nm: String, source srcfrm: ASFrame, at dpoint: DetectedFrame) -> Bool {
+        private func insert(destination dstfrm: ASFrame, name nm: String, source srcfrm: ASFrame, at dpoint: DetectedPoint) -> Bool {
                 for slotidx in 0..<dstfrm.slots.count {
                         let dstslot = dstfrm.slots[slotidx]
                         switch dstslot.value {
                         case .frame(let child):
-                                if child.frameId() == dpoint.frameId {
+                                if child.frameId() == MFInterfaceTagToFrameId(interfaceTag: dpoint.tag) {
                                         return doInsert(parent: dstfrm, childName: dstslot.name, name: nm, source: srcfrm, at: dpoint)
                                 } else {
-                                        return insert(destination: child, name: nm, source: srcfrm, at: dpoint)
+                                        if(insert(destination: child, name: nm, source: srcfrm, at: dpoint)){
+                                                return true
+                                        }
                                 }
                         case .event(_), .path(_), .value(_):
                                 break
@@ -52,7 +54,7 @@ import Foundation
                 return false
         }
 
-        private func doInsert(parent parfrm: ASFrame, childName cname: String, name nm: String, source srcfrm: ASFrame, at dpoint: DetectedFrame) -> Bool {
+        private func doInsert(parent parfrm: ASFrame, childName cname: String, name nm: String, source srcfrm: ASFrame, at dpoint: DetectedPoint) -> Bool {
                 let result: Bool
                 switch parfrm.flameClass() {
                 case .hbox:
@@ -66,10 +68,10 @@ import Foundation
                 return result
         }
 
-        private func doInsert(hBox parfrm: ASFrame, childName cname: String, name nm: String, source srcfrm: ASFrame, at dpoint: DetectedFrame) -> Bool {
+        private func doInsert(hBox parfrm: ASFrame, childName cname: String, name nm: String, source srcfrm: ASFrame, at dpoint: DetectedPoint) -> Bool {
                 let result: Bool
                 switch dpoint.position {
-                case .left, .right, .center:
+                case .left, .right:
                         /* insert into the current box */
                         if dpoint.position == .right {
                                 result = parfrm.insert(slotName: nm, frame: srcfrm, after: cname)
@@ -87,11 +89,14 @@ import Foundation
                                 NSLog("[Error] Failed to make box at \(#file)")
                                 result = false
                         }
+                @unknown default:
+                        NSLog("[Error] Unknown position at \(#file)")
+                        result = false
                 }
                 return result
         }
 
-        private func doInsert(vBox parfrm: ASFrame, childName cname: String, name nm: String, source srcfrm: ASFrame, at dpoint: DetectedFrame) -> Bool {
+        private func doInsert(vBox parfrm: ASFrame, childName cname: String, name nm: String, source srcfrm: ASFrame, at dpoint: DetectedPoint) -> Bool {
                 let result: Bool
                 switch dpoint.position {
                 case .left, .right:
@@ -105,13 +110,16 @@ import Foundation
                                 NSLog("[Error] Failed to make box at \(#file)")
                                 result = false
                         }
-                case .top, .bottom, .center:
+                case .top, .bottom:
                         /* insert into the current box */
                         if dpoint.position == .top {
                                 result = parfrm.insert(slotName: nm, frame: srcfrm, before: cname)
                         } else {
                                 result = parfrm.insert(slotName: nm, frame: srcfrm, after: cname)
                         }
+                @unknown default:
+                        NSLog("[Error] Unknown position at \(#file)")
+                        result = false
                 }
                 return result
         }
