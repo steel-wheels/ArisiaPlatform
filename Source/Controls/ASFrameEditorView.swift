@@ -15,7 +15,7 @@ import  AppKit
 import  UIKit
 #endif  // os(OSX)
 
-public class ASFrameEditor: MIStack
+public class ASFrameEditorView: MIStack
 {
         public typealias UpdatedCallback = (_ frameid: Int) -> Void
 
