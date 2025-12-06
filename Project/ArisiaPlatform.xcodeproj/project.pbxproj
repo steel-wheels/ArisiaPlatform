@@ -23,6 +23,8 @@
 		05348C2A2E2FCEBC00485D66 /* ASFrameCompiler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05348C282E2FCEBC00485D66 /* ASFrameCompiler.swift */; };
 		05362C252E89201D00D495FE /* no-image.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 059648802E5A0585003A2595 /* no-image.png */; };
 		05362C272E89203200D495FE /* no-image.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 059648802E5A0585003A2595 /* no-image.png */; };
+		0539CC8E2EE3AA8000BA6D6B /* ASFrameCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0539CC8D2EE3AA8000BA6D6B /* ASFrameCommand.swift */; };
+		0539CC8F2EE3AA8000BA6D6B /* ASFrameCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0539CC8D2EE3AA8000BA6D6B /* ASFrameCommand.swift */; };
 		055037262E232C8A00670753 /* Hello.astack in CopyFiles */ = {isa = PBXBuildFile; fileRef = 055037252E232C6200670753 /* Hello.astack */; };
 		055037282E232EED00670753 /* Hello.astack in CopyFiles */ = {isa = PBXBuildFile; fileRef = 055037252E232C6200670753 /* Hello.astack */; };
 		05596BFA2E196BB90001384E /* MultiDataKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05596BF92E196BB90001384E /* MultiDataKit.xcframework */; };
@@ -215,6 +217,7 @@
 		05348C212E2FCA9800485D66 /* Frame.ts */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.typescript; path = Frame.ts; sourceTree = "<group>"; };
 		05348C222E2FCA9800485D66 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		05348C282E2FCEBC00485D66 /* ASFrameCompiler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASFrameCompiler.swift; sourceTree = "<group>"; };
+		0539CC8D2EE3AA8000BA6D6B /* ASFrameCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASFrameCommand.swift; sourceTree = "<group>"; };
 		055037252E232C6200670753 /* Hello.astack */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Hello.astack; sourceTree = "<group>"; };
 		05596BF92E196BB90001384E /* MultiDataKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MultiDataKit.xcframework; path = ../../../Library/Frameworks/MultiDataKit.xcframework; sourceTree = "<group>"; };
 		05596C002E196C020001384E /* ASFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASFrame.swift; sourceTree = "<group>"; };
@@ -310,6 +313,7 @@
 				05A6F2752E1AB6A5005A41E5 /* ASFrameEncoder.swift */,
 				05596C162E1971440001384E /* ASFrameParser.swift */,
 				051BC3D82E2DED6200BCACF1 /* ASFrameManager.swift */,
+				0539CC8D2EE3AA8000BA6D6B /* ASFrameCommand.swift */,
 			);
 			path = Frame;
 			sourceTree = "<group>";
@@ -697,6 +701,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				055A06562E9406BC00D206BC /* ASManifest.swift in Sources */,
+				0539CC8F2EE3AA8000BA6D6B /* ASFrameCommand.swift in Sources */,
 				05E0DADF2E4EA4BE00763D7B /* ASResource.swift in Sources */,
 				050910522E46308A002358A9 /* ASFrameEditorView.swift in Sources */,
 				052E02662E4C07A200636E13 /* ASTextField.swift in Sources */,
@@ -717,6 +722,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				055A06572E9406BC00D206BC /* ASManifest.swift in Sources */,
+				0539CC8E2EE3AA8000BA6D6B /* ASFrameCommand.swift in Sources */,
 				05E0DADE2E4EA4BE00763D7B /* ASResource.swift in Sources */,
 				050910532E46308A002358A9 /* ASFrameEditorView.swift in Sources */,
 				05348C232E2FCA9800485D66 /* Makefile in Sources */,
