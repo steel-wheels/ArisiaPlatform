@@ -45,6 +45,8 @@ public class ASStack
                                 let parser = ASFrameParser()
                                 switch parser.parse(string: scr) {
                                 case .success(let frame):
+                                        /* allocate frame ids */
+                                        let _ = ASFrameCommand.initFrameIds(frame: frame)
                                         mFrames[sname] = frame
                                 case .failure(let err):
                                         return .failure(err)
@@ -92,41 +94,4 @@ public class ASStack
         public func save(to url: URL) -> NSError? {
                 return mPackage.save(to: url)
         }
-
-        /*
-        public func script(fileName name: String) -> Result<String, NSError> {
-                return mPackage.script(fileName: name)
-        }
-
-        public func frame(fileName fname: String) -> Result<ASFrame, NSError> {
-                if let frm = mFrames[fname] {
-                        return .success(frm)
-                }
-                switch self.script(fileName: fname) {
-                case .success(let script):
-                        let parser = ASFrameParser()
-                        switch parser.parse(string: script) {
-                        case .success(let frm):
-                                return .success(frm)
-                        case .failure(let err):
-                                return .failure(err)
-                        }
-                case .failure(let err):
-                        return .failure(err)
-                }
-        }
-
-        public func setFrame(fileName name: String, frame frm: ASFrame){
-                mFrames[name] = frm
-                mPackage.setScript(fileName: name, script: frm.encode())
-        }
-
-        public func save() -> NSError? {
-                return mPackage.save()
-        }
-
-        public func save(to pkgdir: URL) -> NSError? {
-                return mPackage.save(to: pkgdir)
-        }*/
-
 }

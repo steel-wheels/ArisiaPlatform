@@ -41,9 +41,6 @@ import Foundation
         }
 
         public func compile(frame frm: ASFrame, into ownerview: MFStack) -> NSError? {
-                /* Initialize frame ids */
-                let _ = setFrameIds(frame: frm, frameId: 0)
-
                 if let err = compile(frame: frm, path: ["root"], into: ownerview) {
                         return err
                 }
@@ -57,20 +54,6 @@ import Foundation
                 } else {
                         return MIError.error(errorCode: .parseError, message: "Some evaluation error: \(ecnt)")
                 }
-        }
-
-        private func setFrameIds(frame frm: ASFrame, frameId fid: Int) -> Int {
-                frm.setFrameId(fid)
-                var nextid = fid + 1
-                for slot in frm.slots {
-                        switch slot.value {
-                        case .frame(let child):
-                                nextid = setFrameIds(frame: child, frameId: nextid)
-                        case .event(_), .path(_), .value(_):
-                                break
-                        }
-                }
-                return nextid
         }
 
         private func compile(frame ownerframe: ASFrame, path pth: Array<String>, into ownerview: MFStack) -> NSError? {

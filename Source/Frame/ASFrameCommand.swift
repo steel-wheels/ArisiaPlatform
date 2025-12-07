@@ -11,6 +11,24 @@ import MultiFrameKit
 import Foundation
 
 
+public class ASFrameCommand
+{
+        public static func initFrameIds(frame frm: ASFrame) -> Int {
+                let cmd = ASInitFrameIdsCommand(rootFrame: frm)
+                return cmd.initFrameIds()
+        }
+
+        public static func getMaxFrameId(frame frm: ASFrame) -> Int {
+                let cmd   = ASMaxFrameIdCommand(rootFrame: frm)
+                return cmd.maxFrameId()
+        }
+
+        public static func search(frame frm: ASFrame, frameId fid: Int) -> ASFrame? {
+                let cmd = ASSearchFrameCommand(rootFrame: frm)
+                return cmd.search(frameId: fid)
+        }
+}
+
 @MainActor public class ASFrameCommandQueue
 {
         public typealias DetectedPoint = MIViewFinder.DetectedPoint
@@ -28,18 +46,6 @@ import Foundation
 
         private func push(command cmd: QueueElement){
                 mCommandQueue.append(cmd)
-        }
-
-        // This operation is NOT pushed into the queue
-        public func initFrameIds(frame frm: ASFrame) -> Int {
-                let cmd = ASInitFrameIdsCommand(rootFrame: frm)
-                return cmd.initFrameIds()
-        }
-
-        // This operation is NOT pushed into the queue
-        public func getMaxFrameId(frame frm: ASFrame) -> Int {
-                let cmd   = ASMaxFrameIdCommand(rootFrame: frm)
-                return cmd.maxFrameId()
         }
 
         public func insert(rootFrame root: ASFrame, sourceName name: String, sourceFrame frame: ASFrame, detectedPoint dpoint: DetectedPoint) -> Bool {
@@ -109,6 +115,36 @@ private class ASMaxFrameIdCommand
                         }
                 }
                 return result
+        }
+}
+
+private class ASSearchFrameCommand
+{
+        var mRootFrame: ASFrame
+
+        public init(rootFrame frame: ASFrame) {
+                self.mRootFrame = frame
+        }
+
+        public func search(frameId fid: Int) -> ASFrame? {
+                return search(frame: mRootFrame, frameId: fid)
+        }
+
+        private func search(frame frm: ASFrame, frameId fid: Int) -> ASFrame? {
+                if frm.frameId() == fid {
+                        return frm
+                }
+                for slot in frm.slots {
+                        switch slot.value {
+                        case .frame(let child):
+                                if let result = search(frame: child, frameId: fid) {
+                                        return result
+                                }
+                        default:
+                                break
+                        }
+                }
+                return nil
         }
 }
 

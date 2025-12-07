@@ -24,27 +24,6 @@ import Foundation
                 mRootFrame   = frm
         }
 
-        public func search(frameId fid: Int) -> ASFrame? {
-                return search(frame: mRootFrame, frameId: fid)
-        }
-
-        private func search(frame frm: ASFrame, frameId fid: Int) -> ASFrame? {
-                if frm.frameId() == fid {
-                        return frm
-                }
-                for slot in frm.slots {
-                        switch slot.value {
-                        case .frame(let child):
-                                if let result = search(frame: child, frameId: fid) {
-                                        return result
-                                }
-                        default:
-                                break
-                        }
-                }
-                return nil
-        }
-
         public static func loadBoxFrame() -> Result<ASFrame, NSError> {
                 return loadFrame(fileName: "Frames/Box.as")
         }
@@ -70,6 +49,8 @@ import Foundation
                         let parser = ASFrameParser()
                         switch parser.parse(string: text) {
                         case .success(let frame):
+                                /* allocate frame ids */
+                                let _ = ASFrameCommand.initFrameIds(frame: frame)
                                 return .success(frame)
                         case .failure(let err):
                                 return .failure(err)

@@ -43,6 +43,7 @@ private func testParser(script scr: String) -> Bool
         switch parser.parse(string: scr) {
         case .success(let frame):
                 print("[Parse result]")
+                let _ = ASFrameCommand.initFrameIds(frame: frame)
                 print(frame.encode())
                 result = true
         case .failure(let err):
