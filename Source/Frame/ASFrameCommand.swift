@@ -10,45 +10,111 @@ import MultiUIKit
 import MultiFrameKit
 import Foundation
 
-public enum ASFrameCommand {
+
+@MainActor public class ASFrameCommandQueue
+{
         public typealias DetectedPoint = MIViewFinder.DetectedPoint
 
-        case insert(String, ASFrame, DetectedPoint) // frame name, frame, detected point
+        public enum QueueElement {
+                // new frameid
+                case insert(Int)
+        }
 
-        @MainActor  public func execute(rootFrame root: ASFrame) -> ASFrameCommandResult {
-                let result: ASFrameCommandResult
-                switch self {
-                case .insert(let name, let frame, let dpoint):
-                        let command = ASFrameInsertCommand(rootFrame: root)
-                        let ecode = command.insert(sourceName: name, sourceFrame: frame, detectedPoint: dpoint)
-                        result = ecode.toCommandResult()
+        private var mCommandQueue:      Array<QueueElement>
+
+        public init() {
+                mCommandQueue = []
+        }
+
+        private func push(command cmd: QueueElement){
+                mCommandQueue.append(cmd)
+        }
+
+        // This operation is NOT pushed into the queue
+        public func initFrameIds(frame frm: ASFrame) -> Int {
+                let cmd = ASInitFrameIdsCommand(rootFrame: frm)
+                return cmd.initFrameIds()
+        }
+
+        // This operation is NOT pushed into the queue
+        public func getMaxFrameId(frame frm: ASFrame) -> Int {
+                let cmd   = ASMaxFrameIdCommand(rootFrame: frm)
+                return cmd.maxFrameId()
+        }
+
+        public func insert(rootFrame root: ASFrame, sourceName name: String, sourceFrame frame: ASFrame, detectedPoint dpoint: DetectedPoint) -> Bool {
+                let command = ASFrameInsertCommand(rootFrame: root)
+                if let newfid = command.insert(sourceName: name, sourceFrame: frame, detectedPoint: dpoint) {
+                        push(command: .insert(newfid))
+                        return true
+                } else {
+                        return false
+                }
+        }
+}
+
+private class ASInitFrameIdsCommand
+{
+        var mRootFrame: ASFrame
+
+        public init(rootFrame frame: ASFrame) {
+                self.mRootFrame = frame
+        }
+
+        public func initFrameIds() -> Int {
+                return initFrameIds(frame: mRootFrame, frameId: 0)
+        }
+
+        private func initFrameIds(frame dst: ASFrame, frameId fid: Int) -> Int {
+                dst.setFrameId(fid)
+                var nextid = fid + 1
+                for slot in dst.slots {
+                        switch slot.value {
+                        case .frame(let child):
+                                nextid = initFrameIds(frame: child, frameId: nextid)
+                        case .value(_), .event(_), .path(_):
+                                break
+                        }
+                }
+                return nextid
+        }
+}
+
+private class ASMaxFrameIdCommand
+{
+        var mRootFrame: ASFrame
+
+        public init(rootFrame frame: ASFrame) {
+                self.mRootFrame = frame
+        }
+
+        public func maxFrameId() -> Int {
+                let maxid = maxFrameId(frame: mRootFrame, minFrameId: -1)
+                if maxid >= 0 {
+                        return maxid
+                } else {
+                        NSLog("[Error] Unexpected frame id at \(#file)")
+                        return 0
+                }
+        }
+
+        private func maxFrameId(frame frm: ASFrame, minFrameId minid: Int) -> Int {
+                var result = max(frm.frameId(), minid)
+                for slot in frm.slots {
+                        switch slot.value {
+                        case .frame(let child):
+                                result = maxFrameId(frame: child, minFrameId: result)
+                        case .value(_), .event(_), .path(_):
+                                break
+                        }
                 }
                 return result
         }
 }
 
-public enum ASFrameCommandResult {
-        case ok
-        case error(String)              // error message
-}
-
 private class ASFrameInsertCommand
 {
         public typealias DetectedPoint = MIViewFinder.DetectedPoint
-
-        public enum ResultCode {
-                case ok
-                case fail
-                case noTarget
-
-                public func toCommandResult() -> ASFrameCommandResult {
-                        switch self {
-                        case .ok:       return .ok
-                        case .fail:     return .error("Failed to insert frame")
-                        case .noTarget: return .error("Can not happen")
-                        }
-                }
-        }
 
         var mRootFrame: ASFrame
 
@@ -56,12 +122,18 @@ private class ASFrameInsertCommand
                 self.mRootFrame = frame
         }
 
-        public func insert(sourceName name: String, sourceFrame frame: ASFrame, detectedPoint dpoint: DetectedPoint) -> ResultCode {
+        public func insert(sourceName name: String, sourceFrame frame: ASFrame, detectedPoint dpoint: DetectedPoint) -> Int? {
+                /* assign unique frame id */
+                let maxcmd = ASMaxFrameIdCommand(rootFrame: mRootFrame)
+                let nextid = maxcmd.maxFrameId() + 1
+                frame.setFrameId(nextid)
                 if childFrameCount(frame: mRootFrame) == 0 {
                         mRootFrame.set(slotName: name, value: .frame(frame))
-                        return .ok
+                        return nextid
+                } else if insert(targetFrame: mRootFrame, sourceName: name, sourceFrame: frame, detectedPoint: dpoint) {
+                        return nextid
                 } else {
-                        return insert(targetFrame: mRootFrame, sourceName: name, sourceFrame: frame, detectedPoint: dpoint)
+                        return nil
                 }
         }
 
@@ -79,33 +151,27 @@ private class ASFrameInsertCommand
                 return result
         }
 
-        private func insert(targetFrame target: ASFrame, sourceName name: String, sourceFrame frame: ASFrame, detectedPoint dpoint: DetectedPoint) -> ResultCode {
+        private func insert(targetFrame target: ASFrame, sourceName name: String, sourceFrame frame: ASFrame, detectedPoint dpoint: DetectedPoint) -> Bool {
                 for slotidx in 0..<target.slots.count {
                         let dstslot = target.slots[slotidx]
                         switch dstslot.value {
                         case .frame(let child):
                                 if child.frameId() == MFInterfaceTagToFrameId(interfaceTag: dpoint.tag) {
                                         if doInsert(parent: target, childName: dstslot.name, name: name, source: frame, at: dpoint) {
-                                                return .ok
+                                                return true
                                         } else {
-                                                return .fail
+                                                return false
                                         }
                                 } else {
-                                        let ecode = insert(targetFrame: child, sourceName: name, sourceFrame: frame, detectedPoint: dpoint)
-                                        switch ecode {
-                                        case .ok:
-                                                return .ok
-                                        case .noTarget:
-                                                break // contine this loop
-                                        default:
-                                                return ecode
+                                        if(insert(targetFrame: child, sourceName: name, sourceFrame: frame, detectedPoint: dpoint)){
+                                                return true
                                         }
                                 }
                         case .event(_), .path(_), .value(_):
                                 break
                         }
                 }
-                return .noTarget
+                return false
         }
 
         private func doInsert(parent parfrm: ASFrame, childName cname: String, name nm: String, source srcfrm: ASFrame, at dpoint: DetectedPoint) -> Bool {
