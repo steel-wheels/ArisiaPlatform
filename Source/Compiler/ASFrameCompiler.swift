@@ -58,7 +58,7 @@ import Foundation
 
         private func compile(frame ownerframe: ASFrame, path pth: Array<String>, into ownerview: MFStack) -> NSError? {
                 let result: NSError?
-                switch ownerframe.flameClass() {
+                switch ownerframe.frameClass() {
                 case .hbox:
                         result = compile(boxFrame: ownerframe, axis: .horizontal, path: pth, into: ownerview)
                 case .vbox:

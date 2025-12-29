@@ -165,7 +165,6 @@ public class ASPackage
                 /* Copy default stack in the resource into temporary directory */
                 guard let resdir = FileManager.default.resourceDirectory(forClass: ASPackage.self) else {
                         let err = MIError.error(errorCode: .fileError, message: "No resource directory", atFile: #file, function: #function)
-                        NSLog("lNP 1")
                         return .failure(err)
                 }
                 let resstack = resdir.appending(path: "Stacks/Default.astack")

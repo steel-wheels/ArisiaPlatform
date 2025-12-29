@@ -198,7 +198,7 @@ extension ASFrame
                 self.set(slotName: ASFrame.ClassSlotName, stringValue: fclass.toString())
         }
 
-        public func flameClass() -> FrameClass {
+        public func frameClass() -> FrameClass {
                 if let str = self.stringValue(slotName: ASFrame.ClassSlotName) {
                         if let cls = FrameClass.decode(string: str) {
                                 return cls
