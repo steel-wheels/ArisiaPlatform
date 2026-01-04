@@ -8,12 +8,11 @@
 import MultiFrameKit
 import MultiUIKit
 import MultiDataKit
-import JavaScriptKit
 import Foundation
 
 @MainActor public class ASFrameCompiler
 {
-        private var mContext:           KSContext
+        private var mContext:           MFContext
         private var mConsoleStortage:   MITextStorage
         private var mPackage:           ASPackage
         private var mResource:          ASResource
@@ -29,7 +28,7 @@ import Foundation
                 }
         }
 
-        public init(context ctxt: KSContext, consoleStorage strg: MITextStorage, package pkg: ASPackage, resource res: ASResource){
+        public init(context ctxt: MFContext, consoleStorage strg: MITextStorage, package pkg: ASPackage, resource res: ASResource){
                 mContext                = ctxt
                 mConsoleStortage        = strg
                 mPackage                = pkg
@@ -48,11 +47,8 @@ import Foundation
 
                 /* Evaluate the script */
                 let scr = mScript.joined(separator: "\n")
-                //NSLog("JavaScript: \(scr)")
-
-                mContext.resetExceptionCount()
-                let _    = mContext.evaluateScript(script: scr, sourceFile: nil)
-                let ecnt = mContext.exceptionCount
+                NSLog("JavaScript: \(scr)")
+                let ecnt = mContext.execute(script: scr)
                 if(ecnt == 0){
                         return nil // no error
                 } else {
