@@ -35,10 +35,6 @@ import Foundation
                 mPackage                = pkg
                 mResource               = res
                 mScript                 = []
-
-                /* add console object */
-                let console = MFConsole(storage: strg)
-                ctxt.setObject(console, forKeyedSubscript: "console" as NSString)
         }
 
         public func compile(frame frm: ASFrame, into ownerview: MFStack) -> NSError? {
